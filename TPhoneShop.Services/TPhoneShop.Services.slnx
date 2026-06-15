@@ -1,0 +1,22 @@
+<Solution>
+  <Folder Name="/BuildingBlocks/">
+    <Project Path="BuildingBlocks/BuildingBlocks.Application/BuildingBlocks.Application.csproj" Id="6815dd38-d48b-4815-ba65-3484e96f8d7b" />
+    <Project Path="BuildingBlocks/BuildingBlocks.Domain/BuildingBlocks.Domain.csproj" Id="36390acb-509b-49e0-a685-011ae68f9a6d" />
+    <Project Path="BuildingBlocks/BuildingBlocks.Infrastructure/BuildingBlocks.Infrastructure.csproj" Id="8830a216-d229-4ae1-8705-f6f85e80449e" />
+  </Folder>
+  <Folder Name="/CommerceService/">
+    <Project Path="CommerceService/CommerceService.API/CommerceService.API.csproj" Id="247e834c-21d9-48cf-8bbf-76ddd13c1dfc" />
+    <Project Path="CommerceService/CommerceService.Application/CommerceService.Application.csproj" Id="d4b12885-7184-48f4-a2dd-8b5ac8f88572" />
+    <Project Path="CommerceService/CommerceService.Domain/CommerceService.Domain.csproj" Id="432fb615-f82b-49d4-bb1d-a347c3d85940" />
+    <Project Path="CommerceService/CommerceService.Infrastructure/CommerceService.Infrastructure.csproj" Id="b009e701-93d9-45dd-9464-224cb0c99fb4" />
+    <Project Path="CommerceService/CommerceService.Persistence/CommerceService.Persistence.csproj" Id="739c7d7f-021f-4809-b63a-c2153b9ddacb" />
+    <Project Path="CommerceService/CommerceService.ReadModel/CommerceService.ReadModel.csproj" Id="f88e3b79-1087-41ca-9b54-fbdcc7d433a5" />
+  </Folder>
+  <Folder Name="/IdentityService/">
+    <Project Path="IdentityService/IdentityService.API/IdentityService.API.csproj" Id="900c1ec5-1abb-44de-a90b-849c50524007" />
+    <Project Path="IdentityService/IdentityService.Application/IdentityService.Application.csproj" Id="a26cad40-fbad-4592-8e9e-0b9298fef98f" />
+    <Project Path="IdentityService/IdentityService.Domain/IdentityService.Domain.csproj" Id="744d58b8-a1c3-482f-944f-6d6a03072612" />
+    <Project Path="IdentityService/IdentityService.Infrastructure/IdentityService.Infrastructure.csproj" Id="c80f2a11-6e32-45e1-8ebe-24cf3b583d69" />
+    <Project Path="IdentityService/IdentityService.Persistence/IdentityService.Persistence.csproj" Id="53ce746e-7f7a-4fe4-bbb5-1ac2f42686fa" />
+  </Folder>
+</Solution>
