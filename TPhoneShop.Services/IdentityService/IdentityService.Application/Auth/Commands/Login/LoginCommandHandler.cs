@@ -1,6 +1,6 @@
 ﻿using IdentityService.Application.Auth.Dtos;
 using IdentityService.Application.Auth.Services;
-using IdentityService.Domain.Entities;
+using IdentityService.Domain.Constants;
 using Microsoft.EntityFrameworkCore;
 
 namespace IdentityService.Application.Auth.Commands.Login
@@ -9,12 +9,10 @@ namespace IdentityService.Application.Auth.Commands.Login
     {
         private readonly IAuthService _authService;
         private readonly MainDbContext _mainDbContext;
-        private readonly IClientInfoService _clientInfoService;
-        public LoginCommandHandler(IAuthService authService, MainDbContext mainDbContext, IClientInfoService clientInfoService)
+        public LoginCommandHandler(IAuthService authService, MainDbContext mainDbContext)
         {
             _authService = authService;
             _mainDbContext = mainDbContext;
-            _clientInfoService = clientInfoService;
         }
 
         public async Task<AuthResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -29,29 +27,13 @@ namespace IdentityService.Application.Auth.Commands.Login
             if (!verifyPassword)
             {
 
-                await RecordFailedLoginAsync(user);
+                await _authService.AddUserSecurityLogAsync(user.Id, UserSecurityActions.Login, "Mật khẩu không hợp lệ");
                 throw new UnauthorizedException("Email hoặc mật khẩu không hợp lệ!");
             }
 
+            await _authService.AddUserSecurityLogAsync(user.Id, UserSecurityActions.Login);
             var response = await _authService.GenerateLoginSessionAsync(user, cancellationToken);
             return response;
-        }
-
-        private async Task RecordFailedLoginAsync(User user)
-        {
-            var ipAddress = _clientInfoService.GetIPAddress();
-            var userAgent = _clientInfoService.GetUserAgent();
-            var deviceName = _clientInfoService.GetDeviceName();
-            var loginLog = new UserLoginLog
-            {
-                UserId = user.Id,
-                IsSuccess = false,
-                FailureReason = "Mật khẩu không hợp lệ",
-                LoginAt = DateTimeOffset.UtcNow,
-                DeviceName = deviceName,
-                IpAddress = ipAddress,
-                UserAgent = userAgent
-            };
         }
     }
 }

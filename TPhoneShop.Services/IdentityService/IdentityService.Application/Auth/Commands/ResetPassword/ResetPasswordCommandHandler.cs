@@ -1,4 +1,5 @@
 ﻿using IdentityService.Application.Auth.Services;
+using IdentityService.Domain.Constants;
 using Microsoft.EntityFrameworkCore;
 
 namespace IdentityService.Application.Auth.Commands.ResetPassword
@@ -36,7 +37,17 @@ namespace IdentityService.Application.Auth.Commands.ResetPassword
 
             resetToken.IsUsed = true;
 
+            var listAvailableRefreshToken = await _mainDbContext.RefreshTokens.Where(e => e.UserId == user.Id
+                                                                                            && e.RevokedAt == null
+                                                                                            && e.ExpiresAt > DateTimeOffset.UtcNow)
+                                                                                 .ToListAsync(cancellationToken);
+            foreach (var refreshToken in listAvailableRefreshToken)
+            {
+                refreshToken.ExpiresAt = DateTimeOffset.UtcNow;
+            }
+
             await _mainDbContext.SaveChangesAsync(cancellationToken);
+            await _authService.AddUserSecurityLogAsync(user.Id, UserSecurityActions.ResetPassword);
         }
     }
 }

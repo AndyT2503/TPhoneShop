@@ -1,5 +1,6 @@
 ﻿using IdentityService.Application.Auth.Dtos;
 using IdentityService.Application.Auth.Services;
+using IdentityService.Domain.Constants;
 using Microsoft.EntityFrameworkCore;
 
 namespace IdentityService.Application.Auth.Commands.RefreshToken
@@ -50,7 +51,7 @@ namespace IdentityService.Application.Auth.Commands.RefreshToken
 
             refreshToken.RevokedAt = DateTimeOffset.UtcNow;
             await _mainDbContext.SaveChangesAsync(cancellationToken);
-
+            await _authService.AddUserSecurityLogAsync(refreshToken.UserId, UserSecurityActions.RefreshToken);
             var response = await _authService.GenerateLoginSessionAsync(refreshToken.User, cancellationToken);
             return response;
         }

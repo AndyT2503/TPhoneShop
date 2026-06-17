@@ -1,5 +1,6 @@
 ﻿using IdentityService.Application.Auth.Dtos;
 using IdentityService.Application.Auth.Services;
+using IdentityService.Domain.Constants;
 using IdentityService.Domain.Entities;
 using IdentityService.Infrastructure.Securities.Options;
 using IdentityService.Persistence;
@@ -51,19 +52,9 @@ namespace IdentityService.Infrastructure.Securities
                 UserAgent = userAgent
             };
 
-            var loginLog = new UserLoginLog
-            {
-                UserId = user.Id,
-                IsSuccess = true,
-                LoginAt = DateTimeOffset.UtcNow,
-                DeviceName = deviceName,
-                IpAddress = ipAddress,
-                UserAgent = userAgent
-            };
-
             _mainDbContext.RefreshTokens.Add(refreshToken);
-            _mainDbContext.UserLoginLogs.Add(loginLog);
             await _mainDbContext.SaveChangesAsync(cancellationToken);
+
 
             return new AuthResponse
             {
@@ -88,6 +79,29 @@ namespace IdentityService.Infrastructure.Securities
             using var sha = SHA256.Create();
             var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(token));
             return Convert.ToHexString(bytes);
+        }
+
+        public async Task AddUserSecurityLogAsync(Guid userId, string userSecurityAction, string? failureReason = null)
+        {
+            if (!UserSecurityActions.IsValid(userSecurityAction))
+            {
+                throw new ArgumentException("Invalid action");
+            }
+            var ipAddress = _clientInfoService.GetIPAddress();
+            var userAgent = _clientInfoService.GetUserAgent();
+            var deviceName = _clientInfoService.GetDeviceName();
+            var secrurityLog = new UserSecurityLog
+            {
+                UserId = userId,
+                IsSuccess = failureReason != null,
+                FailureReason = failureReason,
+                Action = userSecurityAction,
+                DeviceName = deviceName,
+                IpAddress = ipAddress,
+                UserAgent = userAgent
+            };
+            _mainDbContext.UserSecurityLogs.Add(secrurityLog);
+            await _mainDbContext.SaveChangesAsync();
         }
 
         private async Task<string> GenerateAccessTokenAsync(User user, CancellationToken cancellationToken)
@@ -124,6 +138,5 @@ namespace IdentityService.Infrastructure.Securities
             return Guid.NewGuid().ToString("N")
                    + Guid.NewGuid().ToString("N");
         }
-
     }
 }

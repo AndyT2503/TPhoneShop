@@ -9,5 +9,6 @@ namespace IdentityService.Application.Auth.Services
         string HashPassword(string plainPassword);
         bool VerifyPassword(string plainPassword, string hashPassword);
         string HashToken(string token);
+        Task AddUserSecurityLogAsync(Guid userId, string userSecurityAction, string? failureReason = null);
     }
 }

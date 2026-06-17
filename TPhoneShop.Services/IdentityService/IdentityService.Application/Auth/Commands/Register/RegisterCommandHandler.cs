@@ -1,5 +1,6 @@
 ﻿using IdentityService.Application.Auth.Dtos;
 using IdentityService.Application.Auth.Services;
+using IdentityService.Domain.Constants;
 using IdentityService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,6 +34,7 @@ namespace IdentityService.Application.Auth.Commands.Register
             };
             _mainDbContext.Users.Add(user);
             await _mainDbContext.SaveChangesAsync(cancellationToken);
+            await _authService.AddUserSecurityLogAsync(user.Id, UserSecurityActions.Register);
             var authResponse = await _authService.GenerateLoginSessionAsync(user, cancellationToken);
             return authResponse;
         }

@@ -19,6 +19,7 @@ namespace IdentityService.Infrastructure
             services.AddSingleton<RsaKeyProvider>();
             services.AddScoped<IJwksService, JwksService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ICurrentUser, CurrentUser>();
             services.AddScoped<IClientInfoService, ClientInfoService>();
             services.AddHostedService<KeyRotationService>();
             services.AddRabbitMq(configuration);

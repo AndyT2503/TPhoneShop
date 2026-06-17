@@ -1,4 +1,5 @@
 ﻿using IdentityService.API.Extensions;
+using IdentityService.Application.Auth.Commands.ChangePassword;
 using IdentityService.Application.Auth.Commands.ForgotPassword;
 using IdentityService.Application.Auth.Commands.Login;
 using IdentityService.Application.Auth.Commands.Logout;
@@ -34,6 +35,18 @@ namespace IdentityService.API.Controllers
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterCommand command)
+        {
+            var result = await _mediator.Send(command);
+
+            Response.SetRefreshTokenCookie(result.RefreshToken, result.RefreshTokenExpiresTime);
+            return Ok(new
+            {
+                result.AccessToken
+            });
+        }
+
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ResetPassword(ChangePasswordCommand command)
         {
             var result = await _mediator.Send(command);
 

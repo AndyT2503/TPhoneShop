@@ -1,13 +1,15 @@
 ﻿namespace IdentityService.Persistence.Configurations
 {
-    public class UserLoginLogConfiguration
-    : IEntityTypeConfiguration<UserLoginLog>
+    public class UserSecurityLogConfiguration
+    : IEntityTypeConfiguration<UserSecurityLog>
     {
-        public void Configure(EntityTypeBuilder<UserLoginLog> builder)
+        public void Configure(EntityTypeBuilder<UserSecurityLog> builder)
         {
-            builder.ToTable("user_login_logs");
+            builder.ToTable("user_security_logs");
 
             builder.HasKey(x => x.Id);
+
+            builder.HasIndex(x => x.Action);
 
             builder.Property(x => x.IpAddress)
                 .HasMaxLength(100)
