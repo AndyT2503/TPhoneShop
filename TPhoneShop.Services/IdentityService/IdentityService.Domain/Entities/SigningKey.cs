@@ -10,8 +10,8 @@
 
         public bool IsActive { get; set; }
 
-        public DateTime? RevokedAt { get; set; }
+        public DateTimeOffset? RevokedAt { get; set; }
 
-        public DateTime? ActivatedAt { get; set; }
+        public DateTimeOffset ActivatedAt { get; set; }
     }
 }

@@ -16,12 +16,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BuildingBlocks\BuildingBlocks.Infrastructure\BuildingBlocks.Infrastructure.csproj" />
     <ProjectReference Include="..\IdentityService.Domain\IdentityService.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="IdentityService.Domain.Entities"/>
-    <Using Include="Microsoft.EntityFrameworkCore"/>
-    <Using Include="Microsoft.EntityFrameworkCore.Metadata.Builders"/>
+    <Using Include="IdentityService.Domain.Entities" />
+    <Using Include="Microsoft.EntityFrameworkCore" />
+    <Using Include="Microsoft.EntityFrameworkCore.Metadata.Builders" />
   </ItemGroup>
 </Project>

@@ -17,11 +17,6 @@
 
             builder.HasIndex(x => x.Email)
                 .IsUnique();
-
-            builder.HasOne(x => x.Role)
-                .WithMany()
-                .HasForeignKey(x => x.RoleId)
-                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

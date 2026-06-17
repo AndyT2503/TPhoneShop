@@ -27,11 +27,11 @@ namespace IdentityService.Application.Auth.Commands.RefreshToken
             {
                 throw new UnauthorizedException("Refresh token không hợp lệ!");
             }
-
+            var hashedToken = _authService.HashToken(request.RefreshToken);
             var refreshToken = await _mainDbContext.RefreshTokens
                                                         .Include(x => x.User)
                                                         .FirstOrDefaultAsync(
-                                                            x => x.Token == request.RefreshToken, cancellationToken);
+                                                            x => x.Token == hashedToken, cancellationToken);
 
             if (refreshToken is null)
             {

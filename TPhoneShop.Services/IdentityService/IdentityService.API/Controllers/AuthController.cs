@@ -1,8 +1,10 @@
 ﻿using IdentityService.API.Extensions;
+using IdentityService.Application.Auth.Commands.ForgotPassword;
 using IdentityService.Application.Auth.Commands.Login;
 using IdentityService.Application.Auth.Commands.Logout;
 using IdentityService.Application.Auth.Commands.RefreshToken;
 using IdentityService.Application.Auth.Commands.Register;
+using IdentityService.Application.Auth.Commands.ResetPassword;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,6 +42,20 @@ namespace IdentityService.API.Controllers
             {
                 result.AccessToken
             });
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok();
+        }
+
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok();
         }
 
         [HttpPost("refresh-token")]

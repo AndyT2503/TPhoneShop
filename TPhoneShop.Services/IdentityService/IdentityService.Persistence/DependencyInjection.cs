@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using BuildingBlocks.Infrastructure.Interceptors;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IdentityService.Persistence
@@ -9,10 +10,13 @@ namespace IdentityService.Persistence
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddDbContext<MainDbContext>(options =>
+            services.AddSingleton<AuditableEntityInterceptor>();
+            services.AddDbContext<MainDbContext>((sp, options) =>
             {
                 options.UseNpgsql(
                     configuration.GetConnectionString("Auth"));
+                options.AddInterceptors(
+                        sp.GetRequiredService<AuditableEntityInterceptor>());
             });
 
             return services;

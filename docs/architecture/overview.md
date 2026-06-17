@@ -78,43 +78,43 @@ The system follows a **Clean Architecture + CQRS + MediatR pattern** on backend 
 │       .NET 10        │   │       .NET 10        │
 ├──────────────────────┤   ├──────────────────────┤
 │ Authentication       │   │ Business Logic       │
-│ Authorization        │   │ Orders               │
-│ User Management      │   │ Products             │
-│ Key Rotation         │   │ Inventory            │
-│ JWKS Endpoint        │   │ Cart                 │
+│ User Management      │   │ Orders               │
+│ Key Rotation         │   │ Products             │
+│ JWKS Endpoint        │   │ Inventory            │
+│                      │   │ Cart                 │
 └──────────┬───────────┘   └──────────┬───────────┘
            │                          │
            ▼                          ▼
 ┌──────────────────────┐   ┌──────────────────────┐
 │ PostgreSQL           │   │ PostgreSQL           │
-│ Redis                │   │ Redis                │
-└──────────────────────┘   └──────────┬───────────┘
-                                      │
-                                      │
-                    ┌─────────────────┼─────────────────┐
-                    │                 │                 │
-                    ▼                 ▼                 ▼
-           ┌────────────────┐ ┌───────────────┐ ┌───────────────┐
-           │ MongoDB        │ │ Elasticsearch │ │ RabbitMQ      │
-           └────────────────┘ └───────────────┘ └───────┬───────┘
-                                                        │
-                                                        ▼
-                                             ┌──────────────────────┐
-                                             │ NotificationService  │
-                                             │       NestJS         │
-                                             ├──────────────────────┤
-                                             │ Email                │
-                                             │ Push Notification    │
-                                             │ Template Engine      │
-                                             │ Retry Processing     │
-                                             └───────────┬──────────┘
-                                                         │
-                                                         ▼
-                                             ┌──────────────────────┐
-                                             │ MongoDB              │
-                                             │ SendGrid             │
-                                             │ Redis                │
-                                             └──────────────────────┘
+│                      │   │ Redis                │
+└──────────┬───────────┘   └──────────┬───────────┘
+           │                          │
+           │                          │
+           │         ┌────────────────┼─────────────────┐
+           │         │                │                 │
+           ▼         ▼                ▼                 ▼
+     ┌──────────────────────┐ ┌───────────────┐ ┌───────────────┐
+     │ RabbitMQ             │ │ Elasticsearch │ │ MongoDB       │
+     └────────┬─────────────┘ └───────────────┘ └───────────────┘
+              │
+              ▼
+    ┌──────────────────────┐
+    │ NotificationService  │
+    │       NestJS         │
+    ├──────────────────────┤
+    │ Email                │
+    │ Push Notification    │
+    │ Template Engine      │
+    │ Retry Processing     │
+    └───────────┬──────────┘
+                │
+                ▼
+    ┌──────────────────────┐
+    │ MongoDB              │
+    │ Resend               │
+    │ Redis                │
+    └──────────────────────┘
                                                         
 ```
 

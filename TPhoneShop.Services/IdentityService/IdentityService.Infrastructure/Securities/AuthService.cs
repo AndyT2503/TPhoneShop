@@ -1,14 +1,14 @@
 ﻿using IdentityService.Application.Auth.Dtos;
 using IdentityService.Application.Auth.Services;
 using IdentityService.Domain.Entities;
-using IdentityService.Infrastructure.Securities.Constants;
 using IdentityService.Infrastructure.Securities.Options;
 using IdentityService.Persistence;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace IdentityService.Infrastructure.Securities
 {
@@ -44,7 +44,7 @@ namespace IdentityService.Infrastructure.Securities
             var refreshToken = new RefreshToken
             {
                 UserId = user.Id,
-                Token = refreshTokenValue,
+                Token = HashToken(refreshTokenValue),
                 ExpiresAt = expireRefreshTokenTime,
                 DeviceName = deviceName,
                 IpAddress = ipAddress,
@@ -83,24 +83,20 @@ namespace IdentityService.Infrastructure.Securities
             return BCrypt.Net.BCrypt.Verify(plainPassword, hashPassword);
         }
 
+        public string HashToken(string token)
+        {
+            using var sha = SHA256.Create();
+            var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(token));
+            return Convert.ToHexString(bytes);
+        }
+
         private async Task<string> GenerateAccessTokenAsync(User user, CancellationToken cancellationToken)
         {
-            var listPermission = await _mainDbContext.RolePermissions.AsNoTracking()
-                                                                     .Where(e => e.RoleId == user.RoleId)
-                                                                     .Select(e => e.Permission.Name)
-                                                                     .ToListAsync(cancellationToken);
-
             var claims = new List<Claim>
             {
                 new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new(JwtRegisteredClaimNames.Email, user.Email),
             };
-
-            foreach (var permission in listPermission)
-            {
-                claims.Add(
-                    new Claim(CustomClaimNames.Permission, permission));
-            }
 
             var key = new RsaSecurityKey(_keys.PrivateKey)
             {
@@ -128,5 +124,6 @@ namespace IdentityService.Infrastructure.Securities
             return Guid.NewGuid().ToString("N")
                    + Guid.NewGuid().ToString("N");
         }
+
     }
 }
