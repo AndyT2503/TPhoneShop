@@ -6,4 +6,25 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+    <PackageReference Include="MediatR" Version="14.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BuildingBlocks\BuildingBlocks.Application\BuildingBlocks.Application.csproj" />
+    <ProjectReference Include="..\CommerceService.Domain\CommerceService.Domain.csproj" />
+    <ProjectReference Include="..\CommerceService.Persistence\CommerceService.Persistence.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Using Include="MediatR" />
+    <Using Include="CommerceService.Persistence" />
+    <Using Include="CommerceService.Domain.Entities" />
+    <Using Include="BuildingBlocks.Application.Exceptions" />
+    <Using Include="Microsoft.EntityFrameworkCore" />
+    <Using Include="FluentValidation"/>
+  </ItemGroup>
 </Project>

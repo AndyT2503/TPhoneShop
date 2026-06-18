@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<RolePermission> builder)
         {
-            builder.ToTable("role_permissions");
+            builder.ToTable("role_permissions", CommerceDbContext.AuthSchema);
 
             builder.HasKey(x => new
             {

@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Permission> builder)
         {
-            builder.ToTable("permissions");
+            builder.ToTable("permissions", CommerceDbContext.AuthSchema);
 
             builder.HasKey(x => x.Id);
 

@@ -1,20 +1,37 @@
-var builder = WebApplication.CreateBuilder(args);
+using BuildingBlocks.Infrastructure.Authentication;
+using BuildingBlocks.Infrastructure.Middlewares;
+using BuildingBlocks.Infrastructure.Validation;
+using CommerceService.Infrastructure;
+using CommerceService.Persistence;
 
+var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen();
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddFluentValidationBuildingBlocks();
+builder.Services.AddJwtAuthentication(configuration, builder.Environment);
+builder.Services.AddInfrastructure(configuration);
+builder.Services.AddPersistence(configuration);
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwagger();
+    app.UseSwaggerUI();
     app.MapOpenApi();
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseAuthorization();
 
