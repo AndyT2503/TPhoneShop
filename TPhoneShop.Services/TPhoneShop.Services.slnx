@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/APIGateway/">
+    <Project Path="APIGateway/APIGateway/APIGateway.csproj" Id="4c80724c-3d4d-4e89-949b-9c8ed084cf59" />
+  </Folder>
   <Folder Name="/BuildingBlocks/">
     <Project Path="BuildingBlocks/BuildingBlocks.Application/BuildingBlocks.Application.csproj" Id="6815dd38-d48b-4815-ba65-3484e96f8d7b" />
     <Project Path="BuildingBlocks/BuildingBlocks.Domain/BuildingBlocks.Domain.csproj" Id="36390acb-509b-49e0-a685-011ae68f9a6d" />
