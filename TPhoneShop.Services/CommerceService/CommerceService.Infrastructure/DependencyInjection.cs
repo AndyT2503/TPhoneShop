@@ -1,4 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CommerceService.Application.Common.Abstractions;
+using CommerceService.Infrastructure.Authorization;
+using CommerceService.Infrastructure.BackgroundJobs;
+using CommerceService.Infrastructure.Caching;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CommerceService.Infrastructure
@@ -10,9 +15,16 @@ namespace CommerceService.Infrastructure
             IConfiguration configuration
         )
         {
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = configuration["Redis:ConnectionString"];
+            });
+            services.AddScoped<IRolePermissionCache, RolePermissionCache>();
+            services.AddHostedService<SyncPermissionService>();
+            services.AddScoped<UserAuthorizationService>();
+            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+            services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
             return services;
         }
     }
-
-
 }

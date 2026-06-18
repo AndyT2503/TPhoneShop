@@ -25,6 +25,6 @@
     <Using Include="CommerceService.Domain.Entities" />
     <Using Include="BuildingBlocks.Application.Exceptions" />
     <Using Include="Microsoft.EntityFrameworkCore" />
-    <Using Include="FluentValidation"/>
+    <Using Include="FluentValidation" />
   </ItemGroup>
 </Project>

@@ -32,7 +32,7 @@ namespace IdentityService.Infrastructure.BackgroundJobs
 
         private async Task Process(CancellationToken cancellationToken)
         {
-            using var scope = _scopeFactory.CreateScope();
+            await using var scope = _scopeFactory.CreateAsyncScope();
 
             var db = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
             var dispatcher = scope.ServiceProvider.GetRequiredService<EventDispatcher>();

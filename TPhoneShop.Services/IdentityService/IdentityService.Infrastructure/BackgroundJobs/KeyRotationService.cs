@@ -36,7 +36,7 @@ namespace IdentityService.Infrastructure.BackgroundJobs
         {
             _logger.LogInformation("Checking signing key status...");
 
-            using var scope = _scopeFactory.CreateScope();
+            await using var scope = _scopeFactory.CreateAsyncScope();
             var db = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
 
             var activeKey = await db.SigningKeys

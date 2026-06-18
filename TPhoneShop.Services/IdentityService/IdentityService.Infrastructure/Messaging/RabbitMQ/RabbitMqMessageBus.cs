@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace IdentityService.Infrastructure.Messaging.RabbitMQ
 {
-    public sealed class RabbitMqMessageBus : IMessageBus, IAsyncDisposable
+    public class RabbitMqMessageBus : IMessageBus, IAsyncDisposable
     {
         private readonly RabbitMqConnection _connection;
         private readonly RabbitMqSettings _settings;

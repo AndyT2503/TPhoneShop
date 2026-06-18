@@ -1,7 +1,6 @@
 ﻿using CommerceService.API.Models.Roles;
 using CommerceService.Application.Authorization.Commands.CreateRole;
 using CommerceService.Application.Authorization.Commands.SetRolePermissions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommerceService.API.Controllers
@@ -17,7 +16,7 @@ namespace CommerceService.API.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Permissions.RolesCreate)]
         public async Task<IActionResult> CreateRole(CreateRoleCommand command)
         {
             await _mediator.Send(command);
@@ -25,7 +24,7 @@ namespace CommerceService.API.Controllers
         }
 
         [HttpPost("{roleId}/permissions")]
-        [Authorize]
+        [Authorize(Permissions.RolesAssignPermissions)]
         public async Task<IActionResult> SetRole(Guid roleId, SetRolePermissionsRequest request)
         {
             await _mediator.Send(new SetRolePermissionsCommand { RoleId = roleId, PermissionIds = request.PermissionIds });

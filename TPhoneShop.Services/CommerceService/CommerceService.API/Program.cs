@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
-builder.Services.AddHttpContextAccessor();
+builder.Services.AddCurrentUser();
 
 builder.Services.AddFluentValidationBuildingBlocks();
 builder.Services.AddJwtAuthentication(configuration, builder.Environment);
