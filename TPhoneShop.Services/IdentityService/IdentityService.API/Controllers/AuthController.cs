@@ -7,6 +7,7 @@ using IdentityService.Application.Auth.Commands.RefreshToken;
 using IdentityService.Application.Auth.Commands.Register;
 using IdentityService.Application.Auth.Commands.ResetPassword;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityService.API.Controllers
@@ -46,7 +47,8 @@ namespace IdentityService.API.Controllers
         }
 
         [HttpPost("change-password")]
-        public async Task<IActionResult> ResetPassword(ChangePasswordCommand command)
+        [Authorize]
+        public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
         {
             var result = await _mediator.Send(command);
 
