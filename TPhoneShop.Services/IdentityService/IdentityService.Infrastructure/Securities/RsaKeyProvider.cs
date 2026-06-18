@@ -20,7 +20,7 @@ namespace IdentityService.Infrastructure.Securities
         public async Task LoadAsync()
         {
             using var scope = _scopeFactory.CreateScope();
-            var db = scope.ServiceProvider.GetRequiredService<MainDbContext>();
+            var db = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
 
             var key = await db.SigningKeys
                 .FirstAsync(x => x.IsActive);

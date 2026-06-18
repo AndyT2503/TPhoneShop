@@ -8,17 +8,17 @@ namespace IdentityService.Application.Auth.Commands.ForgotPassword
 {
     public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommand>
     {
-        private readonly MainDbContext _mainDbContext;
+        private readonly IdentityDbContext _dbContext;
         private readonly IAuthService _authService;
-        public ForgotPasswordCommandHandler(MainDbContext mainDbContext, IAuthService authService)
+        public ForgotPasswordCommandHandler(IdentityDbContext dbContext, IAuthService authService)
         {
-            _mainDbContext = mainDbContext;
+            _dbContext = dbContext;
             _authService = authService;
         }
 
         public async Task Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
         {
-            var user = await _mainDbContext.Users.AsNoTracking().FirstOrDefaultAsync(e => e.Email == request.Email, cancellationToken);
+            var user = await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(e => e.Email == request.Email, cancellationToken);
             if (user is null)
             {
                 return;
@@ -31,8 +31,8 @@ namespace IdentityService.Application.Auth.Commands.ForgotPassword
                 ExpiredAt = DateTimeOffset.UtcNow.AddMinutes(15),
                 IsUsed = false
             };
-            _mainDbContext.ResetPasswordTokens.Add(resetPasswordToken);
-            _mainDbContext.OutboxMessages.Add(new OutboxMessage
+            _dbContext.ResetPasswordTokens.Add(resetPasswordToken);
+            _dbContext.OutboxMessages.Add(new OutboxMessage
             {
                 Type = OutboxEventTypes.ForgotPassword,
                 Payload = JsonSerializer.SerializeToDocument(new
@@ -43,7 +43,7 @@ namespace IdentityService.Application.Auth.Commands.ForgotPassword
                 }),
                 ExpiresAt = resetPasswordToken.ExpiredAt,
             });
-            await _mainDbContext.SaveChangesAsync(cancellationToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

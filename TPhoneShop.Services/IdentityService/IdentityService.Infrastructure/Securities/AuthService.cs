@@ -15,18 +15,18 @@ namespace IdentityService.Infrastructure.Securities
 {
     public class AuthService : IAuthService
     {
-        private readonly MainDbContext _mainDbContext;
+        private readonly IdentityDbContext _dbContext;
         private readonly JwtOptions _jwt;
         private readonly RsaKeyProvider _keys;
         private readonly IClientInfoService _clientInfoService;
         public AuthService(
-            MainDbContext mainDbContext,
+            IdentityDbContext dbContext,
             IOptions<JwtOptions> jwtOptions,
             RsaKeyProvider keys,
             IClientInfoService clientInfoService
         )
         {
-            _mainDbContext = mainDbContext;
+            _dbContext = dbContext;
             _jwt = jwtOptions.Value;
             _keys = keys;
             _clientInfoService = clientInfoService;
@@ -52,8 +52,8 @@ namespace IdentityService.Infrastructure.Securities
                 UserAgent = userAgent
             };
 
-            _mainDbContext.RefreshTokens.Add(refreshToken);
-            await _mainDbContext.SaveChangesAsync(cancellationToken);
+            _dbContext.RefreshTokens.Add(refreshToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);
 
 
             return new AuthResponse
@@ -100,8 +100,8 @@ namespace IdentityService.Infrastructure.Securities
                 IpAddress = ipAddress,
                 UserAgent = userAgent
             };
-            _mainDbContext.UserSecurityLogs.Add(secrurityLog);
-            await _mainDbContext.SaveChangesAsync();
+            _dbContext.UserSecurityLogs.Add(secrurityLog);
+            await _dbContext.SaveChangesAsync();
         }
 
         private async Task<string> GenerateAccessTokenAsync(User user, CancellationToken cancellationToken)

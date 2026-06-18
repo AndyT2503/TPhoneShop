@@ -6,11 +6,11 @@ namespace IdentityService.Application.Auth.Commands.Logout
 {
     public class LogoutCommandHandler : IRequestHandler<LogoutCommand>
     {
-        private readonly MainDbContext _mainDbContext;
+        private readonly IdentityDbContext _dbContext;
         private readonly IAuthService _authService;
-        public LogoutCommandHandler(MainDbContext mainDbContext, IAuthService authService)
+        public LogoutCommandHandler(IdentityDbContext dbContext, IAuthService authService)
         {
-            _mainDbContext = mainDbContext;
+            _dbContext = dbContext;
             _authService = authService;
         }
 
@@ -20,14 +20,14 @@ namespace IdentityService.Application.Auth.Commands.Logout
             {
                 return;
             }
-            var refreshToken = await _mainDbContext.RefreshTokens
+            var refreshToken = await _dbContext.RefreshTokens
                                         .FirstOrDefaultAsync(x => x.Token == request.RefreshToken, cancellationToken);
             if (refreshToken is null)
             {
                 return;
             }
             refreshToken.RevokedAt = DateTimeOffset.UtcNow;
-            await _mainDbContext.SaveChangesAsync(cancellationToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);
             await _authService.AddUserSecurityLogAsync(refreshToken.UserId, UserSecurityActions.Logout);
         }
     }

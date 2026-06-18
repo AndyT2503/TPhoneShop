@@ -8,16 +8,16 @@ namespace IdentityService.Application.Auth.Commands.Login
     public class LoginCommandHandler : IRequestHandler<LoginCommand, AuthResponse>
     {
         private readonly IAuthService _authService;
-        private readonly MainDbContext _mainDbContext;
-        public LoginCommandHandler(IAuthService authService, MainDbContext mainDbContext)
+        private readonly IdentityDbContext _dbContext;
+        public LoginCommandHandler(IAuthService authService, IdentityDbContext dbContext)
         {
             _authService = authService;
-            _mainDbContext = mainDbContext;
+            _dbContext = dbContext;
         }
 
         public async Task<AuthResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var user = await _mainDbContext.Users.AsNoTracking().FirstOrDefaultAsync(e => e.Email == request.Email, cancellationToken);
+            var user = await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(e => e.Email == request.Email, cancellationToken);
 
             if (user is null)
             {

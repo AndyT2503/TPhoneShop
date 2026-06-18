@@ -34,7 +34,7 @@ namespace IdentityService.Infrastructure.BackgroundJobs
         {
             using var scope = _scopeFactory.CreateScope();
 
-            var db = scope.ServiceProvider.GetRequiredService<MainDbContext>();
+            var db = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
             var dispatcher = scope.ServiceProvider.GetRequiredService<EventDispatcher>();
 
             var messages = await db.OutboxMessages

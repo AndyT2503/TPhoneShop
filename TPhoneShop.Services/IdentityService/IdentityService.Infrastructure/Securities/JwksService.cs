@@ -8,16 +8,16 @@ namespace IdentityService.Infrastructure.Securities
 {
     public class JwksService : IJwksService
     {
-        private readonly MainDbContext _mainDbContext;
+        private readonly IdentityDbContext _dbContext;
 
-        public JwksService(MainDbContext mainDbContext)
+        public JwksService(IdentityDbContext dbContext)
         {
-            _mainDbContext = mainDbContext;
+            _dbContext = dbContext;
         }
 
         public async Task<object> GetJwks()
         {
-            var signingKeys = await _mainDbContext.SigningKeys
+            var signingKeys = await _dbContext.SigningKeys
                                     .Where(x => x.RevokedAt == null)
                                     .ToListAsync();
 

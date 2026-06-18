@@ -11,7 +11,7 @@ namespace IdentityService.Persistence
             IConfiguration configuration)
         {
             services.AddSingleton<AuditableEntityInterceptor>();
-            services.AddDbContext<MainDbContext>((sp, options) =>
+            services.AddDbContext<IdentityDbContext>((sp, options) =>
             {
                 options.UseNpgsql(
                     configuration.GetConnectionString("Auth"));

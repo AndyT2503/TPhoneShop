@@ -1,8 +1,8 @@
 ﻿namespace IdentityService.Persistence
 {
-    public class MainDbContext : DbContext
+    public class IdentityDbContext : DbContext
     {
-        public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
+        public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options)
         {
         }
 
@@ -18,7 +18,7 @@
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(
-                typeof(MainDbContext).Assembly);
+                typeof(IdentityDbContext).Assembly);
         }
     }
 }

@@ -6,18 +6,18 @@ namespace IdentityService.Application.Auth.Commands.ResetPassword
 {
     public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand>
     {
-        private readonly MainDbContext _mainDbContext;
+        private readonly IdentityDbContext _dbContext;
         private readonly IAuthService _authService;
-        public ResetPasswordCommandHandler(MainDbContext mainDbContext, IAuthService authService)
+        public ResetPasswordCommandHandler(IdentityDbContext dbContext, IAuthService authService)
         {
-            _mainDbContext = mainDbContext;
+            _dbContext = dbContext;
             _authService = authService;
         }
 
         public async Task Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
         {
             var hashedToken = _authService.HashToken(request.ResetPasswordToken);
-            var resetToken = await _mainDbContext.ResetPasswordTokens
+            var resetToken = await _dbContext.ResetPasswordTokens
                                     .FirstOrDefaultAsync(e => e.Token == hashedToken, cancellationToken);
             if (resetToken is null ||
                 resetToken.ExpiredAt < DateTimeOffset.UtcNow ||
@@ -27,7 +27,7 @@ namespace IdentityService.Application.Auth.Commands.ResetPassword
                 throw new BadRequestException("Liên kết đặt lại mật khẩu không còn hiệu lực. Vui lòng yêu cầu gửi lại mật khẩu.");
             }
 
-            var user = await _mainDbContext.Users
+            var user = await _dbContext.Users
                         .FirstOrDefaultAsync(x => x.Id == resetToken.UserId, cancellationToken);
             if (user == null)
             {
@@ -37,7 +37,7 @@ namespace IdentityService.Application.Auth.Commands.ResetPassword
 
             resetToken.IsUsed = true;
 
-            var listAvailableRefreshToken = await _mainDbContext.RefreshTokens.Where(e => e.UserId == user.Id
+            var listAvailableRefreshToken = await _dbContext.RefreshTokens.Where(e => e.UserId == user.Id
                                                                                             && e.RevokedAt == null
                                                                                             && e.ExpiresAt > DateTimeOffset.UtcNow)
                                                                                  .ToListAsync(cancellationToken);
@@ -46,7 +46,7 @@ namespace IdentityService.Application.Auth.Commands.ResetPassword
                 refreshToken.ExpiresAt = DateTimeOffset.UtcNow;
             }
 
-            await _mainDbContext.SaveChangesAsync(cancellationToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);
             await _authService.AddUserSecurityLogAsync(user.Id, UserSecurityActions.ResetPassword);
         }
     }

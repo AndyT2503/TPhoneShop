@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IdentityService.Persistence.Migrations
 {
-    [DbContext(typeof(MainDbContext))]
+    [DbContext(typeof(IdentityDbContext))]
     [Migration("20260616035105_AddRequiredActivatedAtToSigningKeys")]
     partial class AddRequiredActivatedAtToSigningKeys
     {

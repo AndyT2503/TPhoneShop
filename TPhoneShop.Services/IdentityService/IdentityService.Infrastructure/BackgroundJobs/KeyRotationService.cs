@@ -37,7 +37,7 @@ namespace IdentityService.Infrastructure.BackgroundJobs
             _logger.LogInformation("Checking signing key status...");
 
             using var scope = _scopeFactory.CreateScope();
-            var db = scope.ServiceProvider.GetRequiredService<MainDbContext>();
+            var db = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
 
             var activeKey = await db.SigningKeys
                 .FirstOrDefaultAsync(x => x.IsActive);
@@ -66,7 +66,7 @@ namespace IdentityService.Infrastructure.BackgroundJobs
             _logger.LogInformation("Signing key rotated successfully.");
         }
 
-        private static async Task CreateNewKeyAsync(MainDbContext db)
+        private static async Task CreateNewKeyAsync(IdentityDbContext db)
         {
             using var rsa = RSA.Create(2048);
 

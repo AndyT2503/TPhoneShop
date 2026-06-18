@@ -9,15 +9,15 @@ namespace IdentityService.Application.Auth.Commands.RefreshToken
     : IRequestHandler<RefreshTokenCommand, AuthResponse>
     {
         private readonly IAuthService _authService;
-        private readonly MainDbContext _mainDbContext;
+        private readonly IdentityDbContext _dbContext;
 
         public RefreshTokenCommandHandler(
             IAuthService authService,
-            MainDbContext mainDbContext
+            IdentityDbContext dbContext
         )
         {
             _authService = authService;
-            _mainDbContext = mainDbContext;
+            _dbContext = dbContext;
         }
 
         public async Task<AuthResponse> Handle(
@@ -29,7 +29,7 @@ namespace IdentityService.Application.Auth.Commands.RefreshToken
                 throw new UnauthorizedException("Refresh token không hợp lệ!");
             }
             var hashedToken = _authService.HashToken(request.RefreshToken);
-            var refreshToken = await _mainDbContext.RefreshTokens
+            var refreshToken = await _dbContext.RefreshTokens
                                                         .Include(x => x.User)
                                                         .FirstOrDefaultAsync(
                                                             x => x.Token == hashedToken, cancellationToken);
@@ -50,7 +50,7 @@ namespace IdentityService.Application.Auth.Commands.RefreshToken
             }
 
             refreshToken.RevokedAt = DateTimeOffset.UtcNow;
-            await _mainDbContext.SaveChangesAsync(cancellationToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);
             await _authService.AddUserSecurityLogAsync(refreshToken.UserId, UserSecurityActions.RefreshToken);
             var response = await _authService.GenerateLoginSessionAsync(refreshToken.User, cancellationToken);
             return response;

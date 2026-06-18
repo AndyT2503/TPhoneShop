@@ -9,18 +9,18 @@ namespace IdentityService.Application.Auth.Commands.ChangePassword
     internal class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, AuthResponse>
     {
         private readonly ICurrentUser _currentUser;
-        private readonly MainDbContext _mainDbContext;
+        private readonly IdentityDbContext _dbContext;
         private readonly IAuthService _authService;
-        public ChangePasswordCommandHandler(ICurrentUser currentUser, MainDbContext mainDbContext, IAuthService authService)
+        public ChangePasswordCommandHandler(ICurrentUser currentUser, IdentityDbContext dbContext, IAuthService authService)
         {
             _currentUser = currentUser;
-            _mainDbContext = mainDbContext;
+            _dbContext = dbContext;
             _authService = authService;
         }
 
         public async Task<AuthResponse> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
-            var user = await _mainDbContext.Users.FirstOrDefaultAsync(e => e.Id == _currentUser.Id, cancellationToken);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(e => e.Id == _currentUser.Id, cancellationToken);
             if (user == null)
             {
                 throw new UnauthorizedException("Phiên đăng nhập không hợp lệ");
@@ -32,7 +32,7 @@ namespace IdentityService.Application.Auth.Commands.ChangePassword
                 throw new BadRequestException("Mật khẩu cũ không đúng");
             }
             user.PasswordHash = _authService.HashPassword(request.NewPassword);
-            var listAvailableRefreshToken = await _mainDbContext.RefreshTokens.Where(e => e.UserId == _currentUser.Id
+            var listAvailableRefreshToken = await _dbContext.RefreshTokens.Where(e => e.UserId == _currentUser.Id
                                                                                 && e.RevokedAt == null
                                                                                 && e.ExpiresAt > DateTimeOffset.UtcNow)
                                                                      .ToListAsync(cancellationToken);
@@ -40,7 +40,7 @@ namespace IdentityService.Application.Auth.Commands.ChangePassword
             {
                 refreshToken.ExpiresAt = DateTimeOffset.UtcNow;
             }
-            await _mainDbContext.SaveChangesAsync(cancellationToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);
             await _authService.AddUserSecurityLogAsync(user.Id, UserSecurityActions.ChangePassword);
 
             var response = await _authService.GenerateLoginSessionAsync(user, cancellationToken);
