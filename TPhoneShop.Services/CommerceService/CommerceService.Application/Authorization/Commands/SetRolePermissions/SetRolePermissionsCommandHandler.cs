@@ -27,10 +27,7 @@
                            RoleId = request.RoleId,
                            PermissionId = permissionId
                        });
-            await _dbContext.RolePermissions.AddRangeAsync(
-                permissionsToAdd,
-                cancellationToken
-            );
+            _dbContext.RolePermissions.AddRange(permissionsToAdd);
 
             var permissionsToRemove = currentPermissions
                         .Where(x => !requestedPermissionIds.Contains(x.PermissionId));
