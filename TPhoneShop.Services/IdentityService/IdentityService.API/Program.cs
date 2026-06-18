@@ -1,3 +1,4 @@
+using BuildingBlocks.Infrastructure.Authentication;
 using BuildingBlocks.Infrastructure.Middlewares;
 using BuildingBlocks.Infrastructure.Validation;
 using IdentityService.Application;
@@ -17,6 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddJwtAuthentication(configuration, builder.Environment);
 builder.Services.AddFluentValidationBuildingBlocks();
 builder.Services.AddApplication(configuration);
 builder.Services.AddPersistence(configuration);
@@ -37,6 +39,7 @@ app.UseHttpsRedirection();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

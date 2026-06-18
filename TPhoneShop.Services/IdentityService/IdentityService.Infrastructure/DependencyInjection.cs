@@ -13,7 +13,8 @@ namespace IdentityService.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(
                 this IServiceCollection services,
-                IConfiguration configuration)
+                IConfiguration configuration
+        )
         {
             services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
             services.AddSingleton<RsaKeyProvider>();
@@ -26,9 +27,7 @@ namespace IdentityService.Infrastructure
             return services;
         }
 
-        private static IServiceCollection AddRabbitMq(
-                this IServiceCollection services,
-                IConfiguration config)
+        private static IServiceCollection AddRabbitMq(this IServiceCollection services, IConfiguration config)
         {
             var settings = config.GetSection("RabbitMQ").Get<RabbitMqSettings>()!;
             services.AddScoped<EventDispatcher>();
