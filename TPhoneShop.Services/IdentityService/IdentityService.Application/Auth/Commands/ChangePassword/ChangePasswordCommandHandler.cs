@@ -1,6 +1,6 @@
-﻿using IdentityService.Application.Auth.Dtos;
+﻿using BuildingBlocks.Application.Auth;
+using IdentityService.Application.Auth.Dtos;
 using IdentityService.Application.Auth.Services;
-using IdentityService.Application.Common.Abstractions;
 using IdentityService.Domain.Constants;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,4 +1,4 @@
-﻿namespace IdentityService.Application.Common.Abstractions
+﻿namespace BuildingBlocks.Application.Auth
 {
     public interface ICurrentUser
     {

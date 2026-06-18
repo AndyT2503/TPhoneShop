@@ -1,9 +1,9 @@
-﻿using IdentityService.Application.Common.Abstractions;
+﻿using BuildingBlocks.Application.Auth;
 using Microsoft.AspNetCore.Http;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace IdentityService.Infrastructure.Securities
+namespace BuildingBlocks.Infrastructure.Authentication
 {
     public class CurrentUser : ICurrentUser
     {

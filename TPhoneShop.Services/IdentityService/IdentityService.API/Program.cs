@@ -16,7 +16,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
-builder.Services.AddHttpContextAccessor();
+builder.Services.AddCurrentUser();
 
 builder.Services.AddJwtAuthentication(configuration, builder.Environment);
 builder.Services.AddFluentValidationBuildingBlocks();
