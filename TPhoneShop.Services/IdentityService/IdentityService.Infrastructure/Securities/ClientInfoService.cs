@@ -4,7 +4,7 @@ using UAParser;
 
 namespace IdentityService.Infrastructure.Securities
 {
-    public class ClientInfoService : IClientInfoService
+    internal class ClientInfoService : IClientInfoService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 

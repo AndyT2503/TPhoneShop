@@ -4,7 +4,7 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace CommerceService.Infrastructure.Caching
 {
-    public class UserRoleCache : IUserRoleCache
+    internal class UserRoleCache : IUserRoleCache
     {
         private readonly IDistributedCache _cache;
 

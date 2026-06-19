@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CommerceService.Infrastructure.Authorization
 {
-    public sealed class UserAuthorizationService
+    internal class UserAuthorizationService
     {
         private readonly CommerceDbContext _dbContext;
         private readonly IUserRoleCache _userRoleCache;

@@ -1,6 +1,6 @@
 ﻿namespace CommerceService.Persistence.Configurations
 {
-    public class PermissionConfiguration : IEntityTypeConfiguration<Permission>
+    internal class PermissionConfiguration : IEntityTypeConfiguration<Permission>
     {
         public void Configure(EntityTypeBuilder<Permission> builder)
         {

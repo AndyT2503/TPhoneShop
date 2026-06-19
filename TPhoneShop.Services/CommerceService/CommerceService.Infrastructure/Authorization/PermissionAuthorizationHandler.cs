@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CommerceService.Infrastructure.Authorization
 {
-    public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
+    internal class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
     {
         private readonly UserAuthorizationService _userAuthorizationService;
         private readonly ICurrentUser _currentUser;

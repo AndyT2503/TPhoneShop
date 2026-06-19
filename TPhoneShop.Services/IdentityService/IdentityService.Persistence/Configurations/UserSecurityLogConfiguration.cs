@@ -1,7 +1,6 @@
 ﻿namespace IdentityService.Persistence.Configurations
 {
-    public class UserSecurityLogConfiguration
-    : IEntityTypeConfiguration<UserSecurityLog>
+    internal class UserSecurityLogConfiguration : IEntityTypeConfiguration<UserSecurityLog>
     {
         public void Configure(EntityTypeBuilder<UserSecurityLog> builder)
         {

@@ -1,7 +1,6 @@
 ﻿namespace IdentityService.Persistence.Configurations
 {
-    public class OutboxMessageConfiguration
-    : IEntityTypeConfiguration<OutboxMessage>
+    internal class OutboxMessageConfiguration : IEntityTypeConfiguration<OutboxMessage>
     {
         public void Configure(EntityTypeBuilder<OutboxMessage> builder)
         {

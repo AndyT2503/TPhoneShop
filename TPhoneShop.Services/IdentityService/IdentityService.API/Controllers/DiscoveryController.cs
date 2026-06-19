@@ -9,15 +9,11 @@ namespace IdentityService.API.Controllers
     public class DiscoveryController : ControllerBase
     {
         private readonly IJwksService _jwksService;
-
         private readonly JwtOptions _jwt;
 
-        public DiscoveryController(
-            IJwksService jwksService,
-            IOptions<JwtOptions> jwt)
+        public DiscoveryController(IJwksService jwksService, IOptions<JwtOptions> jwt)
         {
             _jwksService = jwksService;
-
             _jwt = jwt.Value;
         }
 
@@ -30,9 +26,7 @@ namespace IdentityService.API.Controllers
             return Ok(new
             {
                 issuer,
-
-                jwks_uri =
-                    $"{issuer}/.well-known/jwks.json"
+                jwks_uri = $"{issuer}/.well-known/jwks.json"
             });
         }
 

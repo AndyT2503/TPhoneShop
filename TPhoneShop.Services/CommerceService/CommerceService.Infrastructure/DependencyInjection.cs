@@ -20,6 +20,7 @@ namespace CommerceService.Infrastructure
                 options.Configuration = configuration["Redis:ConnectionString"];
             });
             services.AddScoped<IRolePermissionCache, RolePermissionCache>();
+            services.AddScoped<IUserRoleCache, UserRoleCache>();
             services.AddHostedService<SyncPermissionService>();
             services.AddScoped<UserAuthorizationService>();
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();

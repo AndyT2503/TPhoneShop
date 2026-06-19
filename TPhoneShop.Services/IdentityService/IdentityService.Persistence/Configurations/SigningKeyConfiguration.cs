@@ -1,6 +1,6 @@
 ﻿namespace IdentityService.Persistence.Configurations
 {
-    public class SigningKeyConfiguration : IEntityTypeConfiguration<SigningKey>
+    internal class SigningKeyConfiguration : IEntityTypeConfiguration<SigningKey>
     {
         public void Configure(EntityTypeBuilder<SigningKey> builder)
         {

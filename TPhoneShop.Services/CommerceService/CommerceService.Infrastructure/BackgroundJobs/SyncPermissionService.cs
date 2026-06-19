@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace CommerceService.Infrastructure.BackgroundJobs
 {
-    public class SyncPermissionService : IHostedService
+    internal class SyncPermissionService : IHostedService
     {
         private readonly IServiceProvider _serviceProvider;
         public SyncPermissionService(IServiceProvider serviceProvider)

@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 
 namespace IdentityService.Infrastructure.Securities
 {
-    public class JwksService : IJwksService
+    internal class JwksService : IJwksService
     {
         private readonly IdentityDbContext _dbContext;
 

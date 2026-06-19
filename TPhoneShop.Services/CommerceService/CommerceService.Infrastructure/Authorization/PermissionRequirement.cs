@@ -2,8 +2,7 @@
 
 namespace CommerceService.Infrastructure.Authorization
 {
-    public class PermissionRequirement
-    : IAuthorizationRequirement
+    internal class PermissionRequirement : IAuthorizationRequirement
     {
         public PermissionRequirement(string permission)
         {

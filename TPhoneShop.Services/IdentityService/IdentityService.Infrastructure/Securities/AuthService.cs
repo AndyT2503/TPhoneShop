@@ -13,7 +13,7 @@ using System.Text;
 
 namespace IdentityService.Infrastructure.Securities
 {
-    public class AuthService : IAuthService
+    internal class AuthService : IAuthService
     {
         private readonly IdentityDbContext _dbContext;
         private readonly JwtOptions _jwt;

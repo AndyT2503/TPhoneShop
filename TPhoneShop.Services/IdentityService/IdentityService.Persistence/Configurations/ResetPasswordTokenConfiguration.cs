@@ -1,6 +1,6 @@
 ﻿namespace IdentityService.Persistence.Configurations
 {
-    public class ResetPasswordTokenConfiguration : IEntityTypeConfiguration<ResetPasswordToken>
+    internal class ResetPasswordTokenConfiguration : IEntityTypeConfiguration<ResetPasswordToken>
     {
         public void Configure(EntityTypeBuilder<ResetPasswordToken> builder)
         {

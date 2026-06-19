@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 
 namespace IdentityService.Infrastructure.BackgroundJobs
 {
-    public class KeyRotationService : BackgroundService
+    internal class KeyRotationService : BackgroundService
     {
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly RsaKeyProvider _rsaKeyProvider;

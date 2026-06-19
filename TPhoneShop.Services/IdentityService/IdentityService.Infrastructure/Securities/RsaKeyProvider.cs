@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 
 namespace IdentityService.Infrastructure.Securities
 {
-    public class RsaKeyProvider
+    internal class RsaKeyProvider
     {
         private readonly IServiceScopeFactory _scopeFactory;
 

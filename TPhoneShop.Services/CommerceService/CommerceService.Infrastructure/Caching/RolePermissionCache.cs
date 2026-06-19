@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace CommerceService.Infrastructure.Caching
 {
-    public class RolePermissionCache : IRolePermissionCache
+    internal class RolePermissionCache : IRolePermissionCache
     {
         private readonly IDistributedCache _cache;
 

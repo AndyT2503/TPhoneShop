@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 
 namespace CommerceService.Infrastructure.Authorization
 {
-    public class PermissionPolicyProvider : DefaultAuthorizationPolicyProvider
+    internal class PermissionPolicyProvider : DefaultAuthorizationPolicyProvider
     {
         public PermissionPolicyProvider(IOptions<AuthorizationOptions> options) : base(options)
         {
