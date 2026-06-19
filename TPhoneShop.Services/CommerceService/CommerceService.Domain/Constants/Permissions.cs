@@ -7,5 +7,7 @@
         public const string RolesDelete = "roles.delete";
         public const string RolesUpdate = "roles.update";
         public const string RolesAssignPermissions = "roles.assign-permissions";
+
+        public const string PermissionsRead = "permissions.read";
     }
 }

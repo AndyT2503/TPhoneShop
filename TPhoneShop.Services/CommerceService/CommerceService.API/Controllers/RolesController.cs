@@ -1,6 +1,9 @@
 ﻿using CommerceService.API.Models.Roles;
 using CommerceService.Application.Authorization.Commands.CreateRole;
+using CommerceService.Application.Authorization.Commands.DeleteRole;
 using CommerceService.Application.Authorization.Commands.SetRolePermissions;
+using CommerceService.Application.Authorization.Queries.GetListRole;
+using CommerceService.Application.Authorization.Queries.GetPermissionsByRole;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommerceService.API.Controllers
@@ -17,17 +20,39 @@ namespace CommerceService.API.Controllers
 
         [HttpPost]
         [Authorize(Permissions.RolesCreate)]
-        public async Task<IActionResult> CreateRole(CreateRoleCommand command)
+        public async Task<IActionResult> CreateRole(CreateRoleCommand command, CancellationToken cancellationToken)
         {
-            await _mediator.Send(command);
+            await _mediator.Send(command, cancellationToken);
             return Ok();
+        }
+
+        [HttpGet]
+        [Authorize(Permissions.RolesRead)]
+        public async Task<IActionResult> GetListRole(CancellationToken cancellationToken)
+        {
+            return Ok(await _mediator.Send(new GetListRoleQuery(), cancellationToken));
+        }
+
+        [HttpGet("{roleId}/permissions")]
+        [Authorize(Permissions.RolesRead)]
+        public async Task<IActionResult> GetListPermissionByRole(Guid roleId, CancellationToken cancellationToken)
+        {
+            return Ok(await _mediator.Send(new GetPermissionsByRoleQuery(roleId), cancellationToken));
         }
 
         [HttpPost("{roleId}/permissions")]
         [Authorize(Permissions.RolesAssignPermissions)]
-        public async Task<IActionResult> SetRole(Guid roleId, SetRolePermissionsRequest request)
+        public async Task<IActionResult> SetRole(Guid roleId, SetRolePermissionsRequest request, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new SetRolePermissionsCommand { RoleId = roleId, PermissionIds = request.PermissionIds });
+            await _mediator.Send(new SetRolePermissionsCommand { RoleId = roleId, PermissionIds = request.PermissionIds }, cancellationToken);
+            return Ok();
+        }
+
+        [HttpDelete("{roleId}")]
+        [Authorize(Permissions.RolesDelete)]
+        public async Task<IActionResult> DeleteRole(Guid roleId, CancellationToken cancellationToken)
+        {
+            await _mediator.Send(new DeleteRoleCommand(roleId), cancellationToken);
             return Ok();
         }
     }
