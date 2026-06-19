@@ -23,9 +23,9 @@ namespace IdentityService.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginCommand command)
+        public async Task<IActionResult> Login(LoginCommand command, CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(command, cancellationToken);
 
             Response.SetRefreshTokenCookie(result.RefreshToken, result.RefreshTokenExpiresTime);
             return Ok(new
@@ -35,9 +35,9 @@ namespace IdentityService.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterCommand command)
+        public async Task<IActionResult> Register(RegisterCommand command, CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(command, cancellationToken);
 
             Response.SetRefreshTokenCookie(result.RefreshToken, result.RefreshTokenExpiresTime);
             return Ok(new
@@ -48,9 +48,9 @@ namespace IdentityService.API.Controllers
 
         [HttpPost("change-password")]
         [Authorize]
-        public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
+        public async Task<IActionResult> ChangePassword(ChangePasswordCommand command, CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(command, cancellationToken);
 
             Response.SetRefreshTokenCookie(result.RefreshToken, result.RefreshTokenExpiresTime);
             return Ok(new
@@ -60,24 +60,24 @@ namespace IdentityService.API.Controllers
         }
 
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword(ResetPasswordCommand command)
+        public async Task<IActionResult> ResetPassword(ResetPasswordCommand command, CancellationToken cancellationToken)
         {
-            await _mediator.Send(command);
+            await _mediator.Send(command, cancellationToken);
             return Ok();
         }
 
         [HttpPost("forgot-password")]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordCommand command)
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordCommand command, CancellationToken cancellationToken)
         {
-            await _mediator.Send(command);
+            await _mediator.Send(command, cancellationToken);
             return Ok();
         }
 
         [HttpPost("refresh-token")]
-        public async Task<IActionResult> RefreshToken()
+        public async Task<IActionResult> RefreshToken(CancellationToken cancellationToken)
         {
             var refreshToken = Request.GetRefreshTokenCookie();
-            var result = await _mediator.Send(new RefreshTokenCommand(refreshToken));
+            var result = await _mediator.Send(new RefreshTokenCommand(refreshToken), cancellationToken);
 
             Response.SetRefreshTokenCookie(result.RefreshToken, result.RefreshTokenExpiresTime);
             return Ok(new
@@ -87,10 +87,10 @@ namespace IdentityService.API.Controllers
         }
 
         [HttpPost("logout")]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(CancellationToken cancellationToken)
         {
             var refreshToken = Request.GetRefreshTokenCookie();
-            await _mediator.Send(new LogoutCommand(refreshToken));
+            await _mediator.Send(new LogoutCommand(refreshToken), cancellationToken);
             return Ok();
         }
     }
