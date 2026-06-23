@@ -1,11 +1,26 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import {
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+} from '@angular/core';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
+import {
+  EnvironmentConfig,
+  provideEnvironmentConfig,
+} from '@tphone-shop.web/environment-config';
 import { appRoutes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideClientHydration(withEventReplay()),
+  providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(appRoutes)
-  ]
+    provideRouter(appRoutes, withComponentInputBinding()),
+  ],
 };
+
+export const createAppConfig = (
+  config: EnvironmentConfig,
+): ApplicationConfig => ({
+  providers: [
+    ...appConfig.providers,
+    provideEnvironmentConfig(config),
+  ],
+});

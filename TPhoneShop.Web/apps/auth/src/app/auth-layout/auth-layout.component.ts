@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { LucideSmartphone } from '@lucide/angular';
-
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { LucideHouse, LucideSmartphone } from '@lucide/angular';
 @Component({
   selector: 'app-auth-layout',
-  imports: [LucideSmartphone],
+  imports: [RouterOutlet, RouterLink, LucideSmartphone, LucideHouse],
   templateUrl: './auth-layout.component.html',
   styleUrl: './auth-layout.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthLayoutComponent {}

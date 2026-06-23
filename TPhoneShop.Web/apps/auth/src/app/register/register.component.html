@@ -1,0 +1,110 @@
+<div class="register">
+  <a routerLink="/">
+    <lib-shop-logo />
+  </a>
+  <h1 class="register__title">Tạo tài khoản mới</h1>
+
+  <p class="register__subtitle">Đăng ký để mua sắm dễ dàng hơn</p>
+
+  <form class="register__form" (submit)="onSubmit($event)">
+    <div class="form-group">
+      <label for="name">Họ và têm</label>
+
+      <div class="input-wrapper">
+        <svg lucideUser [size]="16" class="input-icon"></svg>
+
+        <input
+          id="name"
+          type="text"
+          placeholder="Nguyễn Văn A"
+          [formField]="registerForm.fullName"
+          class="form-input"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+
+      <div class="input-wrapper">
+        <svg lucideMail [size]="16" class="input-icon"></svg>
+
+        <input
+          id="email"
+          type="email"
+          placeholder="example@email.com"
+          [formField]="registerForm.email"
+          class="form-input"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Mật khẩu</label>
+
+      <div class="input-wrapper">
+        <svg lucideLock [size]="16" class="input-icon"></svg>
+
+        <input
+          id="password"
+          type="password"
+          placeholder="Nhập mật khẩu"
+          [formField]="registerForm.password"
+          class="form-input form-input--password"
+        />
+
+        <button
+          type="button"
+          class="password-toggle"
+          (click)="isShowingPassword.update(prev => !prev)"
+        >
+          <svg [lucideIcon]="passwordIcon()" [size]="16"></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="repeat-password">Nhập lại mật khẩu</label>
+
+      <div class="input-wrapper">
+        <svg lucideLock [size]="16" class="input-icon"></svg>
+
+        <input
+          id="repeat-password"
+          type="password"
+          [formField]="registerForm.confirmPassword"
+          placeholder="Nhập lại mật khẩu"
+          class="form-input form-input--password"
+        />
+
+        <button
+          type="button"
+          class="password-toggle"
+          (click)="isShowingPassword.update(prev => !prev)"
+        >
+          <svg [lucideIcon]="passwordIcon()" [size]="16"></svg>
+        </button>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn">Đăng ký</button>
+  </form>
+
+  <div class="divider">
+    <div class="divider__line"></div>
+
+    <span>hoặc đăng nhập với</span>
+
+    <div class="divider__line"></div>
+  </div>
+
+  <div class="social-buttons">
+    <app-sso-btn></app-sso-btn>
+  </div>
+
+  <p class="register-link">
+    Đã có tài khoản?
+
+    <a [routerLink]="['/', AUTH_ROUTES.login]"> Đăng nhập </a>
+  </p>
+</div>

@@ -2,9 +2,19 @@ import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { appRoutes } from './app.routes';
+import {
+  EnvironmentConfig,
+  provideEnvironmentConfig,
+} from '@tphone-shop.web/environment-config';
 
-export const appConfig: ApplicationConfig = {
-  providers: [provideBrowserGlobalErrorListeners(), provideRouter(appRoutes)],
-};
+export const createAppConfig = (
+  config: EnvironmentConfig,
+): ApplicationConfig => ({
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideRouter(appRoutes, withComponentInputBinding()),
+    provideEnvironmentConfig(config),
+  ],
+});

@@ -1,0 +1,19 @@
+@reference "tailwindcss";
+
+.social-btn {
+  @apply flex items-center justify-center gap-3
+         h-12 w-full
+         rounded-xl
+         border border-gray-200
+         bg-white
+         text-sm font-medium text-gray-700
+         transition-all cursor-pointer;
+
+  &:hover {
+    @apply border-gray-300 shadow-sm;
+  }
+
+  &__icon {
+    @apply w-5 h-5 flex-shrink-0;
+  }
+}

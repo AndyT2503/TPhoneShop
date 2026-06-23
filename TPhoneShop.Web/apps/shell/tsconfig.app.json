@@ -22,7 +22,6 @@
     "src/**/*.test.jsx",
     "src/**/*.spec.jsx",
     "src/test-setup.ts",
-    "src/main.server.ts",
     "src/server.ts",
     "src/app/app.config.server.ts"
   ]

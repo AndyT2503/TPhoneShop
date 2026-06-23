@@ -4,12 +4,16 @@ import { NotificationEvent } from 'src/domain/enums';
 import * as path from 'path';
 import * as Handlebars from 'handlebars';
 import { readFile } from 'fs/promises';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable({
   scope: Scope.REQUEST,
 })
 export class EmailService {
-  constructor(private readonly emailSender: EmailSender) {}
+  constructor(
+    private readonly emailSender: EmailSender,
+    private readonly configService: ConfigService,
+  ) {}
 
   async sendEmail(
     recipientEmail: string,
@@ -33,7 +37,10 @@ export class EmailService {
     const filePath = path.join(templatePath, `${event}.html`);
     const source = await readFile(filePath, 'utf-8');
     const compiled = Handlebars.compile(source);
-    return compiled(payload);
+    return compiled({
+      ...payload,
+      feUrl: this.configService.get<string>('feUrl'),
+    });
   }
 
   private getEmailSubject(event: NotificationEvent): string {

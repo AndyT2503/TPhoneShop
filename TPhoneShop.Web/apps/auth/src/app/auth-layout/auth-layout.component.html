@@ -1,45 +1,40 @@
-<div class="min-h-screen flex">
-  <div
-    class="hidden lg:flex flex-col justify-center items-center flex-1 bg-gradient-to-br from-indigo-600 via-violet-700 to-purple-800 p-12 relative overflow-hidden"
-  >
-    <div
-      class="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full -translate-x-1/3 -translate-y-1/3"
-    ></div>
-    <div
-      class="absolute bottom-0 right-0 w-80 h-80 bg-white/10 rounded-full translate-x-1/3 translate-y-1/3"
-    ></div>
-    <div class="relative text-white text-center max-w-sm">
-      <div
-        class="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto mb-6"
-      >
-        <svg lucideSmartphone [size]="32" class="text-white"/>
+<div class="auth-layout">
+  <div class="auth-banner">
+    <div class="banner-circle banner-circle-top"></div>
+    <div class="banner-circle banner-circle-bottom"></div>
+
+    <div class="banner-content">
+      <div class="banner-logo">
+        <svg lucideSmartphone [size]="32" class="text-white"></svg>
       </div>
-      <h2 class="text-3xl font-extrabold mb-4">TPhoneShop</h2>
-      <p class="text-white/80 leading-relaxed mb-8">
+
+      <h2 class="banner-title">TPhoneShop</h2>
+
+      <p class="banner-description">
         Hệ thống chuỗi cửa hàng điện thoại & phụ kiện chính hãng hàng đầu Việt
         Nam.
       </p>
-      <div class="space-y-3">
-        <div
-          class="flex items-center gap-3 text-sm text-white/90 bg-white/10 rounded-xl px-4 py-2.5 text-left"
-        >
-          🏆 Hàng chính hãng 100%
-        </div>
-        <div
-          class="flex items-center gap-3 text-sm text-white/90 bg-white/10 rounded-xl px-4 py-2.5 text-left"
-        >
-          💳 Trả góp 0% không lãi suất
-        </div>
-        <div
-          class="flex items-center gap-3 text-sm text-white/90 bg-white/10 rounded-xl px-4 py-2.5 text-left"
-        >
-          🚚 Giao hàng toàn quốc
-        </div>
-        <div
-          class="flex items-center gap-3 text-sm text-white/90 bg-white/10 rounded-xl px-4 py-2.5 text-left"
-        >
-          🔒 Bảo mật thông tin tuyệt đối
-        </div>
+
+      <div class="feature-list">
+        <div class="feature-item">🏆 Hàng chính hãng 100%</div>
+
+        <div class="feature-item">💳 Trả góp 0% không lãi suất</div>
+
+        <div class="feature-item">🚚 Giao hàng toàn quốc</div>
+
+        <div class="feature-item">🔒 Bảo mật thông tin tuyệt đối</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-content">
+    <a class="back-home-btn" routerLink="/">
+      <svg lucideHouse [size]="15"></svg>
+      Về trang chủ
+    </a>
+    <div class="content-wrapper">
+      <div class="w-full max-w-sm mx-auto">
+        <router-outlet />
       </div>
     </div>
   </div>

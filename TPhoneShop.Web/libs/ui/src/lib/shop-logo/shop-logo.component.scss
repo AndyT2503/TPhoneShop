@@ -1,0 +1,17 @@
+@reference "tailwindcss";
+
+.logo-container {
+  @apply flex items-center gap-2 mb-8;
+
+  .logo-icon {
+    @apply w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-700 flex items-center justify-center;
+  }
+
+  .logo-text {
+    font-weight: 800;
+    font-size: 1.2rem;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
