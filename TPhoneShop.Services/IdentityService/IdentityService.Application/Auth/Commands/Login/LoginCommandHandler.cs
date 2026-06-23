@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IdentityService.Application.Auth.Commands.Login
 {
-    public class LoginCommandHandler : IRequestHandler<LoginCommand, AuthResponse>
+    internal class LoginCommandHandler : IRequestHandler<LoginCommand, AuthResponse>
     {
         private readonly IAuthService _authService;
         private readonly IdentityDbContext _dbContext;

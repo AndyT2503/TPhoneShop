@@ -2,7 +2,7 @@
 
 namespace CommerceService.Application.Authorization.Queries.GetListRole
 {
-    public class GetListRoleQueryHanlder : IRequestHandler<GetListRoleQuery, ListRoleResponse>
+    internal class GetListRoleQueryHanlder : IRequestHandler<GetListRoleQuery, ListRoleResponse>
     {
         private readonly CommerceDbContext _dbContext;
         public GetListRoleQueryHanlder(CommerceDbContext dbContext)

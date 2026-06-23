@@ -1,6 +1,6 @@
 ﻿namespace CommerceService.Application.Authorization.Commands.SetRolePermissions
 {
-    public class SetRolePermissionsCommandValidator : AbstractValidator<SetRolePermissionsCommand>
+    internal class SetRolePermissionsCommandValidator : AbstractValidator<SetRolePermissionsCommand>
     {
         public SetRolePermissionsCommandValidator()
         {

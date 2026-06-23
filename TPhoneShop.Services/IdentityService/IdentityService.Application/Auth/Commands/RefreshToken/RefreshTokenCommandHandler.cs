@@ -5,8 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IdentityService.Application.Auth.Commands.RefreshToken
 {
-    public class RefreshTokenCommandHandler
-    : IRequestHandler<RefreshTokenCommand, AuthResponse>
+    internal class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, AuthResponse>
     {
         private readonly IAuthService _authService;
         private readonly IdentityDbContext _dbContext;

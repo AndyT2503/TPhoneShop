@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace IdentityService.Application.Auth.Commands.ForgotPassword
 {
-    public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommand>
+    internal class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommand>
     {
         private readonly IdentityDbContext _dbContext;
         private readonly IAuthService _authService;

@@ -2,7 +2,7 @@
 
 namespace CommerceService.Application.Authorization.Queries.GetListPermission
 {
-    public class GetListPermissionQueryHandler : IRequestHandler<GetListPermissionQuery, ListPermissionResponse>
+    internal class GetListPermissionQueryHandler : IRequestHandler<GetListPermissionQuery, ListPermissionResponse>
     {
         private readonly CommerceDbContext _dbContext;
         public GetListPermissionQueryHandler(CommerceDbContext dbContext)

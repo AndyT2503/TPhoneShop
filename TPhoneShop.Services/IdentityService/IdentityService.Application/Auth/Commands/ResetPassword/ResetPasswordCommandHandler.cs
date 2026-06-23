@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IdentityService.Application.Auth.Commands.ResetPassword
 {
-    public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand>
+    internal class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand>
     {
         private readonly IdentityDbContext _dbContext;
         private readonly IAuthService _authService;

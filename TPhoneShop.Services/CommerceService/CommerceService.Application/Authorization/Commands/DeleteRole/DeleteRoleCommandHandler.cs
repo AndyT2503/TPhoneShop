@@ -1,6 +1,6 @@
 ﻿namespace CommerceService.Application.Authorization.Commands.DeleteRole
 {
-    public class DeleteRoleCommandHandler : IRequestHandler<DeleteRoleCommand>
+    internal class DeleteRoleCommandHandler : IRequestHandler<DeleteRoleCommand>
     {
         private readonly CommerceDbContext _dbContext;
         public DeleteRoleCommandHandler(CommerceDbContext dbContext)

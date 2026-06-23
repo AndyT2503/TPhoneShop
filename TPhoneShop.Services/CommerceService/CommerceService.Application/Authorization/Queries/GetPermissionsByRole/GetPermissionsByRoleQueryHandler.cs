@@ -2,7 +2,7 @@
 
 namespace CommerceService.Application.Authorization.Queries.GetPermissionsByRole
 {
-    public class GetPermissionsByRoleQueryHandler : IRequestHandler<GetPermissionsByRoleQuery, ListPermissionResponse>
+    internal class GetPermissionsByRoleQueryHandler : IRequestHandler<GetPermissionsByRoleQuery, ListPermissionResponse>
     {
         private readonly CommerceDbContext _dbContext;
         public GetPermissionsByRoleQueryHandler(CommerceDbContext dbContext)

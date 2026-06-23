@@ -1,6 +1,6 @@
 ﻿namespace CommerceService.Application.Authorization.Commands.CreateRole
 {
-    public class CreateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
+    internal class CreateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
     {
         public CreateRoleCommandValidator()
         {

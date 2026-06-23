@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IdentityService.Application.Auth.Commands.Logout
 {
-    public class LogoutCommandHandler : IRequestHandler<LogoutCommand>
+    internal class LogoutCommandHandler : IRequestHandler<LogoutCommand>
     {
         private readonly IdentityDbContext _dbContext;
         private readonly IAuthService _authService;

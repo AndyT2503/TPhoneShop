@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace CommerceService.Application.Authorization.Commands.SetRolePermissions
 {
-    public class SetRolePermissionsCommandHandler : IRequestHandler<SetRolePermissionsCommand>
+    internal class SetRolePermissionsCommandHandler : IRequestHandler<SetRolePermissionsCommand>
     {
         private readonly CommerceDbContext _dbContext;
         private readonly IRolePermissionCache _rolePermissionCache;
