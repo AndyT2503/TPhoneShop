@@ -5,6 +5,24 @@ const config: ModuleFederationConfig = {
   exposes: {
     './Routes': 'apps/auth/src/app/remote-entry/entry.routes.ts',
   },
+  additionalShared: [
+    {
+      libraryName: 'firebase/auth',
+      sharedConfig: {
+        singleton: true,
+        strictVersion: false,
+        requiredVersion: '12.15.0',
+      },
+    },
+    {
+      libraryName: 'firebase/app',
+      sharedConfig: {
+        singleton: true,
+        strictVersion: false,
+        requiredVersion: '12.15.0',
+      },
+    },
+  ],
 };
 
 /**

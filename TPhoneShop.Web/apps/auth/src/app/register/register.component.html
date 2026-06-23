@@ -87,7 +87,7 @@
       </div>
     </div>
 
-    <button type="submit" class="submit-btn">Đăng ký</button>
+    <button type="submit" class="submit-btn" [disabled]="isLoading()">Đăng ký</button>
   </form>
 
   <div class="divider">
@@ -99,7 +99,7 @@
   </div>
 
   <div class="social-buttons">
-    <app-sso-btn></app-sso-btn>
+    <app-external-login-btn></app-external-login-btn>
   </div>
 
   <p class="register-link">

@@ -51,7 +51,7 @@
       <a routerLink="/forgot-password"> Quên mật khẩu? </a>
     </div>
 
-    <button type="submit" class="submit-btn">Đăng nhập</button>
+    <button type="submit" class="submit-btn" [disabled]="isLoading()">Đăng nhập</button>
   </form>
 
   <div class="divider">
@@ -63,7 +63,7 @@
   </div>
 
   <div class="social-buttons">
-    <app-sso-btn></app-sso-btn>
+    <app-external-login-btn></app-external-login-btn>
   </div>
 
   <p class="register-link">

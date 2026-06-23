@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SsoBtnComponent } from './sso-btn.component';
+import { ExternalLoginBtnComponent } from './external-login-btn.component';
 
 describe('SsoBtnComponent', () => {
-  let component: SsoBtnComponent;
-  let fixture: ComponentFixture<SsoBtnComponent>;
+  let component: ExternalLoginBtnComponent;
+  let fixture: ComponentFixture<ExternalLoginBtnComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SsoBtnComponent],
+      imports: [ExternalLoginBtnComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SsoBtnComponent);
+    fixture = TestBed.createComponent(ExternalLoginBtnComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

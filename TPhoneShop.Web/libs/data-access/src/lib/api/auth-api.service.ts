@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { injectEnvironmentConfig } from '@tphone-shop.web/environment-config';
 import {
   AuthResponse,
+  ExternalLoginRequest,
   ForgotPasswordRequest,
   LoginRequest,
   RegisterRequest,
@@ -19,6 +20,16 @@ export class AuthAPIService {
   login(request: LoginRequest): Observable<AuthResponse> {
     return this.httpClient.post<AuthResponse>(
       `${this.envConfig.identityService}/api/auth/login`,
+      request,
+      {
+        withCredentials: true,
+      },
+    );
+  }
+
+  externalLogin(request: ExternalLoginRequest): Observable<AuthResponse> {
+    return this.httpClient.post<AuthResponse>(
+      `${this.envConfig.identityService}/api/auth/external-login`,
       request,
       {
         withCredentials: true,

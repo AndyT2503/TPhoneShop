@@ -13,6 +13,7 @@ import { AuthAPIService } from '@tphone-shop.web/data-access';
 import { AUTH_ROUTES } from '@tphone-shop.web/routing-config';
 import { ShopLogoComponent } from '@tphone-shop.web/ui';
 import { ToastService } from '@tphone-shop.web/ui-toast';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-forgot-password',
@@ -31,6 +32,7 @@ export class ForgotPasswordComponent {
   private readonly toastService = inject(ToastService);
   private readonly authAPIService = inject(AuthAPIService);
   readonly AUTH_ROUTES = AUTH_ROUTES;
+  readonly isLoading = signal(false);
   readonly emailSent = signal(false);
   readonly email = model('');
 
@@ -40,13 +42,22 @@ export class ForgotPasswordComponent {
       this.toastService.error('Vui lòng nhập email của bạn');
       return;
     }
-    this.authAPIService.forgotPassword({ email }).subscribe({
-      next: () => {
-        this.emailSent.set(true);
-      },
-      error: (err: HttpErrorResponse) => {
-        this.toastService.error(err.error['message']);
-      },
-    });
+
+    this.isLoading.set(true);
+    this.authAPIService
+      .forgotPassword({ email })
+      .pipe(
+        finalize(() => {
+          this.isLoading.set(false);
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.emailSent.set(true);
+        },
+        error: (err: HttpErrorResponse) => {
+          this.toastService.error(err.error['message']);
+        },
+      });
   }
 }

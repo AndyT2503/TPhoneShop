@@ -15,6 +15,24 @@ const config: ModuleFederationConfig = {
    *
    */
   remotes: ['admin', 'auth', 'commerce'],
+  additionalShared: [
+    {
+      libraryName: 'firebase/auth',
+      sharedConfig: {
+        singleton: true,
+        strictVersion: false,
+        requiredVersion: '12.15.0',
+      },
+    },
+    {
+      libraryName: 'firebase/app',
+      sharedConfig: {
+        singleton: true,
+        strictVersion: false,
+        requiredVersion: '12.15.0',
+      },
+    },
+  ],
 };
 
 /**

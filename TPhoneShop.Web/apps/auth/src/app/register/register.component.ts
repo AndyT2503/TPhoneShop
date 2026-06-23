@@ -24,7 +24,7 @@ import {
 } from '@lucide/angular';
 import { AuthStore, RegisterRequest } from '@tphone-shop.web/data-access';
 import { ToastService } from '@tphone-shop.web/ui-toast';
-import { SsoBtnComponent } from '../shared/ui';
+import { ExternalLoginBtnComponent } from '../shared/ui';
 import { ShopLogoComponent } from '@tphone-shop.web/ui';
 import { AUTH_ROUTES } from '@tphone-shop.web/routing-config';
 
@@ -35,7 +35,7 @@ import { AUTH_ROUTES } from '@tphone-shop.web/routing-config';
     LucideDynamicIcon,
     RouterLink,
     LucideMail,
-    SsoBtnComponent,
+    ExternalLoginBtnComponent,
     LucideUser,
     FormField,
     ShopLogoComponent
@@ -48,6 +48,7 @@ export class RegisterComponent {
   private readonly toastService = inject(ToastService);
   private readonly authStore = inject(AuthStore);
 
+  readonly isLoading = this.authStore.isLoading;
   readonly AUTH_ROUTES = AUTH_ROUTES;
   readonly isShowingPassword = signal(false);
   readonly passwordIcon = computed(() =>

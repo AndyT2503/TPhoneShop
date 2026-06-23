@@ -26,7 +26,8 @@
         "./libs/environment-config/src/index.ts"
       ],
       "@tphone-shop.web/ui-toast": ["./libs/ui-toast/src/index.ts"],
-      "@tphone-shop.web/routing-config": ["./libs/routing-config/src/index.ts"]
+      "@tphone-shop.web/routing-config": ["./libs/routing-config/src/index.ts"],
+      "@tphone-shop.web/app-config": ["./libs/app-config/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

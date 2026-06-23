@@ -4,10 +4,7 @@ import { Routes } from '@angular/router';
 export const authRoutes: Routes = [
   {
     path: AUTH_ROUTES.login,
-    loadComponent: () => {
-      console.log('REMOTE IMPORT SUCCESS');
-      return import('../login/login.component').then((c) => c.LoginComponent);
-    },
+    loadComponent: () => import('../login/login.component').then((c) => c.LoginComponent),
   },
   {
     path: AUTH_ROUTES.register,

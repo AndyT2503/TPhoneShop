@@ -28,6 +28,7 @@ import {
 } from '@tphone-shop.web/data-access';
 import { AUTH_ROUTES } from '@tphone-shop.web/routing-config';
 import { ToastService } from '@tphone-shop.web/ui-toast';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-reset-password',
@@ -46,6 +47,7 @@ export class ResetPasswordComponent {
   private readonly toastService = inject(ToastService);
   private readonly authAPIService = inject(AuthAPIService);
 
+  readonly isLoading = signal(false);
   readonly AUTH_ROUTES = AUTH_ROUTES;
   readonly isResetPasswordSuccess = signal(false);
   readonly isShowingPassword = signal(false);
@@ -95,13 +97,21 @@ export class ResetPasswordComponent {
       return;
     }
     const resetPasswordData = this.resetPasswordForm().value();
-    this.authAPIService.resetPassword(resetPasswordData).subscribe({
-      next: () => {
-        this.isResetPasswordSuccess.set(true);
-      },
-      error: (err: HttpErrorResponse) => {
-        this.toastService.error(err.error['message']);
-      },
-    });
+    this.isLoading.set(true);
+    this.authAPIService
+      .resetPassword(resetPasswordData)
+      .pipe(
+        finalize(() => {
+          this.isLoading.set(false);
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.isResetPasswordSuccess.set(true);
+        },
+        error: (err: HttpErrorResponse) => {
+          this.toastService.error(err.error['message']);
+        },
+      });
   }
 }
