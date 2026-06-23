@@ -25,7 +25,7 @@ namespace IdentityService.Application.Auth.Commands.RefreshToken
         {
             if (String.IsNullOrEmpty(request.RefreshToken))
             {
-                throw new UnauthorizedException("Refresh token không hợp lệ!");
+                throw new UnauthorizedException("Refresh token không hợp lệ.");
             }
             var hashedToken = _authService.HashToken(request.RefreshToken);
             var refreshToken = await _dbContext.RefreshTokens
@@ -35,17 +35,17 @@ namespace IdentityService.Application.Auth.Commands.RefreshToken
 
             if (refreshToken is null)
             {
-                throw new UnauthorizedException("Refresh token không hợp lệ!");
+                throw new UnauthorizedException("Refresh token không hợp lệ.");
             }
 
             if (refreshToken.RevokedAt.HasValue)
             {
-                throw new UnauthorizedException("Refresh token đã bị thu hồi!");
+                throw new UnauthorizedException("Refresh token đã bị thu hồi.");
             }
 
             if (refreshToken.ExpiresAt <= DateTime.UtcNow)
             {
-                throw new UnauthorizedException("Refresh token đã hết hạn!");
+                throw new UnauthorizedException("Refresh token đã hết hạn.");
             }
 
             refreshToken.RevokedAt = DateTimeOffset.UtcNow;

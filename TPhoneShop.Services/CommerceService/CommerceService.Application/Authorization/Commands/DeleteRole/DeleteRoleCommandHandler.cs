@@ -13,7 +13,7 @@
             var role = await _dbContext.Roles.FirstOrDefaultAsync(e => e.Id == request.RoleId, cancellationToken);
             if (role is null)
             {
-                throw new NotFoundException("Vai trò không tồn tại");
+                throw new NotFoundException("Vai trò không tồn tại.");
             }
             _dbContext.Roles.Remove(role);
             await _dbContext.SaveChangesAsync(cancellationToken);

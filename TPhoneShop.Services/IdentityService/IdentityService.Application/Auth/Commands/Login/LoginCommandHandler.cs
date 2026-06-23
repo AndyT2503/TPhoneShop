@@ -21,14 +21,14 @@ namespace IdentityService.Application.Auth.Commands.Login
 
             if (user is null)
             {
-                throw new UnauthorizedException("Email hoặc mật khẩu không hợp lệ!");
+                throw new UnauthorizedException("Email hoặc mật khẩu không hợp lệ.");
             }
             var verifyPassword = _authService.VerifyPassword(request.Password, user.PasswordHash);
             if (!verifyPassword)
             {
 
                 await _authService.AddUserSecurityLogAsync(user.Id, UserSecurityActions.Login, "Mật khẩu không hợp lệ");
-                throw new UnauthorizedException("Email hoặc mật khẩu không hợp lệ!");
+                throw new UnauthorizedException("Email hoặc mật khẩu không hợp lệ.");
             }
 
             await _authService.AddUserSecurityLogAsync(user.Id, UserSecurityActions.Login);
