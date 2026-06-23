@@ -4,6 +4,8 @@
     {
         public const string Login = "login";
         public const string Register = "register";
+        public const string ExternalRegister = "external_register";
+        public const string ExternalLogin = "external_login";
         public const string Logout = "logout";
         public const string ChangePassword = "change_password";
         public const string ResetPassword = "reset_password";

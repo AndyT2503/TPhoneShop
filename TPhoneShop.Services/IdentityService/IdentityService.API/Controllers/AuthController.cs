@@ -1,5 +1,6 @@
 ﻿using IdentityService.API.Extensions;
 using IdentityService.Application.Auth.Commands.ChangePassword;
+using IdentityService.Application.Auth.Commands.ExternalLogin;
 using IdentityService.Application.Auth.Commands.ForgotPassword;
 using IdentityService.Application.Auth.Commands.Login;
 using IdentityService.Application.Auth.Commands.Logout;
@@ -24,6 +25,18 @@ namespace IdentityService.API.Controllers
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginCommand command, CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(command, cancellationToken);
+
+            Response.SetRefreshTokenCookie(result.RefreshToken, result.RefreshTokenExpiresTime);
+            return Ok(new
+            {
+                result.AccessToken
+            });
+        }
+
+        [HttpPost("external-login")]
+        public async Task<IActionResult> ExternalLogin(ExternalLoginCommand command, CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(command, cancellationToken);
 

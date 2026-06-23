@@ -1,4 +1,6 @@
-﻿using IdentityService.Application.Auth.Services;
+﻿using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using IdentityService.Application.Auth.Services;
 using IdentityService.Application.Common.Abstractions;
 using IdentityService.Infrastructure.BackgroundJobs;
 using IdentityService.Infrastructure.Messaging.RabbitMQ;
@@ -23,6 +25,7 @@ namespace IdentityService.Infrastructure
             services.AddScoped<IClientInfoService, ClientInfoService>();
             services.AddHostedService<KeyRotationService>();
             services.AddRabbitMq(configuration);
+            services.AddFirebase();
             return services;
         }
 
@@ -34,6 +37,31 @@ namespace IdentityService.Infrastructure
             services.AddSingleton<RabbitMqConnection>();
             services.AddSingleton<IMessageBus, RabbitMqMessageBus>();
             services.AddHostedService<OutboxProcessorService>();
+            return services;
+        }
+
+        private static IServiceCollection AddFirebase(this IServiceCollection services)
+        {
+            if (FirebaseApp.DefaultInstance != null)
+            {
+                return services;
+            }
+
+            var assembly = typeof(DependencyInjection).Assembly;
+
+            using var stream = assembly.GetManifestResourceStream("IdentityService.Infrastructure.Securities.Firebase.tphoneshop-firebase.json");
+
+            if (stream is null)
+            {
+                throw new InvalidOperationException("Firebase service account not found.");
+            }
+
+            var credential = ServiceAccountCredential.FromServiceAccountData(stream);
+            FirebaseApp.Create(new AppOptions
+            {
+                Credential = credential.ToGoogleCredential()
+            });
+
             return services;
         }
     }

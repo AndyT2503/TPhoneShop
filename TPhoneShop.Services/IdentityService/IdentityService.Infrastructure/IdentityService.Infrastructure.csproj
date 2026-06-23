@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Securities\Firebase\tphoneshop-firebase.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Securities\Firebase\tphoneshop-firebase.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\IdentityService.Application\IdentityService.Application.csproj" />
     <ProjectReference Include="..\IdentityService.Domain\IdentityService.Domain.csproj" />
     <ProjectReference Include="..\IdentityService.Persistence\IdentityService.Persistence.csproj" />
@@ -17,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FirebaseAdmin" Version="3.5.0" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.19.1" />
     <PackageReference Include="RabbitMQ.Client" Version="7.2.1" />

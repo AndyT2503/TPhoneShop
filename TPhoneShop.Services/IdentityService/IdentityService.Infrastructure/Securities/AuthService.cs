@@ -1,4 +1,5 @@
-﻿using IdentityService.Application.Auth.Dtos;
+﻿using FirebaseAdmin.Auth;
+using IdentityService.Application.Auth.Dtos;
 using IdentityService.Application.Auth.Services;
 using IdentityService.Domain.Constants;
 using IdentityService.Domain.Entities;
@@ -102,6 +103,16 @@ namespace IdentityService.Infrastructure.Securities
             };
             _dbContext.UserSecurityLogs.Add(secrurityLog);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<ExternalUserInfo> VerifyExternalUserLoginAsync(string idToken, CancellationToken cancellationToken)
+        {
+            var decoded = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(idToken);
+            return new ExternalUserInfo
+            {
+                Email = decoded.Claims["email"]?.ToString() ?? "",
+                Name = decoded.Claims["name"]?.ToString() ?? ""
+            };
         }
 
         private async Task<string> GenerateAccessTokenAsync(User user, CancellationToken cancellationToken)

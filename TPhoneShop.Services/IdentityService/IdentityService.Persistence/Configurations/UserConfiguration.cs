@@ -12,8 +12,7 @@
                 .HasMaxLength(255)
                 .IsRequired();
 
-            builder.Property(x => x.PasswordHash)
-                .IsRequired();
+            builder.Property(x => x.PasswordHash);
 
             builder.HasIndex(x => x.Email)
                 .IsUnique();
