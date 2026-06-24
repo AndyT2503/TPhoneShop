@@ -23,6 +23,12 @@ namespace IdentityService.Application.Auth.Commands.Login
             {
                 throw new UnauthorizedException("Email hoặc mật khẩu không hợp lệ.");
             }
+
+            if (user.PasswordHash is null)
+            {
+                throw new UnauthorizedException("Email hoặc mật khẩu không hợp lệ.");
+            }
+
             var verifyPassword = _authService.VerifyPassword(request.Password, user.PasswordHash);
             if (!verifyPassword)
             {
