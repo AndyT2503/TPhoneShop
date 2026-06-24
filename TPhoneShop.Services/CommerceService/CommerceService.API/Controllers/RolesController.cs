@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CommerceService.API.Controllers
 {
-    [Route("api/roles")]
+    [Route("api/[controller]")]
     [ApiController]
     public class RolesController : ControllerBase
     {
