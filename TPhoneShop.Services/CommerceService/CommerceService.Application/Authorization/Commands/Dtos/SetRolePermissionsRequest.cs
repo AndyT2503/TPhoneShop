@@ -1,4 +1,4 @@
-﻿namespace CommerceService.API.Models.Roles
+﻿namespace CommerceService.Application.Authorization.Commands.Dtos
 {
     public class SetRolePermissionsRequest
     {

@@ -1,6 +1,6 @@
-﻿using CommerceService.API.Models.Roles;
-using CommerceService.Application.Authorization.Commands.CreateRole;
+﻿using CommerceService.Application.Authorization.Commands.CreateRole;
 using CommerceService.Application.Authorization.Commands.DeleteRole;
+using CommerceService.Application.Authorization.Commands.Dtos;
 using CommerceService.Application.Authorization.Commands.SetRolePermissions;
 using CommerceService.Application.Authorization.Queries.GetListRole;
 using CommerceService.Application.Authorization.Queries.GetPermissionsByRole;

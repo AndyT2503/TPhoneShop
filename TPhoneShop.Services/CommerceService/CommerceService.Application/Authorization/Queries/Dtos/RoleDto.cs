@@ -1,4 +1,4 @@
-﻿namespace CommerceService.Application.Authorization.Dtos
+﻿namespace CommerceService.Application.Authorization.Queries.Dtos
 {
     public class RoleDto
     {

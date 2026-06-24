@@ -1,4 +1,4 @@
-﻿using CommerceService.Application.Authorization.Dtos;
+﻿using CommerceService.Application.Authorization.Queries.Dtos;
 
 namespace CommerceService.Application.Authorization.Queries.GetListPermission
 {

@@ -1,8 +1,9 @@
-﻿namespace CommerceService.Application.Authorization.Commands.SetRolePermissions
+﻿using CommerceService.Application.Authorization.Commands.Dtos;
+
+namespace CommerceService.Application.Authorization.Commands.SetRolePermissions
 {
-    public class SetRolePermissionsCommand : IRequest
+    public class SetRolePermissionsCommand : SetRolePermissionsRequest, IRequest
     {
         public Guid RoleId { get; set; }
-        public required List<Guid> PermissionIds { get; set; }
     }
 }
