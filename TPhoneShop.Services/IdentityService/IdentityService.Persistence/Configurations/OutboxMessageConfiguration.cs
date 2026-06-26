@@ -1,28 +1,11 @@
-﻿namespace IdentityService.Persistence.Configurations
+﻿using BuildingBlocks.Infrastructure.Configurations;
+
+namespace IdentityService.Persistence.Configurations
 {
-    internal class OutboxMessageConfiguration : IEntityTypeConfiguration<OutboxMessage>
+    internal class OutboxMessageConfiguration : OutboxMessageConfigurationBase<OutboxMessage>
     {
-        public void Configure(EntityTypeBuilder<OutboxMessage> builder)
+        public OutboxMessageConfiguration() : base("outbox_messages")
         {
-            builder.ToTable("outbox_messages");
-
-            builder.HasKey(x => x.Id);
-
-            builder.Property(x => x.Type)
-                .HasMaxLength(500)
-                .IsRequired();
-
-            builder.Property(x => x.Payload)
-                    .HasColumnType("jsonb")
-                    .IsRequired();
-
-            builder.HasIndex(x => new
-            {
-                x.Status,
-                x.CreatedAt
-            });
-
-            builder.HasIndex(x => x.ExpiresAt);
         }
     }
 }

@@ -16,6 +16,7 @@
     <ProjectReference Include="..\..\BuildingBlocks\BuildingBlocks.Application\BuildingBlocks.Application.csproj" />
     <ProjectReference Include="..\CommerceService.Domain\CommerceService.Domain.csproj" />
     <ProjectReference Include="..\CommerceService.Persistence\CommerceService.Persistence.csproj" />
+    <ProjectReference Include="..\CommerceService.ReadModel\CommerceService.ReadModel.csproj" />
   </ItemGroup>
 
 

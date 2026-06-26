@@ -3,6 +3,7 @@ using BuildingBlocks.Infrastructure.Middlewares;
 using BuildingBlocks.Infrastructure.Validation;
 using CommerceService.Infrastructure;
 using CommerceService.Persistence;
+using CommerceService.ReadModel;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -18,6 +19,7 @@ builder.Services.AddFluentValidationBuildingBlocks();
 builder.Services.AddJwtAuthentication(configuration, builder.Environment);
 builder.Services.AddInfrastructure(configuration);
 builder.Services.AddPersistence(configuration);
+builder.Services.AddReadModel(configuration);
 
 var app = builder.Build();
 

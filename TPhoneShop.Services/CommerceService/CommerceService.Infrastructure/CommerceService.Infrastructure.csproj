@@ -18,5 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\CommerceService.Application\CommerceService.Application.csproj" />
     <ProjectReference Include="..\CommerceService.Persistence\CommerceService.Persistence.csproj" />
+    <ProjectReference Include="..\CommerceService.ReadModel\CommerceService.ReadModel.csproj" />
   </ItemGroup>
 </Project>

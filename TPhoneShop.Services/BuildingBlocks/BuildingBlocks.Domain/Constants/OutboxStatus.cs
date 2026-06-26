@@ -1,4 +1,4 @@
-﻿namespace IdentityService.Domain.Constants
+﻿namespace BuildingBlocks.Domain.Constants
 {
     public static class OutboxStatus
     {

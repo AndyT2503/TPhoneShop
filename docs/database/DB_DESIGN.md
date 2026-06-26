@@ -61,7 +61,6 @@ Maps roles to permissions.
 
 Stores refresh tokens used for JWT authentication.
 
-
 | Column     | Type         | Description                        |
 | ---------- | ------------ | ---------------------------------- |
 | Id         | uuid         | Primary key                        |
@@ -76,9 +75,9 @@ Stores refresh tokens used for JWT authentication.
 
 ---
 
-## Brands
+# Brands
 
-Stores mobile phone brand information.
+Stores mobile phone and accessory brand information.
 
 | Column      | Type          | Description                           |
 | ----------- | ------------- | ------------------------------------- |
@@ -93,13 +92,40 @@ Stores mobile phone brand information.
 
 ---
 
-## Products
+# Categories
+
+Stores product categories.
+
+| Column      | Type         | Description                              |
+| ----------- | ------------ | ---------------------------------------- |
+| Id          | uuid         | Primary key                              |
+| ParentId    | uuid         | Parent category (nullable)               |
+| Name        | varchar(100) | Category name                            |
+| Slug        | varchar(100) | SEO-friendly URL slug                    |
+| Description | text         | Category description                     |
+| IsActive    | boolean      | Indicates whether the category is active |
+| CreatedAt   | timestamp    | Creation timestamp                       |
+| UpdatedAt   | timestamp    | Last update timestamp                    |
+
+Example hierarchy:
+
+- Phones
+- Accessories
+  - Cases
+  - Earphones
+  - Chargers
+  - Cables
+
+---
+
+# Products
 
 Stores product master information.
 
 | Column      | Type         | Description                                         |
 | ----------- | ------------ | --------------------------------------------------- |
 | Id          | uuid         | Primary key                                         |
+| CategoryId  | uuid         | Associated category                                 |
 | BrandId     | uuid         | Associated brand                                    |
 | Name        | varchar(255) | Product name                                        |
 | Slug        | varchar(255) | SEO-friendly URL slug                               |
@@ -110,21 +136,24 @@ Stores product master information.
 
 ---
 
-## ProductVariants
+# ProductVariants
 
 Represents sellable product variants managed independently for inventory.
 
-| Column         | Type          | Description                                         |
-| -------------- | ------------- | --------------------------------------------------- |
-| Id             | uuid          | Variant primary key                                 |
-| ProductId      | uuid          | Parent product                                      |
-| Sku            | varchar(100)  | Internal SKU                                        |
-| Color          | varchar(100)  | Product color                                       |
-| StorageGb      | int           | Storage capacity                                    |
-| ThumbnailUrl   | varchar(1000) | Variant thumbnail image                             |
-| Price          | bigint        | Current selling price (stored as amount ×100)       |
-| CompareAtPrice | bigint        | Original/list price (stored as amount ×100)         |
-| IsActive       | boolean       | Indicates whether the variant is available for sale |
+| Column         | Type          | Description                                            |
+| -------------- | ------------- | ------------------------------------------------------ |
+| Id             | uuid          | Variant primary key                                    |
+| ProductId      | uuid          | Parent product                                         |
+| Name           | varchar(255)  | Variant name                                           |
+| Sku            | varchar(100)  | Internal SKU                                           |
+| ThumbnailUrl   | varchar(1000) | Variant thumbnail image                                |
+| Attributes     | jsonb         | Variant-specific attributes, store array {name, value} |
+| Price          | bigint        | Current selling price (stored as amount ×100)          |
+| CompareAtPrice | bigint        | Original/list price (stored as amount ×100)            |
+| StockQuantity  | int           | Available inventory quantity                           |
+| IsActive       | boolean       | Indicates whether the variant is available for sale    |
+| CreatedAt      | timestamp     | Creation timestamp                                     |
+| UpdatedAt      | timestamp     | Last update timestamp                                  |
 
 ---
 
@@ -279,7 +308,6 @@ Only customers who have purchased the product may submit reviews.
 
 Stores user notifications.
 
-
 | Column    | Type         | Description                                      |
 | --------- | ------------ | ------------------------------------------------ |
 | Id        | uuid         | Primary key                                      |
@@ -291,7 +319,6 @@ Stores user notifications.
 | IsRead    | boolean      | Indicates whether the notification has been read |
 | ReadAt    | timestamp    | Read timestamp                                   |
 | CreatedAt | timestamp    | Creation timestamp                               |
-
 
 ---
 
@@ -311,4 +338,3 @@ Implements the Outbox Pattern to guarantee consistency between database transact
 | CreatedAt   | timestamp    | Event creation timestamp                       |
 
 ---
-

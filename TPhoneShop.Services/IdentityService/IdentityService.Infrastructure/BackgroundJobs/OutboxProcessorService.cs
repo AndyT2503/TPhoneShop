@@ -1,4 +1,4 @@
-﻿using IdentityService.Domain.Constants;
+﻿using BuildingBlocks.Domain.Constants;
 using IdentityService.Infrastructure.Messaging.RabbitMQ;
 using IdentityService.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -18,8 +18,7 @@ namespace IdentityService.Infrastructure.BackgroundJobs
             _logger = logger;
         }
 
-        protected override async Task ExecuteAsync(
-            CancellationToken stoppingToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
