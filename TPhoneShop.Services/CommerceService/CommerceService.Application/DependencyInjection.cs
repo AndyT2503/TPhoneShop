@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace CommerceService.Application
 {
@@ -9,11 +10,8 @@ namespace CommerceService.Application
                 this IServiceCollection services,
                 IConfiguration configuration)
         {
-            var assembly = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .First(x => x.GetName().Name == "CommerceService.Application");
-            services.AddValidatorsFromAssembly(assembly);
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             return services;
         }
     }

@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace IdentityService.Application
 {
@@ -10,11 +11,8 @@ namespace IdentityService.Application
                 this IServiceCollection services,
                 IConfiguration configuration)
         {
-            var assembly = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .First(x => x.GetName().Name == "IdentityService.Application");
-            services.AddValidatorsFromAssembly(assembly);
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             return services;
         }
     }
