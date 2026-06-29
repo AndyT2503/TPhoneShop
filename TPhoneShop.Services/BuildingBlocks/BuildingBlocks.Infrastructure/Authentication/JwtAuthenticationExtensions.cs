@@ -17,6 +17,7 @@ namespace BuildingBlocks.Infrastructure.Authentication
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
+                    options.MapInboundClaims = false;
                     options.Authority = configuration["Jwt:Issuer"];
                     options.Audience = configuration["Jwt:Audience"];
                     options.RequireHttpsMetadata = false;
