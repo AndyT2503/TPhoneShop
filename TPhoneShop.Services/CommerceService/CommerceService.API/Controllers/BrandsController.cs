@@ -7,6 +7,7 @@ namespace CommerceService.API.Controllers
     [ApiController]
     public class BrandsController(IMediator mediator) : ControllerBase
     {
+        [HttpPost]
         public async Task<IActionResult> CreateBrand(CreateBrandCommand command, CancellationToken cancellationToken)
         {
             await mediator.Send(command, cancellationToken);
