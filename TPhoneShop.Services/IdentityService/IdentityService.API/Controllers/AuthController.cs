@@ -7,6 +7,7 @@ using IdentityService.Application.Auth.Commands.Logout;
 using IdentityService.Application.Auth.Commands.RefreshToken;
 using IdentityService.Application.Auth.Commands.Register;
 using IdentityService.Application.Auth.Commands.ResetPassword;
+using IdentityService.Application.Auth.Queries.GetUserProfile;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -105,6 +106,13 @@ namespace IdentityService.API.Controllers
             var refreshToken = Request.GetRefreshTokenCookie();
             await _mediator.Send(new LogoutCommand(refreshToken), cancellationToken);
             return Ok();
+        }
+
+        [HttpGet("me")]
+        [Authorize]
+        public async Task<IActionResult> GetCurrentUser([FromQuery] GetUserProfileQuery query, CancellationToken cancellationToken)
+        {
+            return Ok(await _mediator.Send(query, cancellationToken));
         }
     }
 }
