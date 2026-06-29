@@ -20,8 +20,4 @@
     <ProjectReference Include="..\CommerceService.Persistence\CommerceService.Persistence.csproj" />
     <ProjectReference Include="..\CommerceService.ReadModel\CommerceService.ReadModel.csproj" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Messaging\RabbitMQ\Consumers\" />
-  </ItemGroup>
 </Project>
