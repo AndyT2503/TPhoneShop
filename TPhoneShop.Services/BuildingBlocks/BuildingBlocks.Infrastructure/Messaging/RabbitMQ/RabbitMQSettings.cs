@@ -1,11 +1,11 @@
-﻿namespace IdentityService.Infrastructure.Messaging.RabbitMQ
+﻿namespace BuildingBlocks.Infrastructure.Messaging.RabbitMQ
 {
-    public class RabbitMqSettings
+    public class RabbitMQSettings
     {
         public required string Host { get; set; }
         public int Port { get; set; }
         public required string Username { get; set; }
         public required string Password { get; set; }
-        public required string Exchange { get; set; }
+        public string Exchange { get; set; } = String.Empty;
     }
 }

@@ -1,5 +1,4 @@
 ﻿using BuildingBlocks.Application.Messaging;
-using IdentityService.Application.Common.Abstractions;
 using IdentityService.Application.Common.Constants;
 using IdentityService.Domain.Entities;
 
@@ -10,7 +9,7 @@ namespace IdentityService.Infrastructure.Messaging.RabbitMQ
         private readonly IMessageBus _messageBus;
         private static readonly Dictionary<string, string> OutboxRoutingMap = new()
         {
-            { OutboxEventTypes.ForgotPassword, RoutingKeys.IdentityUserForgotPassword }
+            { OutboxEventTypes.ForgotPassword, RoutingKeys.IdentityUserForgotPassword },
         };
 
         public EventDispatcher(IMessageBus messageBus)

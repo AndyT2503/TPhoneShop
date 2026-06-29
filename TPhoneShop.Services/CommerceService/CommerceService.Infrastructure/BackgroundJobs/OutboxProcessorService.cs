@@ -1,7 +1,7 @@
-﻿using BuildingBlocks.Domain.Constants;
-using CommerceService.Application.Common.Events;
+﻿using BuildingBlocks.Application.Events;
+using BuildingBlocks.Domain.Constants;
+using BuildingBlocks.Domain.Events;
 using CommerceService.Domain.Entities;
-using CommerceService.Domain.Events.Abstractions;
 using CommerceService.Domain.Events.Product;
 using CommerceService.Persistence;
 using MediatR;

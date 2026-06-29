@@ -1,4 +1,5 @@
 using BuildingBlocks.Infrastructure.Authentication;
+using BuildingBlocks.Infrastructure.Messaging.RabbitMQ;
 using BuildingBlocks.Infrastructure.Middlewares;
 using BuildingBlocks.Infrastructure.Validation;
 using IdentityService.Application;
@@ -17,6 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 builder.Services.AddCurrentUser();
+builder.Services.AddRabbitMQ(configuration, "RabbitMQ");
 
 builder.Services.AddJwtAuthentication(configuration, builder.Environment);
 builder.Services.AddFluentValidationBuildingBlocks();

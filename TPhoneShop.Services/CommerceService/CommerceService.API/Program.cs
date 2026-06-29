@@ -14,7 +14,6 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCurrentUser();
-
 builder.Services.AddFluentValidationBuildingBlocks();
 builder.Services.AddJwtAuthentication(configuration, builder.Environment);
 builder.Services.AddInfrastructure(configuration);

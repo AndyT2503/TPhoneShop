@@ -1,4 +1,4 @@
-﻿using CommerceService.Domain.Events.Abstractions;
+﻿using BuildingBlocks.Domain.Events;
 
 namespace CommerceService.Domain.Events.Product
 {

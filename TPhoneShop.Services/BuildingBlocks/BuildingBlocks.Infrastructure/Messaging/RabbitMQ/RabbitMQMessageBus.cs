@@ -1,20 +1,20 @@
-﻿using IdentityService.Application.Common.Abstractions;
+﻿using BuildingBlocks.Application.Messaging;
 using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
 
-namespace IdentityService.Infrastructure.Messaging.RabbitMQ
+namespace BuildingBlocks.Infrastructure.Messaging.RabbitMQ
 {
-    public class RabbitMqMessageBus : IMessageBus, IAsyncDisposable
+    public class RabbitMQMessageBus : IMessageBus, IAsyncDisposable
     {
-        private readonly RabbitMqConnection _connection;
-        private readonly RabbitMqSettings _settings;
+        private readonly RabbitMQConnection _connection;
+        private readonly RabbitMQSettings _settings;
 
         private IChannel? _channel;
 
-        public RabbitMqMessageBus(
-            RabbitMqConnection connection,
-            RabbitMqSettings settings)
+        public RabbitMQMessageBus(
+            RabbitMQConnection connection,
+            RabbitMQSettings settings)
         {
             _connection = connection;
             _settings = settings;

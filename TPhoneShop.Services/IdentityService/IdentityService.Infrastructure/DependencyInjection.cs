@@ -1,7 +1,6 @@
 ﻿using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using IdentityService.Application.Auth.Services;
-using IdentityService.Application.Common.Abstractions;
 using IdentityService.Infrastructure.BackgroundJobs;
 using IdentityService.Infrastructure.Messaging.RabbitMQ;
 using IdentityService.Infrastructure.Securities;
@@ -24,18 +23,8 @@ namespace IdentityService.Infrastructure
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IClientInfoService, ClientInfoService>();
             services.AddHostedService<KeyRotationService>();
-            services.AddRabbitMq(configuration);
             services.AddFirebase();
-            return services;
-        }
-
-        private static IServiceCollection AddRabbitMq(this IServiceCollection services, IConfiguration config)
-        {
-            var settings = config.GetSection("RabbitMQ").Get<RabbitMqSettings>()!;
             services.AddScoped<EventDispatcher>();
-            services.AddSingleton(settings);
-            services.AddSingleton<RabbitMqConnection>();
-            services.AddSingleton<IMessageBus, RabbitMqMessageBus>();
             services.AddHostedService<OutboxProcessorService>();
             return services;
         }

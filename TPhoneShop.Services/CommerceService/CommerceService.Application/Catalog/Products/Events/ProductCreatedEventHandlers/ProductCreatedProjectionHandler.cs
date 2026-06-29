@@ -1,4 +1,4 @@
-﻿using CommerceService.Application.Common.Events;
+﻿using BuildingBlocks.Application.Events;
 using CommerceService.Domain.Events.Product;
 using CommerceService.ReadModel.Catalog.Services.Product;
 

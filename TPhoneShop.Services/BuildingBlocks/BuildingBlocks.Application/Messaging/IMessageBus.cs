@@ -1,4 +1,4 @@
-﻿namespace IdentityService.Application.Common.Abstractions
+﻿namespace BuildingBlocks.Application.Messaging
 {
     public interface IMessageBus
     {

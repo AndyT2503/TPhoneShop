@@ -1,14 +1,14 @@
 ﻿using RabbitMQ.Client;
 
-namespace IdentityService.Infrastructure.Messaging.RabbitMQ
+namespace BuildingBlocks.Infrastructure.Messaging.RabbitMQ
 {
-    public class RabbitMqConnection : IAsyncDisposable
+    public class RabbitMQConnection : IAsyncDisposable
     {
         private readonly ConnectionFactory _factory;
 
         private IConnection? _connection;
 
-        public RabbitMqConnection(RabbitMqSettings settings)
+        public RabbitMQConnection(RabbitMQSettings settings)
         {
             _factory = new ConnectionFactory
             {

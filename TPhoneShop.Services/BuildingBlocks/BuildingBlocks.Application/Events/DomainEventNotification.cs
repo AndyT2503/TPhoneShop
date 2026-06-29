@@ -1,6 +1,7 @@
-﻿using CommerceService.Domain.Events.Abstractions;
+﻿using BuildingBlocks.Domain.Events;
+using MediatR;
 
-namespace CommerceService.Application.Common.Events
+namespace BuildingBlocks.Application.Events
 {
     public record DomainEventNotification<TEvent>(TEvent Event) : INotification where TEvent : IDomainEvent;
 }
