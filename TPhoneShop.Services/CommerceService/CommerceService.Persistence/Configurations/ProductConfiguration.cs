@@ -6,7 +6,7 @@ namespace CommerceService.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.ToTable("products", CommerceDbContext.ProductsSchema);
+            builder.ToTable("products", CommerceDbContext.CatalogsSchema);
 
             builder.HasKey(x => x.Id);
 

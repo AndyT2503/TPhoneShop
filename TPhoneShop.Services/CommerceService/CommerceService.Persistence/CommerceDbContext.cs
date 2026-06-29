@@ -3,7 +3,7 @@
     public class CommerceDbContext : DbContext
     {
         public const string AuthSchema = "auth";
-        public const string ProductsSchema = "products";
+        public const string CatalogsSchema = "catalogs";
         public const string EventsSchema = "events";
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<Role> Roles { get; set; }

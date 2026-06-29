@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<ProductVariant> builder)
         {
-            builder.ToTable("product_variants", CommerceDbContext.ProductsSchema);
+            builder.ToTable("product_variants", CommerceDbContext.CatalogsSchema);
 
             builder.HasKey(x => x.Id);
 
