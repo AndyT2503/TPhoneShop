@@ -42,7 +42,7 @@ const ACTION_META: Record<string, ActionMeta> = {
     label: 'Xóa',
     modifier: 'delete',
   },
-  ['assign-permission']: {
+  ['assign-permissions']: {
     label: 'Phân quyền',
     modifier: 'default'
   }
