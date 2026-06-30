@@ -8,6 +8,7 @@ namespace CommerceService.API.Controllers
     public class CategoriesController(IMediator mediator) : ControllerBase
     {
         [HttpPost]
+        [Authorize(Permissions.CategoriesCreate)]
         public async Task<IActionResult> CreateCategoy(CreateCategoryCommand command, CancellationToken cancellationToken)
         {
             await mediator.Send(command, cancellationToken);

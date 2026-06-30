@@ -10,6 +10,7 @@ namespace CommerceService.API.Controllers
     public class ProductsController(IMediator mediator) : ControllerBase
     {
         [HttpPost]
+        [Authorize(Permissions.ProductsCreate)]
         public async Task<IActionResult> CreateProduct(CreateProductCommand command, CancellationToken cancellationToken)
         {
             await mediator.Send(command, cancellationToken);
@@ -17,6 +18,7 @@ namespace CommerceService.API.Controllers
         }
 
         [HttpPost("{id}/variants")]
+        [Authorize(Permissions.ProductsUpdate)]
         public async Task<IActionResult> AddProductVariant(Guid id, CreateProductVariantRequest request, CancellationToken cancellationToken)
         {
             await mediator.Send(new AddProductVariantCommand
