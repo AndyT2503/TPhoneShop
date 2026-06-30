@@ -20,14 +20,15 @@ namespace IdentityService.Application.Auth.Commands.Logout
             {
                 return;
             }
+            var hashedToken = _authService.HashToken(request.RefreshToken);
             var refreshToken = await _dbContext.RefreshTokens
-                                        .FirstOrDefaultAsync(x => x.Token == request.RefreshToken, cancellationToken);
+                                        .FirstOrDefaultAsync(x => x.Token == hashedToken, cancellationToken);
             if (refreshToken is null)
             {
                 return;
             }
             refreshToken.RevokedAt = DateTimeOffset.UtcNow;
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            await _dbContext.SaveChangesAsync();
             await _authService.AddUserSecurityLogAsync(refreshToken.UserId, UserSecurityActions.Logout);
         }
     }
