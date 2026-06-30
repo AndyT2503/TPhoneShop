@@ -1,0 +1,25 @@
+<nav class="sidebar__nav">
+  @for (menuItem of adminMenu; track $index) {
+    <a
+      [routerLink]="menuItem.link"
+      routerLinkActive="nav-item--active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      [title]="sidebarOpen() ? '' : 'Tổng quan'"
+      class="nav-item"
+    >
+      <svg
+        [lucideIcon]="menuItem.icon"
+        [size]="17"
+        class="nav-item__icon"
+      ></svg>
+
+      @if (sidebarOpen()) {
+        <span class="nav-item__label">{{menuItem.title}}</span>
+      }
+
+      @if (sidebarOpen() && isRouteActive(menuItem.link)) {
+        <svg lucideChevronRight [size]="14" class="nav-item__chevron"></svg>
+      }
+    </a>
+  }
+</nav>

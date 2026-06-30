@@ -1,0 +1,33 @@
+@reference "tailwindcss";
+
+.sidebar {
+  @apply w-60 bg-white border-r border-gray-200 flex flex-col shrink-0 transition-all duration-300 overflow-hidden shadow-sm;
+
+  &__nav {
+    @apply flex-1 p-2.5 space-y-0.5 overflow-y-auto;
+  }
+}
+
+.nav-item {
+  @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-gray-600 hover:bg-gray-50 hover:text-gray-900;
+
+  &--active {
+    @apply bg-indigo-50 text-indigo-700 border border-indigo-100;
+
+    .nav-item__icon {
+      @apply text-indigo-600;
+    }
+  }
+
+  &__icon {
+    @apply shrink-0 text-gray-400;
+  }
+
+  &__label {
+    @apply truncate;
+  }
+
+  &__chevron {
+    @apply ml-auto text-indigo-400;
+  }
+}

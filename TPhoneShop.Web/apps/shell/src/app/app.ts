@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthStore } from '@tphone-shop.web/data-access';
 
 @Component({
   imports: [RouterModule],
@@ -7,5 +8,10 @@ import { RouterModule } from '@angular/router';
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {
+export class App implements OnInit {
+  private readonly authStore = inject(AuthStore);
+
+  ngOnInit(): void {
+    this.authStore.refreshToken();
+  }
 }

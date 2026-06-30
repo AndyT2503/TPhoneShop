@@ -1,0 +1,136 @@
+<section class="permission-panel">
+  <div class="permission-panel__header">
+    <div>
+      <p class="permission-panel__title">
+        Quyền của:
+        <span class="permission-panel__role-name">{{
+          selectedRole()?.name
+        }}</span>
+      </p>
+      <p class="permission-panel__subtitle">
+        {{ activePerms().length }}/{{ allPermissions.value().length }}
+        quyền được chọn
+      </p>
+    </div>
+
+    @if (dirty()) {
+      <div class="permission-panel__warning">
+        <p class="permission-panel__warning-text">Có thay đổi chưa được lưu</p>
+        <div class="permission-panel__warning-actions">
+          <button
+            type="button"
+            class="permission-panel__link-btn"
+            (click)="discardChanges()"
+          >
+            Hủy
+          </button>
+          <button
+            type="button"
+            class="permission-panel__quick-save-btn"
+            (click)="savePerms()"
+          >
+            <svg lucideSave [size]="11"></svg>
+            <span>Lưu ngay</span>
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="permission-panel__tree">
+    @for (group of groups(); track group.label) {
+      @let expanded = isExpanded(group);
+      @let selectedCount = selectedInGroup(group).length;
+      @let allSelected = isAllSelected(group);
+      @let someSelected = isSomeSelected(group);
+
+      <div class="permission-group">
+        <div
+          class="permission-group__header"
+          (click)="toggleExpandGroup(group)"
+        >
+          <span class="permission-group__chevron">
+            @if (expanded) {
+              <svg lucideChevronDown [size]="15"></svg>
+            } @else {
+              <svg lucideChevronRight [size]="15"></svg>
+            }
+          </span>
+
+          <button
+            type="button"
+            class="permission-checkbox"
+            [class.permission-checkbox--checked]="allSelected"
+            [class.permission-checkbox--mixed]="someSelected"
+            (click)="$event.stopPropagation(); toggleGroupPerms(group)"
+          >
+            @if (allSelected) {
+              <svg lucideCheck [size]="10" [strokeWidth]="3"></svg>
+            }
+            @if (someSelected) {
+              <span class="permission-checkbox__mixed-mark"></span>
+            }
+          </button>
+
+          <span class="permission-group__label">{{ group.label }}</span>
+
+          <span
+            class="permission-group__counter"
+            [class.permission-group__counter--full]="allSelected"
+            [class.permission-group__counter--partial]="someSelected"
+          >
+            {{ selectedCount }}/{{ group.permissions.length }}
+          </span>
+        </div>
+
+        @if (expanded) {
+          <div class="permission-group__rows">
+            @for (
+              permission of group.permissions;
+              track permission.id;
+              let last = $last
+            ) {
+              @let checked = isChecked(permission);
+              @let meta = actionMeta(permission);
+
+              <div
+                class="permission-row"
+                [class.permission-row--checked]="checked"
+                (click)="togglePerm(permission)"
+              >
+                <div
+                  class="permission-row__tree-line"
+                  [class.permission-row__tree-line--last]="last"
+                >
+                  <span class="permission-row__tree-vertical"></span>
+                  <span class="permission-row__tree-horizontal"></span>
+                </div>
+
+                <button
+                  type="button"
+                  class="permission-checkbox"
+                  [class.permission-checkbox--checked]="checked"
+                >
+                  @if (checked) {
+                    <svg lucideCheck [size]="10" [strokeWidth]="3"></svg>
+                  }
+                </button>
+
+                <code class="permission-row__code">
+                  {{ permission.name }}
+                </code>
+
+                <span
+                  class="action-badge"
+                  [class]="'action-badge action-badge--' + meta.modifier"
+                >
+                  {{ meta.label }}
+                </span>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>

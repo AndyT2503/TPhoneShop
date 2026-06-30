@@ -1,0 +1,21 @@
+@reference "tailwindcss";
+
+.permission-page {
+  @apply space-y-5;
+
+  &__header {
+    @apply space-y-1;
+  }
+
+  &__title {
+    @apply text-lg font-bold text-gray-900;
+  }
+
+  &__subtitle {
+    @apply text-sm text-gray-500;
+  }
+
+  &__grid {
+    @apply grid grid-cols-1 gap-5 lg:grid-cols-3;
+  }
+}

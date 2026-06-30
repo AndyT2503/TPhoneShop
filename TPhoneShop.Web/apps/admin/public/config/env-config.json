@@ -1,0 +1,13 @@
+{
+  "identityService": "http://localhost:550/identity",
+  "commerceService": "http://localhost:550/commerce",
+  "notificationService": "http://localhost:550/notification",
+  "firebase": {
+    "apiKey": "AIzaSyCtbpXUOa0tVS8Qd_sFpIZEocHSOsoskIY",
+    "authDomain": "tphoneshop.firebaseapp.com",
+    "projectId": "tphoneshop",
+    "storageBucket": "tphoneshop.firebasestorage.app",
+    "messagingSenderId": "816145663439",
+    "appId": "1:816145663439:web:de7b817ee3a3e7bb457eba"
+  }
+}

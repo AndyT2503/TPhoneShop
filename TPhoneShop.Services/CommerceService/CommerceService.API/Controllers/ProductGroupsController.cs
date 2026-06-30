@@ -7,6 +7,7 @@ namespace CommerceService.API.Controllers
     [ApiController]
     public class ProductGroupsController(IMediator mediator) : ControllerBase
     {
+        [HttpPost]
         public async Task<IActionResult> CreateProductGroup(CreateProductGroupCommand command, CancellationToken cancellationToken)
         {
             await mediator.Send(command, cancellationToken);

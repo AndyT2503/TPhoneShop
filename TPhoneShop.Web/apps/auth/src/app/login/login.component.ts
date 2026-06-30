@@ -4,6 +4,7 @@ import {
   Component,
   computed,
   inject,
+  input,
   signal,
 } from '@angular/core';
 import { email, form, FormField, required } from '@angular/forms/signals';
@@ -39,6 +40,7 @@ export class LoginComponent {
   private readonly toastService = inject(ToastService);
   private readonly authStore = inject(AuthStore);
 
+  readonly returnUrl = input<string>();
   readonly isLoading = this.authStore.isLoading;
   readonly AUTH_ROUTES = AUTH_ROUTES;
   readonly isShowingPassword = signal(false);
@@ -68,6 +70,9 @@ export class LoginComponent {
       return;
     }
     const loginData = this.loginForm().value();
-    this.authStore.login(loginData);
+    this.authStore.login({
+      loginRequest: loginData,
+      returnUrl: this.returnUrl(),
+    });
   }
 }

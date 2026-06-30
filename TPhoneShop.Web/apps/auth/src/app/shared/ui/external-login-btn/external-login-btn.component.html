@@ -1,4 +1,8 @@
-<button class="social-btn social-btn--google" (click)="authStore.googleLogin()" [disabled]="authStore.isLoading()">
+<button
+  class="social-btn social-btn--google"
+  (click)="authStore.googleLogin({ returnUrl: returnUrl() })"
+  [disabled]="authStore.isLoading()"
+>
   <svg viewBox="0 0 48 48" class="social-btn__icon" aria-hidden="true">
     <path
       fill="#FFC107"

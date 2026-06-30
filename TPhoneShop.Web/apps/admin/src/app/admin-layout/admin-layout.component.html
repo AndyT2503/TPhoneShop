@@ -1,0 +1,101 @@
+<div class="admin-shell">
+  <aside class="sidebar" [class.sidebar--collapsed]="!sidebarOpen()">
+    <div class="sidebar__logo">
+      <div class="sidebar__logo-icon">
+        <svg lucideSmartphone [size]="16"></svg>
+      </div>
+
+      @if (sidebarOpen()) {
+        <div class="sidebar__brand">
+          <p class="sidebar__brand-name">TPhoneShop</p>
+          <p class="sidebar__brand-label">Admin Panel</p>
+        </div>
+      }
+    </div>
+
+    <app-admin-menu [sidebarOpen]="sidebarOpen()"></app-admin-menu>
+
+    <div class="sidebar__bottom">
+      <a
+        routerLink="/"
+        [title]="sidebarOpen() ? '' : 'Về cửa hàng'"
+        class="store-link"
+      >
+        <svg lucideSmartphone [size]="15" class="store-link__icon"></svg>
+
+        @if (sidebarOpen()) {
+          <span>Về cửa hàng</span>
+        }
+      </a>
+
+      @if (sidebarOpen()) {
+        <div class="sidebar-user">
+          @if (currentUser(); as currUser) {
+            <lib-user-avatar
+              [fullName]="currUser?.fullName || ''"
+              [size]="'sm'"
+            ></lib-user-avatar>
+            <div class="sidebar-user__info">
+              <p class="sidebar-user__name">{{ currUser?.fullName }}</p>
+              <p class="sidebar-user__email">{{ currUser?.email }}</p>
+            </div>
+          }
+          <button
+            type="button"
+            class="logout-btn"
+            (click)="logout()"
+            aria-label="Đăng xuất"
+          >
+            <svg lucideLogOut [size]="14"></svg>
+          </button>
+        </div>
+      } @else {
+        <button
+          type="button"
+          class="logout-btn logout-btn--collapsed"
+          title="Đăng xuất"
+          (click)="logout()"
+        >
+          <svg lucideLogOut [size]="15"></svg>
+        </button>
+      }
+    </div>
+  </aside>
+
+  <div class="content">
+    <header class="topbar">
+      <div class="topbar__left">
+        <button
+          type="button"
+          class="sidebar-toggle"
+          (click)="toggleSidebar()"
+          aria-label="Đóng mở sidebar"
+        >
+          @if (sidebarOpen()) {
+            <svg lucideX [size]="19"></svg>
+          } @else {
+            <svg lucideMenu [size]="19"></svg>
+          }
+        </button>
+
+        <div>
+          <p class="topbar__title">
+            {{ title() }}
+          </p>
+          <p class="topbar__subtitle">TPhoneShop Admin Panel</p>
+        </div>
+      </div>
+
+      <div class="topbar__right">
+        <button type="button" class="notification-btn" aria-label="Thông báo">
+          <svg lucideBell [size]="18"></svg>
+          <span class="notification-btn__dot"></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <router-outlet />
+    </main>
+  </div>
+</div>

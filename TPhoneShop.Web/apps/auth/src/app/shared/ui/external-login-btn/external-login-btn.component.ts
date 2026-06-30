@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { AuthStore } from '@tphone-shop.web/data-access';
 
 @Component({
@@ -10,4 +10,5 @@ import { AuthStore } from '@tphone-shop.web/data-access';
 })
 export class ExternalLoginBtnComponent {
   readonly authStore = inject(AuthStore);
+  readonly returnUrl = input<string>();
 }

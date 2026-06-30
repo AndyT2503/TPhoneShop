@@ -14,7 +14,7 @@ namespace CommerceService.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Permissions.PermissionsRead)]
+        //[Authorize(Permissions.PermissionsRead)]
         public async Task<IActionResult> GetListPermission(CancellationToken cancellationToken)
         {
             return Ok(await _mediator.Send(new GetListPermissionQuery(), cancellationToken));

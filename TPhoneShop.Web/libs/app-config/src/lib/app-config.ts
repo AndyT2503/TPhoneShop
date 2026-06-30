@@ -1,6 +1,8 @@
+import { authInterceptor } from '@tphone-shop.web/data-access';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import {
   ApplicationConfig,
-  provideBrowserGlobalErrorListeners
+  provideBrowserGlobalErrorListeners,
 } from '@angular/core';
 import {
   provideRouter,
@@ -9,7 +11,7 @@ import {
 } from '@angular/router';
 import {
   EnvironmentConfig,
-  provideEnvironmentConfig
+  provideEnvironmentConfig,
 } from '@tphone-shop.web/environment-config';
 
 export const createAppBrowserConfig = (
@@ -22,10 +24,9 @@ export const createAppBrowserConfig = (
   ],
 });
 
-export const createBaseAppConfig = (
-  appRoutes: Routes,
-): ApplicationConfig => ({
+export const createBaseAppConfig = (appRoutes: Routes): ApplicationConfig => ({
   providers: [
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideBrowserGlobalErrorListeners(),
     provideRouter(appRoutes, withComponentInputBinding()),
   ],

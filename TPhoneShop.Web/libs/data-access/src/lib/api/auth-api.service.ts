@@ -8,6 +8,7 @@ import {
   LoginRequest,
   RegisterRequest,
   ResetPasswordRequest,
+  UserProfileResponse,
 } from '../models';
 import { Observable } from 'rxjs';
 @Injectable({
@@ -21,6 +22,16 @@ export class AuthAPIService {
     return this.httpClient.post<AuthResponse>(
       `${this.envConfig.identityService}/api/auth/login`,
       request,
+      {
+        withCredentials: true,
+      },
+    );
+  }
+
+  logout(): Observable<object> {
+    return this.httpClient.post<object>(
+      `${this.envConfig.identityService}/api/auth/logout`,
+      {},
       {
         withCredentials: true,
       },
@@ -68,6 +79,12 @@ export class AuthAPIService {
       {
         withCredentials: true,
       },
+    );
+  }
+
+  getUserProfile(): Observable<UserProfileResponse> {
+    return this.httpClient.get<UserProfileResponse>(
+      `${this.envConfig.identityService}/api/auth/me`,
     );
   }
 }

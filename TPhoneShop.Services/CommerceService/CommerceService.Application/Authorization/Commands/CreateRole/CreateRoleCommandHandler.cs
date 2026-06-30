@@ -10,10 +10,10 @@
 
         public async Task Handle(CreateRoleCommand request, CancellationToken cancellationToken)
         {
-            var isRoleExist = await _dbContext.Roles.AnyAsync(e => e.Name == request.Name, cancellationToken);
+            var isRoleExist = await _dbContext.Roles.AsNoTracking().AnyAsync(e => e.Name == request.Name, cancellationToken);
             if (isRoleExist)
             {
-                throw new BadRequestException($"Vai trò {request.Name} đã tồn tại");
+                throw new BadRequestException($"Vai trò {request.Name} đã tồn tại.");
             }
             _dbContext.Roles.Add(new Role { Name = request.Name });
             await _dbContext.SaveChangesAsync(cancellationToken);

@@ -3,6 +3,7 @@ using BuildingBlocks.Domain.Constants;
 using BuildingBlocks.Domain.Events;
 using CommerceService.Domain.Entities;
 using CommerceService.Domain.Events.Product;
+using CommerceService.Domain.Events.Role;
 using CommerceService.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -84,6 +85,7 @@ namespace CommerceService.Infrastructure.BackgroundJobs
             return message.Type switch
             {
                 ProductCreatedEvent.EventName => PublishAsync<ProductCreatedEvent>(message, cancellationToken),
+                RolePermissionsUpdatedEvent.EventName => PublishAsync<RolePermissionsUpdatedEvent>(message, cancellationToken),
 
                 _ => throw new InvalidOperationException($"Unknown outbox message type '{message.Type}'.")
             };

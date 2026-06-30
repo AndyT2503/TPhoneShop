@@ -66,8 +66,7 @@
       "defaultConfiguration": "development",
       "options": {
         "port": 4200,
-        "publicHost": "http://localhost:4200",
-        "skipRemotes": ["auth"]
+        "publicHost": "http://localhost:4200"
       },
       "configurations": {
         "production": {

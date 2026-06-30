@@ -1,6 +1,7 @@
 using BuildingBlocks.Infrastructure.Authentication;
 using BuildingBlocks.Infrastructure.Middlewares;
 using BuildingBlocks.Infrastructure.Validation;
+using CommerceService.Application;
 using CommerceService.Infrastructure;
 using CommerceService.Persistence;
 using CommerceService.ReadModel;
@@ -16,6 +17,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCurrentUser();
 builder.Services.AddFluentValidationBuildingBlocks();
 builder.Services.AddJwtAuthentication(configuration, builder.Environment);
+
+builder.Services.AddApplication(configuration);
 builder.Services.AddInfrastructure(configuration);
 builder.Services.AddPersistence(configuration);
 builder.Services.AddReadModel(configuration);

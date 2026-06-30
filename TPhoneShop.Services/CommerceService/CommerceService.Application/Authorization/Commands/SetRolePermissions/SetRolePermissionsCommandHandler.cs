@@ -1,22 +1,13 @@
-﻿using CommerceService.Application.Common.Abstractions;
-using Microsoft.Extensions.Logging;
+﻿using CommerceService.Domain.Events.Role;
+using System.Text.Json;
 
 namespace CommerceService.Application.Authorization.Commands.SetRolePermissions
 {
-    internal class SetRolePermissionsCommandHandler : IRequestHandler<SetRolePermissionsCommand>
+    internal class SetRolePermissionsCommandHandler(CommerceDbContext dbContext) : IRequestHandler<SetRolePermissionsCommand>
     {
-        private readonly CommerceDbContext _dbContext;
-        private readonly IRolePermissionCache _rolePermissionCache;
-        private readonly ILogger<SetRolePermissionsCommandHandler> _logger;
-        public SetRolePermissionsCommandHandler(CommerceDbContext dbContext, IRolePermissionCache rolePermissionCache, ILogger<SetRolePermissionsCommandHandler> logger)
-        {
-            _dbContext = dbContext;
-            _rolePermissionCache = rolePermissionCache;
-            _logger = logger;
-        }
         public async Task Handle(SetRolePermissionsCommand request, CancellationToken cancellationToken)
         {
-            var currentPermissions = await _dbContext.RolePermissions
+            var currentPermissions = await dbContext.RolePermissions
                                         .Where(x => x.RoleId == request.RoleId)
                                         .ToListAsync(cancellationToken);
 
@@ -34,38 +25,17 @@ namespace CommerceService.Application.Authorization.Commands.SetRolePermissions
                            RoleId = request.RoleId,
                            PermissionId = permissionId
                        });
-            _dbContext.RolePermissions.AddRange(permissionsToAdd);
+            dbContext.RolePermissions.AddRange(permissionsToAdd);
 
             var permissionsToRemove = currentPermissions
                         .Where(x => !requestedPermissionIds.Contains(x.PermissionId));
-            _dbContext.RolePermissions.RemoveRange(permissionsToRemove);
-
-            await _dbContext.SaveChangesAsync(cancellationToken);
-            await UpdateRolePermissionCache(request.RoleId, request.PermissionIds, cancellationToken);
-        }
-
-        private async Task UpdateRolePermissionCache(Guid roleId, List<Guid> requestedPermissionIds, CancellationToken cancellationToken)
-        {
-            try
+            dbContext.RolePermissions.RemoveRange(permissionsToRemove);
+            dbContext.OutboxMessages.Add(new OutboxMessage
             {
-                var permissionNames = await _dbContext.Permissions
-                    .Where(x => requestedPermissionIds.Contains(x.Id))
-                    .Select(x => x.Name)
-                    .ToHashSetAsync(cancellationToken);
-
-                await _rolePermissionCache.SetAsync(
-                    roleId,
-                    permissionNames,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(
-                    ex,
-                    "Failed to update permission cache for role {RoleId}",
-                    roleId
-                );
-            }
+                Type = RolePermissionsUpdatedEvent.EventName,
+                Payload = JsonSerializer.SerializeToDocument(new RolePermissionsUpdatedEvent(request.RoleId, request.PermissionIds))
+            });
+            await dbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

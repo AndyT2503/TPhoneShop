@@ -1,28 +1,45 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { tapResponse } from '@ngrx/operators';
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import {
+  patchState,
+  signalStore,
+  withMethods,
+  withProps,
+  withState,
+} from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { AUTH_ROUTES } from '@tphone-shop.web/routing-config';
 import { ToastService } from '@tphone-shop.web/ui-toast';
-import { exhaustMap, from, pipe, switchMap, tap } from 'rxjs';
+import { exhaustMap, filter, from, map, pipe, switchMap, tap } from 'rxjs';
 import { AuthAPIService } from '../api';
 import { FirebaseAuthService } from '../firebase/firebase-auth.service';
-import { LoginRequest, RegisterRequest } from '../models';
-
+import { LoginRequest, RegisterRequest, UserProfileResponse } from '../models';
 type AuthState = {
+  authState: 'pending' | 'authenticated' | 'unauthenticated';
   accessToken: string;
   isLoading: boolean;
+  currentUser: UserProfileResponse | null;
 };
 
 const initialState: AuthState = {
   accessToken: '',
   isLoading: false,
+  authState: 'pending',
+  currentUser: null,
 };
 
 export const AuthStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
+  withProps((store) => ({
+    isAuthenticated$: toObservable(store.authState).pipe(
+      filter((state) => state !== 'pending'),
+      map((state) => state === 'authenticated'),
+    ),
+  })),
   withMethods(
     (
       store,
@@ -31,20 +48,26 @@ export const AuthStore = signalStore(
       toastService = inject(ToastService),
       firebaseAuthService = inject(FirebaseAuthService),
     ) => ({
-      googleLogin: rxMethod<void>(
+      googleLogin: rxMethod<{ returnUrl?: string }>(
         pipe(
-          tap(() => patchState(store, { isLoading: true })),
-          exhaustMap(() =>
+          tap(() =>
+            patchState(store, { isLoading: true, authState: 'pending' }),
+          ),
+          exhaustMap((req) =>
             from(firebaseAuthService.signInWithGoogle()).pipe(
               switchMap((idToken) => authAPIService.externalLogin({ idToken })),
               tapResponse({
                 next: (res) => {
                   patchState(store, {
                     accessToken: res.accessToken,
+                    authState: 'authenticated',
                   });
-                  router.navigate(['/']);
+                  router.navigate([req.returnUrl ?? '/']);
                 },
                 error: (err) => {
+                  patchState(store, {
+                    authState: 'unauthenticated',
+                  });
                   if (err instanceof HttpErrorResponse) {
                     toastService.error(err.error['message']);
                   }
@@ -58,19 +81,25 @@ export const AuthStore = signalStore(
           ),
         ),
       ),
-      login: rxMethod<LoginRequest>(
+      login: rxMethod<{ loginRequest: LoginRequest; returnUrl?: string }>(
         pipe(
-          tap(() => patchState(store, { isLoading: true })),
+          tap(() =>
+            patchState(store, { isLoading: true, authState: 'pending' }),
+          ),
           switchMap((req) =>
-            authAPIService.login(req).pipe(
+            authAPIService.login(req.loginRequest).pipe(
               tapResponse({
                 next: (res) => {
                   patchState(store, {
                     accessToken: res.accessToken,
+                    authState: 'authenticated',
                   });
-                  router.navigate(['/']);
+                  router.navigate([req.returnUrl ?? '/']);
                 },
                 error: (err: HttpErrorResponse) => {
+                  patchState(store, {
+                    authState: 'unauthenticated',
+                  });
                   toastService.error(err.error['message']);
                 },
                 finalize: () => {
@@ -81,19 +110,25 @@ export const AuthStore = signalStore(
           ),
         ),
       ),
-      register: rxMethod<RegisterRequest>(
+      register: rxMethod<{ request: RegisterRequest; returnUrl?: string }>(
         pipe(
-          tap(() => patchState(store, { isLoading: true })),
+          tap(() =>
+            patchState(store, { isLoading: true, authState: 'pending' }),
+          ),
           switchMap((req) =>
-            authAPIService.register(req).pipe(
+            authAPIService.register(req.request).pipe(
               tapResponse({
                 next: (res) => {
                   patchState(store, {
                     accessToken: res.accessToken,
+                    authState: 'authenticated',
                   });
-                  router.navigate(['/']);
+                  router.navigate([req.returnUrl ?? '/']);
                 },
                 error: (err: HttpErrorResponse) => {
+                  patchState(store, {
+                    authState: 'unauthenticated',
+                  });
                   toastService.error(err.error['message']);
                 },
                 finalize: () => {
@@ -105,20 +140,58 @@ export const AuthStore = signalStore(
         ),
       ),
       refreshToken: rxMethod<void>(
-        switchMap(() =>
-          authAPIService.refreshToken().pipe(
+        exhaustMap(() => {
+          patchState(store, {
+            authState: 'pending',
+          });
+          return authAPIService.refreshToken().pipe(
             tapResponse({
               next: (res) =>
                 patchState(store, {
                   accessToken: res.accessToken,
+                  authState: 'authenticated',
                 }),
               error: (err: HttpErrorResponse) => {
+                patchState(store, {
+                  authState: 'unauthenticated',
+                });
                 console.error(err);
+              },
+            }),
+          );
+        }),
+      ),
+      getCurrentUser: rxMethod<void>(
+        switchMap(() =>
+          authAPIService.getUserProfile().pipe(
+            tapResponse({
+              next: (res) => {
+                patchState(store, {
+                  currentUser: res,
+                });
+              },
+              error: () => {
+                patchState(store, {
+                  currentUser: null,
+                });
               },
             }),
           ),
         ),
       ),
+      logout: () => {
+        authAPIService.logout().subscribe();
+        patchState(store, {
+          accessToken: '',
+          currentUser: null,
+          authState: 'unauthenticated',
+        });
+        router.navigate([`/${AUTH_ROUTES.login}`], {
+          queryParams: {
+            returnUrl: router.url,
+          },
+        });
+      },
     }),
   ),
 );

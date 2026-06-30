@@ -47,7 +47,7 @@
 
         <input
           id="password"
-          type="password"
+          [type]="isShowingPassword() ? 'text' : 'password'"
           placeholder="Nhập mật khẩu"
           [formField]="registerForm.password"
           class="form-input form-input--password"
@@ -87,7 +87,9 @@
       </div>
     </div>
 
-    <button type="submit" class="submit-btn" [disabled]="isLoading()">Đăng ký</button>
+    <button type="submit" class="submit-btn" [disabled]="isLoading()">
+      Đăng ký
+    </button>
   </form>
 
   <div class="divider">
@@ -99,12 +101,14 @@
   </div>
 
   <div class="social-buttons">
-    <app-external-login-btn></app-external-login-btn>
+    <app-external-login-btn [returnUrl]="returnUrl()"></app-external-login-btn>
   </div>
 
   <p class="register-link">
     Đã có tài khoản?
 
-    <a [routerLink]="['/', AUTH_ROUTES.login]"> Đăng nhập </a>
+    <a [routerLink]="['/', AUTH_ROUTES.login]" queryParamsHandling="preserve">
+      Đăng nhập
+    </a>
   </p>
 </div>

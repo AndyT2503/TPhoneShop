@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   inject,
+  input,
   signal,
 } from '@angular/core';
 import {
@@ -10,8 +11,7 @@ import {
   form,
   FormField,
   required,
-  validate,
-  validateTree,
+  validateTree
 } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 import {
@@ -23,10 +23,10 @@ import {
   LucideUser,
 } from '@lucide/angular';
 import { AuthStore, RegisterRequest } from '@tphone-shop.web/data-access';
+import { AUTH_ROUTES } from '@tphone-shop.web/routing-config';
+import { ShopLogoComponent } from '@tphone-shop.web/ui';
 import { ToastService } from '@tphone-shop.web/ui-toast';
 import { ExternalLoginBtnComponent } from '../shared/ui';
-import { ShopLogoComponent } from '@tphone-shop.web/ui';
-import { AUTH_ROUTES } from '@tphone-shop.web/routing-config';
 
 @Component({
   selector: 'app-register',
@@ -38,7 +38,7 @@ import { AUTH_ROUTES } from '@tphone-shop.web/routing-config';
     ExternalLoginBtnComponent,
     LucideUser,
     FormField,
-    ShopLogoComponent
+    ShopLogoComponent,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
@@ -48,6 +48,7 @@ export class RegisterComponent {
   private readonly toastService = inject(ToastService);
   private readonly authStore = inject(AuthStore);
 
+  readonly returnUrl = input<string>();
   readonly isLoading = this.authStore.isLoading;
   readonly AUTH_ROUTES = AUTH_ROUTES;
   readonly isShowingPassword = signal(false);
@@ -99,6 +100,9 @@ export class RegisterComponent {
       return;
     }
     const registerData = this.registerForm().value();
-    this.authStore.register(registerData);
+    this.authStore.register({
+      request: registerData,
+      returnUrl: this.returnUrl(),
+    });
   }
 }

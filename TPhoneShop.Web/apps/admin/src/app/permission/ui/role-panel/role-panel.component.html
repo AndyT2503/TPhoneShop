@@ -1,0 +1,102 @@
+<aside class="role-panel">
+  <div class="role-panel__header">
+    <p class="role-panel__title">Danh sách vai trò</p>
+    <button type="button" class="role-panel__add-btn" (click)="toggleNewRole()">
+      <svg lucidePlus [size]="12"></svg>
+      <span>Thêm</span>
+    </button>
+  </div>
+
+  @if (showNewRole()) {
+    <div class="role-panel__new">
+      <div class="role-panel__new-row">
+        <input
+          type="text"
+          [(ngModel)]="newRoleName"
+          placeholder="Tên vai trò mới..."
+          class="role-panel__input"
+        />
+        <button type="button" class="role-panel__confirm-btn" (click)="addRole()">
+          <svg lucideCheck [size]="14"></svg>
+        </button>
+        <button
+          type="button"
+          class="role-panel__cancel-btn"
+          (click)="cancelNewRole()"
+        >
+          <svg lucideX [size]="14"></svg>
+        </button>
+      </div>
+    </div>
+  }
+
+  <div class="role-panel__list">
+    @for (role of roles.value(); track role.id) {
+      @let isSelected = selectedRole()?.id === role.id;
+      @let isEditing = editingRoleId() === role.id;
+
+      <div
+        class="role-item"
+        [class.role-item--selected]="isSelected"
+        (click)="selectRole(role)"
+      >
+        <div class="role-item__icon" [class.role-item__icon--selected]="isSelected">
+          <svg lucideShieldCheck [size]="14"></svg>
+        </div>
+
+        @if (isEditing) {
+          <input
+            type="text"
+            [(ngModel)]="editName"
+            class="role-item__edit-input"
+            (click)="$event.stopPropagation()"
+          />
+        } @else {
+          <div class="role-item__content">
+            <p class="role-item__name" [class.role-item__name--selected]="isSelected">
+              {{ role.name }}
+            </p>
+          </div>
+        }
+
+        @if (!isEditing) {
+          <div class="role-item__actions" (click)="$event.stopPropagation()">
+            <button
+              type="button"
+              class="role-item__icon-btn role-item__icon-btn--edit"
+              (click)="startEdit(role)"
+            >
+              <svg lucidePen [size]="12"></svg>
+            </button>
+            <button
+              type="button"
+              class="role-item__icon-btn role-item__icon-btn--delete"
+              libConfirmPopover
+              [message]="'Bạn có muốn xóa vai trò này?'"
+              (confirm)="deleteRole(role.id)"
+            >
+              <svg lucideTrash2 [size]="12"></svg>
+            </button>
+          </div>
+        } @else {
+          <div class="role-item__actions role-item__actions--visible" (click)="$event.stopPropagation()">
+            <button
+              type="button"
+              class="role-item__icon-btn role-item__icon-btn--save"
+              (click)="saveEdit()"
+            >
+              <svg lucideCheck [size]="12"></svg>
+            </button>
+            <button
+              type="button"
+              class="role-item__icon-btn"
+              (click)="cancelEdit()"
+            >
+              <svg lucideX [size]="12"></svg>
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</aside>

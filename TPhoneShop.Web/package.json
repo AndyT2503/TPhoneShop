@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "npx nx serve shell --devRemotes=auth",
+    "start": "npx nx serve shell --devRemotes=auth,admin",
     "start:shell": "npx nx serve shell",
     "start:admin": "npx nx serve admin",
     "start:auth": "npx nx serve auth --tui=false",

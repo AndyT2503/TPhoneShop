@@ -31,7 +31,7 @@
 
         <input
           id="password"
-          type="password"
+          [type]="isShowingPassword() ? 'text' : 'password'"
           placeholder="Nhập mật khẩu"
           class="form-input form-input--password"
           [formField]="loginForm.password"
@@ -63,12 +63,12 @@
   </div>
 
   <div class="social-buttons">
-    <app-external-login-btn></app-external-login-btn>
+    <app-external-login-btn [returnUrl]="returnUrl()"></app-external-login-btn>
   </div>
 
   <p class="register-link">
     Chưa có tài khoản?
 
-    <a [routerLink]="['/', AUTH_ROUTES.register]"> Đăng ký ngay </a>
+    <a [routerLink]="['/', AUTH_ROUTES.register]" queryParamsHandling="preserve"> Đăng ký ngay </a>
   </p>
 </div>
