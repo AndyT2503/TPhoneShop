@@ -7,6 +7,11 @@
             builder.ToTable("user_roles", CommerceDbContext.AuthSchema);
             builder.HasIndex(e => e.UserId).IsUnique();
             builder.HasIndex(e => e.RoleId);
+            builder.HasIndex(e => new
+            {
+                e.RoleId,
+                e.UserId
+            }).IsUnique();
         }
     }
 }
