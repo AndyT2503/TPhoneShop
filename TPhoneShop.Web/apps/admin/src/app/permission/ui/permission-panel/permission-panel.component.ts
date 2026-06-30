@@ -12,13 +12,41 @@ import {
   LucideSave,
 } from '@lucide/angular';
 import { PermissionDto } from '@tphone-shop.web/data-access';
-import { ACTION_META, ActionMeta } from '../../permission.mock';
 import { PermissionStore } from '../../store/permission.store';
 
 interface PermissionGroup {
   label: string;
   permissions: PermissionDto[];
 }
+
+interface ActionMeta {
+  label: string;
+  modifier: string;
+}
+
+
+const ACTION_META: Record<string, ActionMeta> = {
+  read: {
+    label: 'Xem',
+    modifier: 'read',
+  },
+  create: {
+    label: 'Tạo mới',
+    modifier: 'create',
+  },
+  update: {
+    label: 'Cập nhật',
+    modifier: 'update',
+  },
+  delete: {
+    label: 'Xóa',
+    modifier: 'delete',
+  },
+  ['assign-permission']: {
+    label: 'Phân quyền',
+    modifier: 'default'
+  }
+};
 
 @Component({
   selector: 'app-permission-panel',
@@ -104,7 +132,7 @@ export class PermissionPanelComponent {
   actionMeta(permission: PermissionDto): ActionMeta {
     return (
       ACTION_META[this.actionOf(permission)] ?? {
-        label: this.actionOf(permission),
+        label: this.actionOf(permission).split('-').join(' '),
         modifier: 'default',
       }
     );
