@@ -118,6 +118,25 @@ chore(git): add .gitignore
 - Be clear and descriptive
 - Avoid combining unrelated changes
 
+## 📌 Branch Name Guidelines
+
+Branch names should be clear, concise, and follow a consistent pattern.
+
+- Use the prefix format: `type/scope/short-description`
+- Types can include: `feature`, `fix`, `chore`, `hotfix`, `refactor`, `docs`
+- Scope should represent the team, service, or area, for example: `api`, `auth`, `ui`, `db`, `infra`
+- Short description should use hyphens and avoid spaces, e.g. `add-product-search`, `fix-login-flow`
+- Avoid generic branch names such as `update`, `test`, or `new-branch`
+
+### Branch naming examples
+
+```
+feature/api/add-product-search
+fix/auth/handle-null-user
+chore/ci/update-pipeline
+refactor/ui/clean-button-styles
+```
+
 ---
 
 ## 📌 Recommended Project Scopes
