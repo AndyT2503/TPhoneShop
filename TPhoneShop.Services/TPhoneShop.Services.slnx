@@ -15,6 +15,13 @@
     <Project Path="CommerceService/CommerceService.Persistence/CommerceService.Persistence.csproj" Id="739c7d7f-021f-4809-b63a-c2153b9ddacb" />
     <Project Path="CommerceService/CommerceService.ReadModel/CommerceService.ReadModel.csproj" Id="f88e3b79-1087-41ca-9b54-fbdcc7d433a5" />
   </Folder>
+  <Folder Name="/FileService/">
+    <Project Path="FileService/FileService.API/FileService.API.csproj" Id="f123e085-898b-4081-a51f-67a4e163c1d0" />
+    <Project Path="FileService/FileService.Application/FileService.Application.csproj" Id="9880d673-0317-46cd-9ee4-2e7228c5c4fc" />
+    <Project Path="FileService/FileService.Domain/FileService.Domain.csproj" Id="353c5d8a-c106-44e7-aa53-7558e8f897ed" />
+    <Project Path="FileService/FileService.Infrastructure/FileService.Infrastructure.csproj" Id="cf1197d6-e688-4100-9ebd-882309cd3ca0" />
+    <Project Path="FileService/FileService.Persistence/FileService.Persistence.csproj" Id="afb1fe20-ddc3-445b-8fd6-775b34a1ab16" />
+  </Folder>
   <Folder Name="/IdentityService/">
     <Project Path="IdentityService/IdentityService.API/IdentityService.API.csproj" Id="900c1ec5-1abb-44de-a90b-849c50524007" />
     <Project Path="IdentityService/IdentityService.Application/IdentityService.Application.csproj" Id="a26cad40-fbad-4592-8e9e-0b9298fef98f" />

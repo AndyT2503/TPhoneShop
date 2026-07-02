@@ -1,4 +1,4 @@
-﻿using CommerceService.Application.Common.Abstractions;
+﻿using BuildingBlocks.Application.Slug;
 
 namespace CommerceService.Application.Catalog.Categories.Commands.CreateCategory
 {

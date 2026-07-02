@@ -1,29 +1,52 @@
-
 services:
+  minio:
+    image: minio/minio:latest
+    container_name: tphoneshop-minio
+    restart: unless-stopped
+
+    ports:
+      - "9000:9000" # S3 API
+      - "9001:9001" # Web Console
+
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: 12345678
+
+    command: server /data --console-address ":9001"
+
+    volumes:
+      - minio-data:/data
+
   redis:
     image: redis:8
     container_name: tphoneshop-redis
     restart: unless-stopped
+
     ports:
       - "6379:6379"
+
+    command: redis-server --appendonly yes
+
     volumes:
       - redis-data:/data
-    command: redis-server --appendonly yes
 
   rabbitmq:
     image: rabbitmq:4-management
     container_name: tphoneshop-rabbitmq
     restart: unless-stopped
+
     ports:
-      - "5672:5672"     # AMQP
-      - "15672:15672"   # Management UI
+      - "5672:5672"
+      - "15672:15672"
+
     environment:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: admin
+
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
 
 volumes:
+  minio-data:
   redis-data:
   rabbitmq-data:
-

@@ -1,11 +1,10 @@
-﻿using CommerceService.Application.Common.Abstractions;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace CommerceService.Infrastructure.Utils
+namespace BuildingBlocks.Application.Slug
 {
-    public sealed class SlugGenerator : ISlugGenerator
+    public class SlugGenerator : ISlugGenerator
     {
         public string Generate(string value)
         {

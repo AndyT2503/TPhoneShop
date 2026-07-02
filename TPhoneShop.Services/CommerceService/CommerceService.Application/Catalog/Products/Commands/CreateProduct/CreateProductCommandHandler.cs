@@ -1,4 +1,4 @@
-﻿using CommerceService.Application.Common.Abstractions;
+﻿using BuildingBlocks.Application.Slug;
 using CommerceService.Domain.Events.Product;
 using System.Text.Json;
 

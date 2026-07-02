@@ -1,4 +1,4 @@
-﻿namespace CommerceService.Application.Common.Abstractions
+﻿namespace BuildingBlocks.Application.Slug
 {
     public interface ISlugGenerator
     {
