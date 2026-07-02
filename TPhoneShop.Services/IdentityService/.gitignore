@@ -5,6 +5,7 @@
 
 # dotenv files
 .env
+tphoneshop-firebase.json
 
 # User-specific files
 *.rsuser
