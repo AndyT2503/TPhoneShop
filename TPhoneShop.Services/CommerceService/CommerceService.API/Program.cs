@@ -40,6 +40,7 @@ if (app.Environment.IsProduction())
 
 app.UseMiddleware<ExceptionMiddleware>();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
