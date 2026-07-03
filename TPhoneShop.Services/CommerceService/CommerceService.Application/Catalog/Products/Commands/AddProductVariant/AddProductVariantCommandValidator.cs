@@ -13,7 +13,7 @@
             RuleFor(x => x.Variant.Sku)
                 .NotEmpty().WithName("Mã SKU");
 
-            RuleFor(x => x.Variant.ThumbnailUrl)
+            RuleFor(x => x.Variant.ThumbnailId)
                 .NotEmpty().WithName("Ảnh biến thể");
 
             RuleFor(x => x.Variant.Price)

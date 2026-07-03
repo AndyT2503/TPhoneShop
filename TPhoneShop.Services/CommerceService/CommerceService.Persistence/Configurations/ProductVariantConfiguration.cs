@@ -16,8 +16,7 @@
                 .HasMaxLength(100)
                 .IsRequired();
 
-            builder.Property(x => x.ThumbnailUrl)
-                .HasMaxLength(1000)
+            builder.Property(x => x.ThumbnailId)
                 .IsRequired();
 
             builder.HasIndex(x => x.Sku)

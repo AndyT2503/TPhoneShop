@@ -6,7 +6,7 @@
 
         public required string Sku { get; set; }
 
-        public required string ThumbnailUrl { get; set; }
+        public Guid ThumbnailId { get; set; }
         public List<ProductAttributeRequest> Attributes { get; set; } = [];
         /// <summary>
         /// Selling price stored as amount ×100.

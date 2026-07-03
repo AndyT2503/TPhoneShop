@@ -1,0 +1,19 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "FileService.Grpc";
+
+service FileService {
+
+  rpc GetPresignedUrl(GetPresignedUrlRequest)
+      returns (GetPresignedUrlResponse);
+}
+
+message GetPresignedUrlRequest {
+
+  string mediaId = 1;
+}
+
+message GetPresignedUrlResponse {
+
+  string presignedUrl = 1;
+}

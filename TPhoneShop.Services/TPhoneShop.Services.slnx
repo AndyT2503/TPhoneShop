@@ -4,6 +4,7 @@
   </Folder>
   <Folder Name="/BuildingBlocks/">
     <Project Path="BuildingBlocks/BuildingBlocks.Application/BuildingBlocks.Application.csproj" Id="6815dd38-d48b-4815-ba65-3484e96f8d7b" />
+    <Project Path="BuildingBlocks/BuildingBlocks.Contracts/BuildingBlocks.Contracts.csproj" Id="46290f88-d791-4417-9ee0-cfa79446633a" />
     <Project Path="BuildingBlocks/BuildingBlocks.Domain/BuildingBlocks.Domain.csproj" Id="36390acb-509b-49e0-a685-011ae68f9a6d" />
     <Project Path="BuildingBlocks/BuildingBlocks.Infrastructure/BuildingBlocks.Infrastructure.csproj" Id="8830a216-d229-4ae1-8705-f6f85e80449e" />
   </Folder>

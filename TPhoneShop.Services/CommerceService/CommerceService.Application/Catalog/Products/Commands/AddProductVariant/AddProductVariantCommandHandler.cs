@@ -36,7 +36,7 @@
                 ProductId = request.ProductId,
                 Name = request.Variant.Name,
                 Sku = request.Variant.Sku,
-                ThumbnailUrl = request.Variant.ThumbnailUrl,
+                ThumbnailId = request.Variant.ThumbnailId,
                 Price = request.Variant.Price * 100,
                 CompareAtPrice = request.Variant.CompareAtPrice * 100,
                 StockQuantity = request.Variant.StockQuantity,

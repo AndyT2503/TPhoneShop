@@ -1,4 +1,5 @@
 ﻿using CommerceService.Application.Catalog.Brands.Commands.CreateBrand;
+using CommerceService.Application.Catalog.Brands.Queries.GetPublicBrands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommerceService.API.Controllers
@@ -13,6 +14,13 @@ namespace CommerceService.API.Controllers
         {
             await mediator.Send(command, cancellationToken);
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPublicBrands([FromQuery] GetPublicBrandsQuery query, CancellationToken cancellationToken)
+        {
+            var result = await mediator.Send(query, cancellationToken);
+            return Ok(result);
         }
     }
 }

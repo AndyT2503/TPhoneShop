@@ -16,8 +16,7 @@
                 .HasMaxLength(100)
                 .IsRequired();
 
-            builder.Property(x => x.LogoUrl)
-                .HasMaxLength(1000)
+            builder.Property(x => x.LogoId)
                 .IsRequired();
 
             builder.Property(x => x.Description)

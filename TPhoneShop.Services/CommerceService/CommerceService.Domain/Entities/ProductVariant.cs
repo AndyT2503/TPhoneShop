@@ -8,7 +8,7 @@
 
         public required string Sku { get; set; }
 
-        public required string ThumbnailUrl { get; set; }
+        public Guid ThumbnailId { get; set; }
 
         /// <summary>
         /// Stored as amount ×100

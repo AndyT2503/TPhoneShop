@@ -10,7 +10,7 @@ namespace CommerceService.Application.Catalog.Brands.Commands.CreateBrand
             {
                 Name = request.Name,
                 Description = request.Description,
-                LogoUrl = request.LogoUrl,
+                LogoId = request.LogoId,
                 Slug = slugGenerator.Generate(request.Name),
                 IsActive = true
             };

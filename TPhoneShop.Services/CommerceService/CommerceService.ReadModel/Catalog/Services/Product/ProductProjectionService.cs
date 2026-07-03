@@ -56,7 +56,7 @@ namespace CommerceService.ReadModel.Catalog.Services.Product
                 {
                     Id = v.Id,
                     Name = v.Name,
-                    ThumbnailUrl = v.ThumbnailUrl,
+                    ThumbnailId = v.ThumbnailId,
                     CompareAtPrice = v.CompareAtPrice,
                     Price = v.Price,
                     StockQuantity = v.StockQuantity

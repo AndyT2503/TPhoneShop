@@ -1,4 +1,5 @@
-﻿using FileService.Application.Common.Abstractions;
+﻿using BuildingBlocks.Infrastructure.Grpc;
+using FileService.Application.Common.Abstractions;
 using FileService.Infrastructure.Storages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ namespace FileService.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddGrpcConfig();
             services.AddFileStorage(configuration);
             return services;
         }
@@ -43,6 +45,16 @@ namespace FileService.Infrastructure
                 }
 
                 return client;
+            });
+            return services;
+        }
+
+        private static IServiceCollection AddGrpcConfig(this IServiceCollection services)
+        {
+            services.AddTransient<GrpcExceptionInterceptor>();
+            services.AddGrpc(options =>
+            {
+                options.Interceptors.Add<GrpcExceptionInterceptor>();
             });
             return services;
         }

@@ -10,7 +10,7 @@
             RuleFor(x => x.Description)
                 .NotEmpty().WithName("Mô tả");
 
-            RuleFor(x => x.LogoUrl)
+            RuleFor(x => x.LogoId)
                 .NotEmpty().WithName("Logo");
         }
     }

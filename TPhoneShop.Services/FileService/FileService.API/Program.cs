@@ -1,3 +1,5 @@
+using BuildingBlocks.Infrastructure.Authentication;
+using BuildingBlocks.Infrastructure.Middlewares;
 using BuildingBlocks.Infrastructure.Validation;
 using FileService.Application;
 using FileService.Infrastructure;
@@ -12,13 +14,13 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddCurrentUser();
 builder.Services.AddFluentValidationBuildingBlocks();
+builder.Services.AddJwtAuthentication(configuration, builder.Environment);
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(configuration);
 builder.Services.AddPersistence(configuration);
-
 
 var app = builder.Build();
 
@@ -35,8 +37,10 @@ if (app.Environment.IsProduction())
     app.UseHttpsRedirection();
 }
 
-app.UseAuthorization();
+app.UseMiddleware<ExceptionMiddleware>();
 
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();

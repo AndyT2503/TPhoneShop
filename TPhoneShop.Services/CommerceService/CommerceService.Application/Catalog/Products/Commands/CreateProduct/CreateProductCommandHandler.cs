@@ -99,7 +99,7 @@ namespace CommerceService.Application.Catalog.Products.Commands.CreateProduct
                 {
                     Name = variantRequest.Name.Trim(),
                     Sku = variantRequest.Sku.Trim(),
-                    ThumbnailUrl = variantRequest.ThumbnailUrl,
+                    ThumbnailId = variantRequest.ThumbnailId,
                     Price = variantRequest.Price * 100,
                     CompareAtPrice = variantRequest.CompareAtPrice.HasValue
                         ? variantRequest.CompareAtPrice.Value * 100

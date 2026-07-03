@@ -4,6 +4,6 @@
     {
         public required string Name { get; set; }
         public required string Description { get; set; }
-        public required string LogoUrl { get; set; }
+        public Guid LogoId { get; set; }
     }
 }

@@ -42,7 +42,7 @@
     {
         public Guid Id { get; set; }
         public required string Name { get; set; }
-        public required string ThumbnailUrl { get; set; }
+        public Guid ThumbnailId { get; set; }
         public long Price { get; set; }
         public long? CompareAtPrice { get; set; }
         public int StockQuantity { get; set; }
