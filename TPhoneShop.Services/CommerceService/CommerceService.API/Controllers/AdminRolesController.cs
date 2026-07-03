@@ -7,23 +7,17 @@ using CommerceService.Application.Authorization.Queries.GetListRole;
 using CommerceService.Application.Authorization.Queries.GetPermissionsByRole;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CommerceService.API.Controllers
+namespace CommerceService.API.Controllers.Admin
 {
-    [Route("api/[controller]")]
+    [Route("api/admin/roles")]
     [ApiController]
-    public class RolesController : ControllerBase
+    public class AdminRolesController(IMediator mediator) : ControllerBase
     {
-        private readonly IMediator _mediator;
-        public RolesController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-
         [HttpPost]
         [Authorize(Permissions.RolesCreate)]
         public async Task<IActionResult> CreateRole(CreateRoleCommand command, CancellationToken cancellationToken)
         {
-            await _mediator.Send(command, cancellationToken);
+            await mediator.Send(command, cancellationToken);
             return Ok();
         }
 
@@ -31,21 +25,21 @@ namespace CommerceService.API.Controllers
         [Authorize(Permissions.RolesRead)]
         public async Task<IActionResult> GetListRole(CancellationToken cancellationToken)
         {
-            return Ok(await _mediator.Send(new GetListRoleQuery(), cancellationToken));
+            return Ok(await mediator.Send(new GetListRoleQuery(), cancellationToken));
         }
 
         [HttpGet("{roleId}/permissions")]
         [Authorize(Permissions.RolesRead)]
         public async Task<IActionResult> GetListPermissionByRole(Guid roleId, CancellationToken cancellationToken)
         {
-            return Ok(await _mediator.Send(new GetPermissionsByRoleQuery(roleId), cancellationToken));
+            return Ok(await mediator.Send(new GetPermissionsByRoleQuery(roleId), cancellationToken));
         }
 
         [HttpPost("{roleId}/permissions")]
         [Authorize(Permissions.RolesAssignPermissions)]
         public async Task<IActionResult> SetRole(Guid roleId, SetRolePermissionsRequest request, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new SetRolePermissionsCommand { RoleId = roleId, PermissionIds = request.PermissionIds }, cancellationToken);
+            await mediator.Send(new SetRolePermissionsCommand { RoleId = roleId, PermissionIds = request.PermissionIds }, cancellationToken);
             return Ok();
         }
 
@@ -53,7 +47,7 @@ namespace CommerceService.API.Controllers
         [Authorize(Permissions.RolesUpdate)]
         public async Task<IActionResult> UpdateRole(Guid roleId, UpdateRoleRequest request, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new UpdateRoleCommand { Id = roleId, Name = request.Name }, cancellationToken);
+            await mediator.Send(new UpdateRoleCommand { Id = roleId, Name = request.Name }, cancellationToken);
             return Ok();
         }
 
@@ -61,7 +55,7 @@ namespace CommerceService.API.Controllers
         [Authorize(Permissions.RolesDelete)]
         public async Task<IActionResult> DeleteRole(Guid roleId, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new DeleteRoleCommand(roleId), cancellationToken);
+            await mediator.Send(new DeleteRoleCommand(roleId), cancellationToken);
             return Ok();
         }
     }

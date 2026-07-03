@@ -1,11 +1,11 @@
 ﻿using CommerceService.Application.Catalog.Categories.Commands.CreateCategory;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CommerceService.API.Controllers
+namespace CommerceService.API.Controllers.Admin
 {
-    [Route("api/[controller]")]
+    [Route("api/admin/categories")]
     [ApiController]
-    public class CategoriesController(IMediator mediator) : ControllerBase
+    public class AdminCategoriesController(IMediator mediator) : ControllerBase
     {
         [HttpPost]
         [Authorize(Permissions.CategoriesCreate)]

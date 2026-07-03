@@ -7,13 +7,13 @@ import { ListPermissionResponse } from '../models';
 @Injectable({
   providedIn: 'root',
 })
-export class PermissionAPIService {
+export class AdminPermissionAPIService {
   private readonly envConfig = injectEnvironmentConfig();
   private readonly httpClient = inject(HttpClient);
 
   getPermissions(): Observable<ListPermissionResponse> {
     return this.httpClient.get<ListPermissionResponse>(
-      `${this.envConfig.commerceService}/api/permissions`,
+      `${this.envConfig.commerceService}/api/admin/permissions`,
     );
   }
 }

@@ -1,11 +1,11 @@
 ﻿using CommerceService.Application.Catalog.ProductGroups.Commands.CreateProductGroup;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CommerceService.API.Controllers
+namespace CommerceService.API.Controllers.Admin
 {
-    [Route("api/[controller]")]
+    [Route("api/admin/product-groups")]
     [ApiController]
-    public class ProductGroupsController(IMediator mediator) : ControllerBase
+    public class AdminProductGroupsController(IMediator mediator) : ControllerBase
     {
         [HttpPost]
         [Authorize(Permissions.ProductsCreate)]

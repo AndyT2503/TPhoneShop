@@ -3,11 +3,11 @@ using CommerceService.Application.Catalog.Products.Commands.CreateProduct;
 using CommerceService.Application.Catalog.Products.Commands.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CommerceService.API.Controllers
+namespace CommerceService.API.Controllers.Admin
 {
-    [Route("api/[controller]")]
+    [Route("api/admin/products")]
     [ApiController]
-    public class ProductsController(IMediator mediator) : ControllerBase
+    public class AdminProductsController(IMediator mediator) : ControllerBase
     {
         [HttpPost]
         [Authorize(Permissions.ProductsCreate)]
