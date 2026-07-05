@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.Application.Pagination;
+using BuildingBlocks.Infrastructure.Extensions;
 using CommerceService.Application.Catalog.Brands.Queries.Dtos;
 using CommerceService.Application.Common.Abstractions;
 
