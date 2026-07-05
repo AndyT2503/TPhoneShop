@@ -21,6 +21,7 @@
         /// Stored as amount ×100
         /// </summary>
         public long? CompareAtPrice { get; set; }
+        public string Currency { get; set; } = Constants.Currency.VND;
 
         public int StockQuantity { get; set; }
 

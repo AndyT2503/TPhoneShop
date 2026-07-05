@@ -26,6 +26,8 @@
                 .IsRequired();
 
             builder.Property(x => x.CompareAtPrice);
+            builder.Property(x => x.Currency)
+                .IsRequired();
 
             builder.Property(x => x.StockQuantity)
                 .IsRequired();

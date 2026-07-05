@@ -46,5 +46,6 @@
         public long Price { get; set; }
         public long? CompareAtPrice { get; set; }
         public int StockQuantity { get; set; }
+        public required string Currency { get; set; }
     }
 }

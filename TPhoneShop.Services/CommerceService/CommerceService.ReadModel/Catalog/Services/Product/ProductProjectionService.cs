@@ -59,7 +59,8 @@ namespace CommerceService.ReadModel.Catalog.Services.Product
                     ThumbnailId = v.ThumbnailId,
                     CompareAtPrice = v.CompareAtPrice,
                     Price = v.Price,
-                    StockQuantity = v.StockQuantity
+                    StockQuantity = v.StockQuantity,
+                    Currency = v.Currency
                 }).ToList(),
             };
 
