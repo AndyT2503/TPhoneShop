@@ -11,8 +11,8 @@ import {
 } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import {
-  PermissionAPIService,
-  RoleAPIService,
+  AdminPermissionAPIService,
+  AdminRoleAPIService,
   RoleDto,
 } from '@tphone-shop.web/data-access';
 import { ToastService } from '@tphone-shop.web/ui-toast';
@@ -33,8 +33,8 @@ export const PermissionStore = signalStore(
   withProps(
     (
       store,
-      roleAPIService = inject(RoleAPIService),
-      permissionAPIService = inject(PermissionAPIService),
+      roleAPIService = inject(AdminRoleAPIService),
+      permissionAPIService = inject(AdminPermissionAPIService),
     ) => ({
       permissionsOfSelectedRole: rxResource({
         params: () => {
@@ -76,7 +76,7 @@ export const PermissionStore = signalStore(
   withMethods(
     (
       store,
-      roleAPIService = inject(RoleAPIService),
+      roleAPIService = inject(AdminRoleAPIService),
       toast = inject(ToastService),
     ) => ({
       selectRole: (role: RoleDto) => {
