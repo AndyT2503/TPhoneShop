@@ -13,6 +13,10 @@
       {
         "Path": "APIGateway\\APIGateway\\APIGateway.csproj",
         "Action": "Start"
+      },
+      {
+        "Path": "FileService\\FileService.API\\FileService.API.csproj",
+        "Action": "Start"
       }
     ]
   }
