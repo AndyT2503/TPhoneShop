@@ -17,9 +17,8 @@ import {
   LucideMail,
 } from '@lucide/angular';
 import { AuthStore, LoginRequest } from '@tphone-shop.web/data-access';
-import { ToastService } from '@tphone-shop.web/ui-toast';
 import { ExternalLoginBtnComponent } from '../shared/ui';
-import { ShopLogoComponent } from '@tphone-shop.web/ui';
+import { ShopLogoComponent, ToastService } from '@tphone-shop.web/ui';
 
 @Component({
   selector: 'app-login',
@@ -72,6 +71,9 @@ export class LoginComponent {
     const loginData = this.loginForm().value();
     this.authStore.login({
       loginRequest: loginData,
+      onError: (message) => {
+        this.toastService.error(message);
+      },
       returnUrl: this.returnUrl(),
     });
   }

@@ -12,11 +12,22 @@ import {
 } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { AUTH_ROUTES } from '@tphone-shop.web/routing-config';
-import { ToastService } from '@tphone-shop.web/ui-toast';
-import { exhaustMap, filter, from, map, pipe, switchMap, tap } from 'rxjs';
+import {
+  catchError,
+  EMPTY,
+  exhaustMap,
+  filter,
+  finalize,
+  from,
+  map,
+  pipe,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { AuthAPIService } from '../api';
 import { FirebaseAuthService } from '../firebase/firebase-auth.service';
 import { LoginRequest, RegisterRequest, UserProfileResponse } from '../models';
+import { toSyncObservable } from '@tphone-shop.web/utils';
 type AuthState = {
   authState: 'pending' | 'authenticated' | 'unauthenticated';
   accessToken: string;
@@ -35,7 +46,7 @@ export const AuthStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
   withProps((store) => ({
-    isAuthenticated$: toObservable(store.authState).pipe(
+    isAuthenticated$: toSyncObservable(store.authState).pipe(
       filter((state) => state !== 'pending'),
       map((state) => state === 'authenticated'),
     ),
@@ -45,10 +56,13 @@ export const AuthStore = signalStore(
       store,
       authAPIService = inject(AuthAPIService),
       router = inject(Router),
-      toastService = inject(ToastService),
+
       firebaseAuthService = inject(FirebaseAuthService),
     ) => ({
-      googleLogin: rxMethod<{ returnUrl?: string }>(
+      googleLogin: rxMethod<{
+        onError: (message: string) => void;
+        returnUrl?: string;
+      }>(
         pipe(
           tap(() =>
             patchState(store, { isLoading: true, authState: 'pending' }),
@@ -69,7 +83,7 @@ export const AuthStore = signalStore(
                     authState: 'unauthenticated',
                   });
                   if (err instanceof HttpErrorResponse) {
-                    toastService.error(err.error['message']);
+                    req.onError(err.error['message']);
                   }
                   console.error(err);
                 },
@@ -81,7 +95,11 @@ export const AuthStore = signalStore(
           ),
         ),
       ),
-      login: rxMethod<{ loginRequest: LoginRequest; returnUrl?: string }>(
+      login: rxMethod<{
+        loginRequest: LoginRequest;
+        onError: (message: string) => void;
+        returnUrl?: string;
+      }>(
         pipe(
           tap(() =>
             patchState(store, { isLoading: true, authState: 'pending' }),
@@ -100,7 +118,7 @@ export const AuthStore = signalStore(
                   patchState(store, {
                     authState: 'unauthenticated',
                   });
-                  toastService.error(err.error['message']);
+                  req.onError(err.error['message']);
                 },
                 finalize: () => {
                   patchState(store, { isLoading: false });
@@ -110,7 +128,11 @@ export const AuthStore = signalStore(
           ),
         ),
       ),
-      register: rxMethod<{ request: RegisterRequest; returnUrl?: string }>(
+      register: rxMethod<{
+        request: RegisterRequest;
+        onError: (message: string) => void;
+        returnUrl?: string;
+      }>(
         pipe(
           tap(() =>
             patchState(store, { isLoading: true, authState: 'pending' }),
@@ -129,7 +151,7 @@ export const AuthStore = signalStore(
                   patchState(store, {
                     authState: 'unauthenticated',
                   });
-                  toastService.error(err.error['message']);
+                  req.onError(err.error['message']);
                 },
                 finalize: () => {
                   patchState(store, { isLoading: false });
@@ -179,19 +201,29 @@ export const AuthStore = signalStore(
           ),
         ),
       ),
-      logout: () => {
-        authAPIService.logout().subscribe();
-        patchState(store, {
-          accessToken: '',
-          currentUser: null,
-          authState: 'unauthenticated',
-        });
-        router.navigate([`/${AUTH_ROUTES.login}`], {
-          queryParams: {
-            returnUrl: router.url,
-          },
-        });
-      },
+
+      logout: rxMethod<void>(
+        exhaustMap(() =>
+          authAPIService.logout().pipe(
+            finalize(() => {
+              patchState(store, {
+                accessToken: '',
+                currentUser: null,
+                authState: 'unauthenticated',
+              });
+              router.navigate([`/${AUTH_ROUTES.login}`], {
+                queryParams: {
+                  returnUrl: router.url,
+                },
+              });
+            }),
+            catchError((err) => {
+              console.error(err);
+              return EMPTY;
+            }),
+          ),
+        ),
+      ),
     }),
   ),
 );

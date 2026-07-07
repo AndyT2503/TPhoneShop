@@ -24,8 +24,7 @@ import {
 } from '@lucide/angular';
 import { AuthStore, RegisterRequest } from '@tphone-shop.web/data-access';
 import { AUTH_ROUTES } from '@tphone-shop.web/routing-config';
-import { ShopLogoComponent } from '@tphone-shop.web/ui';
-import { ToastService } from '@tphone-shop.web/ui-toast';
+import { ShopLogoComponent, ToastService } from '@tphone-shop.web/ui';
 import { ExternalLoginBtnComponent } from '../shared/ui';
 
 @Component({
@@ -102,6 +101,9 @@ export class RegisterComponent {
     const registerData = this.registerForm().value();
     this.authStore.register({
       request: registerData,
+      onError: (message) => {
+        this.toastService.error(message);
+      },
       returnUrl: this.returnUrl(),
     });
   }
