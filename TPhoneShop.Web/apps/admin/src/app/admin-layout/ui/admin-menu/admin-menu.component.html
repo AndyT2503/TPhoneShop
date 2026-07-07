@@ -4,7 +4,7 @@
       [routerLink]="menuItem.link"
       routerLinkActive="nav-item--active"
       [routerLinkActiveOptions]="{ exact: true }"
-      [title]="sidebarOpen() ? '' : 'Tổng quan'"
+      [title]="sidebarOpen() ? '' : menuItem.title"
       class="nav-item"
     >
       <svg

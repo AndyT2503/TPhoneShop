@@ -27,7 +27,7 @@ import {
   ResetPasswordRequest,
 } from '@tphone-shop.web/data-access';
 import { AUTH_ROUTES } from '@tphone-shop.web/routing-config';
-import { ToastService } from '@tphone-shop.web/ui-toast';
+import { ToastService } from '@tphone-shop.web/ui';
 import { finalize } from 'rxjs';
 
 @Component({

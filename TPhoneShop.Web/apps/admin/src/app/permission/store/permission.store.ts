@@ -15,7 +15,7 @@ import {
   AdminRoleAPIService,
   RoleDto,
 } from '@tphone-shop.web/data-access';
-import { ToastService } from '@tphone-shop.web/ui-toast';
+import { ToastService } from '@tphone-shop.web/ui';
 import { map, pipe, switchMap, tap } from 'rxjs';
 
 type PermissionState = {

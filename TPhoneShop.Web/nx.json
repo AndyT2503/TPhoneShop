@@ -89,6 +89,10 @@
       "standalone": true,
       "type": "component"
     },
+    "@nx/angular:directive": {
+      "standalone": true,
+      "type": "directive"
+    },
     "@nx/angular:library": {
       "linter": "eslint",
       "unitTestRunner": "vitest-analog"

@@ -12,4 +12,14 @@ export const adminRoutes: Routes = [
       title: 'Phân quyền',
     },
   },
+  {
+    path: ADMIN_ROUTES.brandManagement,
+    loadComponent: () =>
+      import('../brand-management/brand-management.component').then(
+        (c) => c.BrandManagementComponent,
+      ),
+    data: {
+      title: 'Nhãn hàng',
+    },
+  },
 ];

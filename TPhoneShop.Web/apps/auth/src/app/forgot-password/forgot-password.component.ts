@@ -11,8 +11,7 @@ import { RouterLink } from '@angular/router';
 import { LucideArrowLeft, LucideMail } from '@lucide/angular';
 import { AuthAPIService } from '@tphone-shop.web/data-access';
 import { AUTH_ROUTES } from '@tphone-shop.web/routing-config';
-import { ShopLogoComponent } from '@tphone-shop.web/ui';
-import { ToastService } from '@tphone-shop.web/ui-toast';
+import { ShopLogoComponent, ToastService } from '@tphone-shop.web/ui';
 import { finalize } from 'rxjs';
 
 @Component({

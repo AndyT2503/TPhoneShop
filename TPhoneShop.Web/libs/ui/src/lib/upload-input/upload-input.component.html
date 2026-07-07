@@ -1,0 +1,38 @@
+@if (imagePreview(); as preview) {
+  <div class="image-preview">
+    <div class="image-preview__container">
+      <img
+        [src]="preview.presignedUrl"
+        alt="Brand logo preview"
+        class="image-preview__image"
+      />
+      <button
+        type="button"
+        class="image-preview__remove"
+        (click)="removeImage()"
+        [disabled]="isUploadingFile()"
+        aria-label="Remove image"
+      >
+        <svg lucideX [size]="20"></svg>
+      </button>
+    </div>
+  </div>
+} @else {
+  <label class="upload-box" [libLoading]="isUploadingFile()">
+    <input
+      #fileInput
+      class="sr-only"
+      type="file"
+      [accept]="acceptType()"
+      (change)="onFileSelected($event)"
+      [disabled]="isUploadingFile()"
+    />
+    <span class="upload-box__icon">
+      <svg lucideCloudUpload [size]="28"></svg>
+    </span>
+    <span class="upload-box__title">
+      {{ isUploadingFile() ? 'Đang tải lên...' : 'Chọn file để upload' }}
+    </span>
+    <span class="upload-box__hint">{{helperText()}}</span>
+  </label>
+}

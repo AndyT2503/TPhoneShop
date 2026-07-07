@@ -1,0 +1,37 @@
+@reference "tailwindcss";
+
+.upload-box {
+  @apply flex min-h-36 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-slate-300 bg-slate-50 px-4 py-5 text-center transition hover:border-indigo-400 hover:bg-indigo-50;
+
+  &:disabled {
+    @apply cursor-not-allowed opacity-50;
+  }
+
+  &__icon {
+    @apply mb-3 flex size-12 items-center justify-center rounded-full bg-white text-indigo-600 shadow-sm;
+  }
+
+  &__title {
+    @apply text-sm font-medium text-slate-800;
+  }
+
+  &__hint {
+    @apply mt-1 text-xs text-slate-500;
+  }
+}
+
+.image-preview {
+  @apply flex items-center justify-center rounded-lg bg-slate-50 p-4;
+
+  &__container {
+    @apply relative;
+  }
+
+  &__image {
+    @apply max-h-48 max-w-48 rounded-lg object-cover shadow-sm;
+  }
+
+  &__remove {
+    @apply absolute -right-2 -top-2 flex size-8 items-center justify-center rounded-full bg-red-500 text-white shadow-md transition hover:bg-red-600 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+}

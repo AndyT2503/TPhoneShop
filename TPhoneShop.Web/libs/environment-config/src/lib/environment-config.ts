@@ -2,6 +2,7 @@ export interface EnvironmentConfig {
   identityService: string;
   commerceService: string;
   notificationService: string;
+  fileService: string;
   firebase: {
     apiKey: string;
     authDomain: string;

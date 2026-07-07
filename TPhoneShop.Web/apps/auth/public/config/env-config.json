@@ -2,6 +2,7 @@
   "identityService": "http://localhost:550/identity",
   "commerceService": "http://localhost:550/commerce",
   "notificationService": "http://localhost:550/notification",
+  "fileService": "http://localhost:550/file",
   "firebase": {
     "apiKey": "",
     "authDomain": "",

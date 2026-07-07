@@ -16,7 +16,7 @@ import {
 } from '@lucide/angular';
 import { RoleDto } from '@tphone-shop.web/data-access';
 import { PermissionStore } from '../../store/permission.store';
-import { ConfirmPopoverDirective } from '@tphone-shop.web/ui';
+import { ButtonDirective, ConfirmPopoverDirective } from '@tphone-shop.web/ui';
 
 @Component({
   selector: 'app-role-panel',
@@ -28,7 +28,8 @@ import { ConfirmPopoverDirective } from '@tphone-shop.web/ui';
     LucideTrash2,
     LucideX,
     FormsModule,
-    ConfirmPopoverDirective
+    ConfirmPopoverDirective,
+    ButtonDirective
   ],
   templateUrl: './role-panel.component.html',
   styleUrl: './role-panel.component.scss',

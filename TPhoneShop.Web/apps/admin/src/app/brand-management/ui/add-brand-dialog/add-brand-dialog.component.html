@@ -1,0 +1,51 @@
+<form class="add-brand-form" (submit)="submit($event)">
+  <label class="field">
+    <span class="field__label">Tên nhãn hàng</span>
+    <input
+      class="field__control"
+      type="text"
+      placeholder="Ví dụ: Apple"
+      autocomplete="off"
+      [formField]="brandForm.name"
+    />
+  </label>
+
+  <label class="field">
+    <span class="field__label">Mô tả</span>
+    <textarea
+      class="field__control field__textarea"
+      placeholder="Mô tả ngắn về nhãn hàng"
+      rows="4"
+      [formField]="brandForm.description"
+    ></textarea>
+  </label>
+
+  <div class="field">
+    <span class="field__label">Logo nhãn hàng</span>
+
+    <lib-upload-input
+      [(isUploadingFile)]="isUploadingFile"
+      [(imagePreview)]="imagePreview"
+      (imagePreviewChange)="onImageChange($event?.mediaId)"
+    ></lib-upload-input>
+  </div>
+
+  <div class="actions">
+    <button
+      class="actions__cancel"
+      type="button"
+      (click)="closeDialog()"
+      [disabled]="isLoading()"
+    >
+      Hủy
+    </button>
+    <button
+      libButton
+      size="md"
+      type="submit"
+      [disabled]="isUploadingFile() || isLoading() || !brandForm().invalid"
+    >
+      {{ isLoading() ? 'Đang lưu...' : 'Lưu nhãn hàng' }}
+    </button>
+  </div>
+</form>

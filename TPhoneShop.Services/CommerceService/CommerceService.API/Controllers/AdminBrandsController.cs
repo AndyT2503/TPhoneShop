@@ -1,4 +1,5 @@
 ﻿using CommerceService.Application.Catalog.Brands.Commands.CreateBrand;
+using CommerceService.Application.Catalog.Brands.Queries.GetBrandsForAdmin;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommerceService.API.Controllers.Admin
@@ -13,6 +14,13 @@ namespace CommerceService.API.Controllers.Admin
         {
             await mediator.Send(command, cancellationToken);
             return Ok();
+        }
+
+        [HttpGet]
+        [Authorize(Permissions.BrandsRead)]
+        public async Task<IActionResult> GetBrands(GetBrandsForAdminQuery query, CancellationToken cancellationToken)
+        {
+            return Ok(await mediator.Send(query, cancellationToken));
         }
     }
 }

@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import {
+  LucideAward,
   LucideChevronRight,
   LucideDynamicIcon,
   LucideIconInput,
@@ -24,6 +25,11 @@ const MENU: MenuItem[] = [
     title: 'Phân quyền',
     icon: LucideShieldCheck,
     link: ADMIN_ROUTES.permission,
+  },
+  {
+    title: 'Nhãn hàng',
+    icon: LucideAward,
+    link: ADMIN_ROUTES.brandManagement,
   },
 ];
 

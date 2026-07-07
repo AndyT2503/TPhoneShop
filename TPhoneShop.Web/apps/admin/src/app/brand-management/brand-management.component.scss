@@ -1,0 +1,7 @@
+@reference "tailwindcss";
+.brand-container {
+  .header {
+   @apply flex items-center justify-end;
+
+  }
+}
