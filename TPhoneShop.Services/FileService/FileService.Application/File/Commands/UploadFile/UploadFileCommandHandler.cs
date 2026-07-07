@@ -26,7 +26,7 @@ namespace FileService.Application.File.Commands.UploadFile
             return new UploadFileResponse
             {
                 MediaId = newMedia.Id,
-                PreSignedUrl = uploadResult.Url,
+                PresignedUrl = uploadResult.Url,
             };
         }
     }

@@ -1,5 +1,6 @@
 ﻿using FileService.Application.File.Commands.UploadFile;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FileService.API.Controllers
@@ -9,6 +10,7 @@ namespace FileService.API.Controllers
     public class FilesController(IMediator mediator) : ControllerBase
     {
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> UploadFile([FromForm] UploadFileCommand command, CancellationToken cancellationToken)
         {
             var result = await mediator.Send(command, cancellationToken);
