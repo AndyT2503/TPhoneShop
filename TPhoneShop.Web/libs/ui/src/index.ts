@@ -6,3 +6,4 @@ export * from './lib/toast';
 export * from './lib/dialog';
 export * from './lib/loading/loading.directive';
 export * from './lib/upload-input/upload-input.component';
+export * from './lib/table';

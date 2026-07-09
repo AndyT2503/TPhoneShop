@@ -1,5 +1,7 @@
 import { NotificationChannel, NotificationStatus } from '../enums';
 
+//index BTree, Hash, Inverted index
+//non functional & functional
 export class NotificationLog {
   id?: string;
   recipientId!: string;
