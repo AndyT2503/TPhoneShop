@@ -4,7 +4,7 @@ import { EnvironmentConfig } from '@tphone-shop.web/environment-config';
 import { appRoutes } from './app/app.routes';
 import { RemoteEntry } from './app/remote-entry/entry';
 
-fetch('config/env-config.json')
+fetch('/config/env-config.json')
   .then((res) => res.json())
   .then((config: EnvironmentConfig) => {
     bootstrapApplication(

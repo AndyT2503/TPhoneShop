@@ -6,11 +6,13 @@ export function toSyncObservable<T>(sourceSignal: Signal<T>, options?: ToObserva
   if (ngDevMode && !options?.injector) {
     assertInInjectionContext(toSyncObservable);
   }
-  const currentValue = sourceSignal();
   const nextValues$ = toObservable(sourceSignal, options).pipe(skip(1));
 
   return new Observable<T>((subscriber) => {
-    subscriber.next(currentValue);
+    // Read the live signal value at subscription time (not when this
+    // observable was created), otherwise late subscribers receive a stale
+    // snapshot and never see the already-settled state.
+    subscriber.next(sourceSignal());
     const subscription = nextValues$.subscribe(subscriber);
     return () => subscription.unsubscribe();
   });

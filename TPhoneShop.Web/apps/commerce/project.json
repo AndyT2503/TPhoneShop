@@ -11,7 +11,7 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/apps/commerce/browser",
+        "outputPath": "dist/apps/commerce",
         "index": "apps/commerce/src/index.html",
         "main": "apps/commerce/src/main.ts",
         "tsConfig": "apps/commerce/tsconfig.app.json",

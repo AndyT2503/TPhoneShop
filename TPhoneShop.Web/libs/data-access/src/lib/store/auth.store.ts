@@ -42,6 +42,15 @@ const initialState: AuthState = {
   currentUser: null,
 };
 
+function resolveErrorMessage(err: HttpErrorResponse): string {
+  // A network/CORS failure (server down, blocked) has status 0 and no JSON
+  // body, so err.error carries no `message` field.
+  if (err.status === 0) {
+    return 'Không thể kết nối tới máy chủ. Vui lòng thử lại sau.';
+  }
+  return err.error?.['message'] ?? 'Đã có lỗi xảy ra. Vui lòng thử lại.';
+}
+
 export const AuthStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
@@ -83,7 +92,7 @@ export const AuthStore = signalStore(
                     authState: 'unauthenticated',
                   });
                   if (err instanceof HttpErrorResponse) {
-                    req.onError(err.error['message']);
+                    req.onError(resolveErrorMessage(err));
                   }
                   console.error(err);
                 },
@@ -118,7 +127,7 @@ export const AuthStore = signalStore(
                   patchState(store, {
                     authState: 'unauthenticated',
                   });
-                  req.onError(err.error['message']);
+                  req.onError(resolveErrorMessage(err));
                 },
                 finalize: () => {
                   patchState(store, { isLoading: false });
@@ -151,7 +160,7 @@ export const AuthStore = signalStore(
                   patchState(store, {
                     authState: 'unauthenticated',
                   });
-                  req.onError(err.error['message']);
+                  req.onError(resolveErrorMessage(err));
                 },
                 finalize: () => {
                   patchState(store, { isLoading: false });

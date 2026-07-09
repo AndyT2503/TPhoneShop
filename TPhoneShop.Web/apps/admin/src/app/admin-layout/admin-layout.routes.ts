@@ -3,6 +3,11 @@ import { ADMIN_ROUTES } from '@tphone-shop.web/routing-config';
 
 export const adminRoutes: Routes = [
   {
+    path: '',
+    redirectTo: ADMIN_ROUTES.permission,
+    pathMatch: 'full',
+  },
+  {
     path: ADMIN_ROUTES.permission,
     loadComponent: () =>
       import('../permission/permission.component').then(

@@ -1,4 +1,4 @@
-﻿using FirebaseAdmin;
+using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using IdentityService.Application.Auth.Services;
 using IdentityService.Infrastructure.BackgroundJobs;
@@ -45,11 +45,18 @@ namespace IdentityService.Infrastructure
                 throw new InvalidOperationException("Firebase service account not found.");
             }
 
-            var credential = ServiceAccountCredential.FromServiceAccountData(stream);
-            FirebaseApp.Create(new AppOptions
+            try
             {
-                Credential = credential.ToGoogleCredential()
-            });
+                var credential = ServiceAccountCredential.FromServiceAccountData(stream);
+                FirebaseApp.Create(new AppOptions
+                {
+                    Credential = credential.ToGoogleCredential()
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[Warning] Failed to initialize Firebase: {ex.Message}");
+            }
 
             return services;
         }

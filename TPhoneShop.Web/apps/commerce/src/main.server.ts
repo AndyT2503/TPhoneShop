@@ -9,7 +9,7 @@ import bootstrap from './bootstrap.server';
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
-  const browserBundles = join(process.cwd(), 'dist/apps/commerce/browser');
+  const browserBundles = join(process.cwd(), 'dist/apps/commerce');
   const serverBundles = join(process.cwd(), 'dist/apps/commerce/server');
   const indexHtml = existsSync(join(browserBundles, 'index.original.html'))
     ? join(browserBundles, 'index.original.html')

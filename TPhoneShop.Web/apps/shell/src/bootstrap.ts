@@ -4,7 +4,7 @@ import { App } from './app/app';
 import { createAppBrowserConfig } from '@tphone-shop.web/app-config';
 import { appRoutes } from './app/app.routes';
 
-fetch('config/env-config.json')
+fetch('/config/env-config.json')
   .then((res) => res.json())
   .then((config: EnvironmentConfig) =>
     bootstrapApplication(App, createAppBrowserConfig(config, appRoutes)).catch(
