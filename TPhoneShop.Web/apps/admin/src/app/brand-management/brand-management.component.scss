@@ -1,7 +1,40 @@
 @reference "tailwindcss";
 .brand-container {
-  .header {
-   @apply flex items-center justify-end;
+  @apply flex flex-col gap-6;
 
+  .header {
+    @apply flex items-center justify-end;
   }
+}
+
+.brand-info {
+  @apply flex flex-col items-baseline gap-1;
+
+  .brand-name {
+    @apply text-sm font-semibold text-slate-900;
+  }
+
+  .brand-description {
+    @apply text-xs font-light text-slate-500;
+  }
+}
+
+.status-badge {
+  @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium bg-gray-100 text-gray-700;
+}
+
+.status-active {
+  @apply bg-emerald-100 text-emerald-700;
+}
+
+.action-button {
+  @apply p-2 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors cursor-pointer;
+}
+
+.actions {
+  @apply flex items-center justify-center gap-2;
+}
+
+img {
+  @apply w-24 h-24 rounded-lg object-cover;
 }

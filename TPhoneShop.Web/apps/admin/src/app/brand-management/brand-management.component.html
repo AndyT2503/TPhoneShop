@@ -5,4 +5,55 @@
       <span>Thêm nhãn hàng</span>
     </button>
   </div>
+
+  <lib-table
+    [showPagination]="true"
+    [totalCount]="brandTable.value().totalCount"
+    [pageNumber]="query().pageNumber"
+    [pageSize]="query().pageSize"
+    (onPageNumberChange)="onPageNumberChange($event)"
+  >
+    <thead>
+      <tr>
+        <th libTbCenter>Nhãn hàng</th>
+        <th libTbCenter>Slug</th>
+        <th libTbCenter>Trạng thái</th>
+        <th libTbCenter>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of brandTable.value().items; track $index) {
+        <tr>
+          <td libTbCenter>
+            <div class="flex gap-3 items-center">
+              <img [src]="item.logoUrl" [alt]="item.name" />
+              <div class="brand-info">
+                <p class="brand-name">{{ item.name }}</p>
+                <p class="brand-description">{{ item.description }}</p>
+              </div>
+            </div>
+          </td>
+          <td libTbCenter>/{{ item.slug }}</td>
+          <td libTbCenter>
+            <span class="status-badge" [class.status-active]="item.isActive">
+              {{ item.isActive ? 'Hiển thị' : 'Ẩn' }}
+            </span>
+          </td>
+          <td libTbCenter>
+            <div class="actions flex items-center justify-center gap-2">
+              <button class="action-button" type="button">
+                <svg lucideEye size="14"></svg>
+              </button>
+              <button class="action-button" type="button">
+                <svg lucideSquarePen size="14"></svg>
+              </button>
+              <button class="action-button" type="button">
+                <svg lucideTrash size="14"></svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </lib-table>
 </section>

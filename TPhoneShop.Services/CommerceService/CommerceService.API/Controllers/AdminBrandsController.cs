@@ -18,7 +18,7 @@ namespace CommerceService.API.Controllers.Admin
 
         [HttpGet]
         [Authorize(Permissions.BrandsRead)]
-        public async Task<IActionResult> GetBrands(GetBrandsForAdminQuery query, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetBrands([FromQuery] GetBrandsForAdminQuery query, CancellationToken cancellationToken)
         {
             return Ok(await mediator.Send(query, cancellationToken));
         }

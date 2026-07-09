@@ -1,6 +1,7 @@
 using BuildingBlocks.Infrastructure.Authentication;
 using BuildingBlocks.Infrastructure.Middlewares;
 using BuildingBlocks.Infrastructure.Validation;
+using FileService.API.Grpc;
 using FileService.Application;
 using FileService.Infrastructure;
 using FileService.Persistence;
@@ -36,6 +37,8 @@ if (app.Environment.IsProduction())
 {
     app.UseHttpsRedirection();
 }
+
+app.MapGrpcService<FileGrpcService>();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
