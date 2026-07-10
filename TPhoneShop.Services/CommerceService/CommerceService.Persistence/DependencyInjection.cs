@@ -10,13 +10,16 @@ namespace CommerceService.Persistence
             this IServiceCollection services,
             IConfiguration configuration)
         {
+            services.AddScoped<SoftDeleteInterceptor>();
             services.AddSingleton<AuditableEntityInterceptor>();
             services.AddDbContext<CommerceDbContext>((sp, options) =>
             {
                 options.UseNpgsql(
                     configuration.GetConnectionString("Commerce"));
                 options.AddInterceptors(
-                        sp.GetRequiredService<AuditableEntityInterceptor>());
+                        sp.GetRequiredService<SoftDeleteInterceptor>(),
+                        sp.GetRequiredService<AuditableEntityInterceptor>()
+                );
             });
 
             return services;

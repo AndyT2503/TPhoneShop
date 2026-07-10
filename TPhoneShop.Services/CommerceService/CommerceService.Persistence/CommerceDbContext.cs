@@ -1,4 +1,6 @@
-﻿namespace CommerceService.Persistence
+﻿using BuildingBlocks.Infrastructure.Extensions;
+
+namespace CommerceService.Persistence
 {
     public class CommerceDbContext : DbContext
     {
@@ -25,6 +27,8 @@
 
             modelBuilder.ApplyConfigurationsFromAssembly(
                 typeof(CommerceDbContext).Assembly);
+
+            modelBuilder.ApplySoftDeleteQueryFilter();
         }
 
     }

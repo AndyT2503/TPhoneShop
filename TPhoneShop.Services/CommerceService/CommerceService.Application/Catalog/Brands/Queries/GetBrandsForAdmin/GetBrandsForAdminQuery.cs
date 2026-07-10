@@ -3,7 +3,7 @@ using CommerceService.Application.Catalog.Brands.Queries.Dtos;
 
 namespace CommerceService.Application.Catalog.Brands.Queries.GetBrandsForAdmin
 {
-    public class GetBrandsForAdminQuery : PagingQuery, IRequest<PagingResponse<BrandDto>>
+    public class GetBrandsForAdminQuery : PagingQuery, IRequest<PagingResponse<BrandForAdminDto>>
     {
         public string? Search { get; set; }
         public bool IsActive { get; set; } = true;

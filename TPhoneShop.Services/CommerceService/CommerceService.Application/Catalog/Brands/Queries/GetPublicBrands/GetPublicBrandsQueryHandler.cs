@@ -20,7 +20,6 @@ namespace CommerceService.Application.Catalog.Brands.Queries.GetPublicBrands
                                      e.Slug,
                                      e.Description,
                                      e.LogoId,
-                                     e.IsActive
                                  });
             var totalCount = await query.CountAsync(cancellationToken);
             var brands = await query.Paginate(request.PageNumber, request.PageSize)
@@ -33,7 +32,6 @@ namespace CommerceService.Application.Catalog.Brands.Queries.GetPublicBrands
                 Slug = brand.Slug,
                 Description = brand.Description,
                 LogoUrl = await mediaService.GetPresignedUrl(brand.LogoId, cancellationToken),
-                IsActive = brand.IsActive
             }));
 
             return new PagingResponse<BrandDto>

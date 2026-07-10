@@ -1,6 +1,6 @@
 ﻿namespace CommerceService.Domain.Entities
 {
-    public class ProductVariant : BaseEntity
+    public class ProductVariant : BaseEntity, ISoftDeletable
     {
         public Guid ProductId { get; set; }
 
@@ -28,14 +28,8 @@
         public bool IsActive { get; set; }
 
         public Product Product { get; set; } = null!;
-
-    }
-
-    public class ProductAttribute
-    {
-        public required string Name { get; set; }
-
-        public required string Value { get; set; }
+        public DateTimeOffset? DeletedAt { get; set; }
+        public Guid? DeletedBy { get; set; }
 
     }
 }
