@@ -1,0 +1,12 @@
+<div class="status-filter-container">
+  @for (tab of tabs; track tab.key) {
+    <button
+      [class.active]="isActive() === tab.key"
+      (click)="onTabSelect(tab.key)"
+      class="tab"
+      type="button"
+    >
+      <span class="tab-label">{{ tab.label }}</span>
+    </button>
+  }
+</div>

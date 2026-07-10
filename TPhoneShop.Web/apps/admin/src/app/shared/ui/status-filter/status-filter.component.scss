@@ -1,0 +1,21 @@
+@reference "tailwindcss";
+
+.status-filter-container {
+  @apply flex gap-0 border-b border-gray-200;
+
+  .tab {
+    @apply flex items-center gap-2 px-5 py-3 text-sm font-medium border-0 border-b-2 border-transparent -mb-px bg-transparent cursor-pointer transition-all duration-200 text-gray-500;
+
+    &:hover:not(.active) {
+      @apply text-gray-700;
+    }
+
+    &.active {
+      @apply text-indigo-600 border-indigo-600;
+    }
+
+    .tab-label {
+      @apply flex-1;
+    }
+  }
+}

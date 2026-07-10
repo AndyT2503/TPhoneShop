@@ -3,10 +3,10 @@ import { computed, Directive, input } from '@angular/core';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
 const BASE_CLASSES =
-  'inline-flex items-center gap-1 rounded-lg font-medium text-white transition-colors';
+  'inline-flex items-center gap-1 rounded-lg font-medium text-white transition-colors cursor-pointer';
 
 const ENABLED_CLASSES =
-  'bg-indigo-600 hover:bg-indigo-700 cursor-pointer';
+  'bg-gradient-to-r from-indigo-600 to-violet-700';
 
 const DISABLED_CLASSES =
   'bg-gray-400 cursor-not-allowed opacity-50';

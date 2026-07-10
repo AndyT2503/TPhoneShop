@@ -1,3 +1,5 @@
+import { Injector } from "@angular/core";
+
 export interface DialogConfig<TData = unknown> {
   title?: string;
   data?: TData;
@@ -9,6 +11,7 @@ export interface DialogConfig<TData = unknown> {
   hasBackdrop?: boolean;
   disableClose?: boolean;
   showCloseButton?: boolean;
+  injector?: Injector;
 }
 
 export const DEFAULT_DIALOG_CONFIG: DialogConfig = {
