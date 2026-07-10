@@ -10,13 +10,16 @@ namespace IdentityService.Persistence
             this IServiceCollection services,
             IConfiguration configuration)
         {
+            services.AddScoped<SoftDeleteInterceptor>();
             services.AddSingleton<AuditableEntityInterceptor>();
             services.AddDbContext<IdentityDbContext>((sp, options) =>
             {
                 options.UseNpgsql(
                     configuration.GetConnectionString("Auth"));
                 options.AddInterceptors(
-                        sp.GetRequiredService<AuditableEntityInterceptor>());
+                        sp.GetRequiredService<SoftDeleteInterceptor>(),
+                        sp.GetRequiredService<AuditableEntityInterceptor>()
+                );
             });
 
             return services;

@@ -1,6 +1,6 @@
 ﻿namespace CommerceService.Domain.Entities
 {
-    public class Category : BaseEntity
+    public class Category : BaseEntity, ISoftDeletable
     {
         public Guid? ParentId { get; set; }
 
@@ -17,6 +17,8 @@
         public ICollection<Category> Children { get; set; } = [];
 
         public ICollection<Product> Products { get; set; } = [];
+        public DateTimeOffset? DeletedAt { get; set; }
+        public Guid? DeletedBy { get; set; }
 
     }
 }

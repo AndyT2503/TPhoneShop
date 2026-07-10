@@ -1,6 +1,6 @@
 ﻿namespace CommerceService.Domain.Entities
 {
-    public class Product : BaseEntity
+    public class Product : BaseEntity, ISoftDeletable
     {
         public Guid? ProductGroupId { get; set; }
         public Guid CategoryId { get; set; }
@@ -25,6 +25,15 @@
 
         public ICollection<ProductVariant> Variants { get; set; } = [];
         public ProductGroup? ProductGroup { get; set; }
+        public DateTimeOffset? DeletedAt { get; set; }
+        public Guid? DeletedBy { get; set; }
+    }
+
+    public class ProductAttribute
+    {
+        public required string Name { get; set; }
+
+        public required string Value { get; set; }
 
     }
 }
