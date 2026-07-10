@@ -12,14 +12,13 @@ import {
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import {
   AdminBrandAPIService,
-  BrandDto,
   CreateBrandRequest,
   DEFAULT_PAGE_SIZE,
   GetBrandsQuery,
-  PagingResponse,
+  UpdateBrandRequest,
 } from '@tphone-shop.web/data-access';
 import { ToastService } from '@tphone-shop.web/ui';
-import { pipe, switchMap, tap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, pipe, switchMap, tap } from 'rxjs';
 
 type BrandManagementState = {
   isLoading: boolean;
@@ -31,6 +30,8 @@ const initialState: BrandManagementState = {
   query: {
     pageNumber: 1,
     pageSize: DEFAULT_PAGE_SIZE,
+    search: '',
+    isActive: true,
   },
 };
 
@@ -44,8 +45,8 @@ export const BrandManagementStore = signalStore(
       },
       defaultValue: {
         items: [],
-        totalCount: 0
-      }
+        totalCount: 0,
+      },
     }),
   })),
   withMethods(
@@ -81,11 +82,98 @@ export const BrandManagementStore = signalStore(
           ),
         ),
       ),
+      updateBrand: rxMethod<{
+        brandId: string;
+        updateBrandRequest: UpdateBrandRequest;
+        onSuccess: () => void;
+      }>(
+        pipe(
+          tap(() => {
+            patchState(store, { isLoading: true });
+          }),
+          switchMap((req) =>
+            brandAPIService
+              .updateBrand(req.brandId, req.updateBrandRequest)
+              .pipe(
+                tapResponse({
+                  next: () => {
+                    toast.success('Cập nhật nhãn hàng thành công');
+                    req.onSuccess();
+                    store.brandTable.reload();
+                  },
+                  error: (err: HttpErrorResponse) => {
+                    toast.error(
+                      err.error?.message || 'Cập nhật nhãn hàng thất bại',
+                    );
+                  },
+                  finalize: () => {
+                    patchState(store, { isLoading: false });
+                  },
+                }),
+              ),
+          ),
+        ),
+      ),
+      deleteBrand: rxMethod<{
+        brandId: string;
+      }>(
+        pipe(
+          tap(() => {
+            patchState(store, { isLoading: true });
+          }),
+          switchMap((req) =>
+            brandAPIService.deleteBrand(req.brandId).pipe(
+              tapResponse({
+                next: () => {
+                  toast.success('Xóa nhãn hàng thành công');
+                  store.brandTable.reload();
+                },
+                error: (err: HttpErrorResponse) => {
+                  toast.error(err.error?.message || 'Xóa nhãn hàng thất bại');
+                },
+                finalize: () => {
+                  patchState(store, { isLoading: false });
+                },
+              }),
+            ),
+          ),
+        ),
+      ),
       changePageNumber(pageNumber: number) {
         patchState(store, {
           query: {
             ...store.query(),
             pageNumber,
+          },
+        });
+
+        store.brandTable.reload();
+      },
+      changeSearch: rxMethod<string>(
+        pipe(
+          debounceTime(300),
+          distinctUntilChanged(),
+          tap((search) => {
+            {
+              patchState(store, {
+                query: {
+                  ...store.query(),
+                  search,
+                  pageNumber: 1,
+                },
+              });
+
+              store.brandTable.reload();
+            }
+          }),
+        ),
+      ),
+      changeStatusFilter(isActive: boolean) {
+        patchState(store, {
+          query: {
+            ...store.query(),
+            isActive,
+            pageNumber: 1,
           },
         });
 
