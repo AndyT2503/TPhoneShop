@@ -8,10 +8,10 @@ export const appRoutes: Route[] = [
     loadChildren: () => import('auth/Routes').then((m) => m.remoteRoutes),
     canMatch: [nonAuthGuard]
   },
-  // {
-  //   path: '',
-  //   loadChildren: () => import('commerce/Routes').then((m) => m.remoteRoutes),
-  // },
+  {
+    path: '',
+    loadChildren: () => import('commerce/Routes').then((m) => m.remoteRoutes),
+  },
   {
     path: 'admin',
     loadChildren: () => import('admin/Routes').then((m) => m.remoteRoutes),

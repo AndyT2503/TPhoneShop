@@ -1,84 +1,8 @@
 <section class="brand-container">
   <div class="header">
-    <div class="header-left">
-      <div class="search-container">
-        <svg lucideSearch [size]="15" class="search-icon"></svg>
-        <input
-          type="text"
-          placeholder="Tìm nhãn hàng..."
-          class="search-input"
-          [(ngModel)]="searchValue"
-          (ngModelChange)="onSearchChange($event)"
-        />
-      </div>
-    </div>
     <button libButton size="md" type="button" (click)="openAddBrandDialog()">
       <svg lucidePlus [size]="12"></svg>
       <span>Thêm nhãn hàng</span>
     </button>
   </div>
-
-  <app-status-filter
-    [isActive]="query().isActive"
-    (isActiveChange)="onStatusFilterChange($event)"
-  ></app-status-filter>
-
-  <lib-table
-    [showPagination]="true"
-    [totalCount]="brandTable.value().totalCount"
-    [pageNumber]="query().pageNumber"
-    [pageSize]="query().pageSize"
-    (onPageNumberChange)="onPageNumberChange($event)"
-  >
-    <thead>
-      <tr>
-        <th libTbCenter>Nhãn hàng</th>
-        <th libTbCenter>Slug</th>
-        <th libTbCenter>Trạng thái</th>
-        <th libTbCenter>Hành động</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (item of brandTable.value().items; track $index) {
-        <tr>
-          <td libTbCenter>
-            <div class="flex gap-3 items-center">
-              <img [src]="item.logoUrl" [alt]="item.name" />
-              <div class="brand-info">
-                <p class="brand-name">{{ item.name }}</p>
-                <p class="brand-description">{{ item.description }}</p>
-              </div>
-            </div>
-          </td>
-          <td libTbCenter>/{{ item.slug }}</td>
-          <td libTbCenter>
-            <span class="status-badge" [class.status-active]="item.isActive">
-              {{ item.isActive ? 'Hiển thị' : 'Ẩn' }}
-            </span>
-          </td>
-          <td libTbCenter>
-            <div class="actions flex items-center justify-center gap-2">
-              <button
-                class="action-button"
-                type="button"
-                (click)="openUpdateBrandDialog(item)"
-              >
-                <svg lucideSquarePen size="14"></svg>
-              </button>
-              <button
-                class="action-button delete-button"
-                type="button"
-                libConfirmPopover
-                [message]="'Bạn có muốn xóa nhãn hàng này?'"
-                (confirm)="onDeleteBrand(item.id)"
-                [disabled]="isLoading()"
-              >
-                <svg lucideTrash size="14"></svg>
-              </button>
-            </div>
-          </td>
-        </tr>
-      }
-    </tbody>
-  </lib-table>
 </section>

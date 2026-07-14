@@ -1,50 +1,10 @@
 <div
-  class="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden"
+  class="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden"
 >
   <div class="overflow-x-auto">
-    <table class="w-full min-w-full table-fixed">
+    <table class="w-full">
       <ng-content select="thead"></ng-content>
-      <ng-content select="tbody"></ng-content>
+      <ng-content select="tbody "></ng-content>
     </table>
   </div>
-  @if (showPagination()) {
-    <div class="pagination-container">
-      <p class="pagination-summary">Hiển thị {{ totalCount() }} kết quả</p>
-
-      <div class="pagination-actions">
-        <button
-          type="button"
-          class="pagination-button"
-          [disabled]="pageNumber() <= 1"
-          (click)="changePage(pageNumber() - 1)"
-        >
-          <svg lucideArrowLeft [size]="14"></svg>
-        </button>
-
-        @for (item of paginationPages(); track $index) {
-          @if (item !== 'ellipsis') {
-            <button
-              type="button"
-              class="pagination-button"
-              [class.pagination-button--active]="item === pageNumber()"
-              (click)="changePage(item)"
-            >
-              {{ item }}
-            </button>
-          } @else {
-            <span class="pagination-ellipsis">...</span>
-          }
-        }
-
-        <button
-          type="button"
-          class="pagination-button"
-          [disabled]="pageNumber() >= totalPages()"
-          (click)="changePage(pageNumber() + 1)"
-        >
-          <svg lucideArrowRight [size]="14"></svg>
-        </button>
-      </div>
-    </div>
-  }
 </div>

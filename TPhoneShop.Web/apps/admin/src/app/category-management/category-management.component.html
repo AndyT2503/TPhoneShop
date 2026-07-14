@@ -1,0 +1,130 @@
+<section class="category-page">
+  <div class="category-header">
+    <div class="category-header__left">
+      <h1 class="category-title">Quản lý danh mục</h1>
+      <p class="category-subtitle">
+        {{ store.categories().length }} danh mục
+      </p>
+    </div>
+
+    <button
+      libButton
+      size="md"
+      type="button"
+      (click)="openAddCategoryDialog()"
+      class="add-btn"
+    >
+      <svg lucidePlus [size]="14"></svg>
+      <span>Thêm danh mục</span>
+    </button>
+  </div>
+
+  <div class="category-card">
+    <div class="table-container">
+      <table class="category-table">
+        <thead>
+          <tr>
+            <th>Tên danh mục</th>
+            <th>Slug (URL)</th>
+            <th class="text-center">Sản phẩm</th>
+            <th class="text-right">Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (store.isLoading() && categoryTree().length === 0) {
+            <tr>
+              <td colspan="4" class="text-center py-8 text-slate-400">
+                Đang tải danh mục...
+              </td>
+            </tr>
+          } @else if (categoryTree().length === 0) {
+            <tr>
+              <td colspan="4" class="text-center py-8 text-slate-400">
+                Chưa có danh mục nào được tạo.
+              </td>
+            </tr>
+          } @else {
+            @for (item of categoryTree(); track item.id) {
+              <tr class="category-row" [class.category-row--root]="!item.parentId">
+                <td>
+                  <div
+                    class="name-cell"
+                    [style.padding-left.px]="item.level * 24"
+                  >
+                    <!-- Expand/Collapse Button -->
+                    <button
+                      type="button"
+                      class="expand-btn"
+                      *ngIf="item.hasChildren"
+                      (click)="toggleExpand(item.id, $event)"
+                    >
+                      <svg
+                        *ngIf="item.isExpanded"
+                        lucideChevronDown
+                        [size]="14"
+                      ></svg>
+                      <svg
+                        *ngIf="!item.isExpanded"
+                        lucideChevronRight
+                        [size]="14"
+                      ></svg>
+                    </button>
+                    <span class="expand-spacer" *ngIf="!item.hasChildren"></span>
+
+                    <!-- Folder Icon -->
+                    <svg
+                      *ngIf="item.hasChildren && item.isExpanded"
+                      lucideFolderOpen
+                      [size]="16"
+                      class="folder-icon text-indigo-500"
+                    ></svg>
+                    <svg
+                      *ngIf="!item.hasChildren || !item.isExpanded"
+                      lucideFolder
+                      [size]="16"
+                      class="folder-icon text-slate-400"
+                    ></svg>
+
+                    <!-- Category Name -->
+                    <span class="category-name">{{ item.name }}</span>
+
+                    <!-- Gốc Badge -->
+                    <span class="root-badge" *ngIf="!item.parentId">Gốc</span>
+                  </div>
+                </td>
+                <td>
+                  <span class="slug-text">{{ item.slug }}</span>
+                </td>
+                <td class="text-center">
+                  <span class="product-count">{{ item.productCount }}</span>
+                </td>
+                <td>
+                  <div class="actions-cell">
+                    <button
+                      type="button"
+                      class="action-btn action-btn--edit"
+                      title="Chỉnh sửa"
+                      (click)="openEditCategoryDialog(item)"
+                    >
+                      <svg lucidePen [size]="14"></svg>
+                    </button>
+                    <button
+                      type="button"
+                      class="action-btn action-btn--delete"
+                      title="Xóa"
+                      libConfirmPopover
+                      [message]="'Bạn có chắc chắn muốn xóa danh mục này?'"
+                      (confirm)="deleteCategory(item.id)"
+                    >
+                      <svg lucideTrash2 [size]="14"></svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

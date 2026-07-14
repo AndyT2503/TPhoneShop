@@ -34,7 +34,7 @@ export class DialogService {
         { provide: DIALOG_CONFIG, useValue: mergedConfig },
         { provide: DIALOG_DATA, useValue: mergedConfig.data },
       ],
-       parent: mergedConfig.injector ?? this.injector,
+      parent: this.injector,
     });
 
     const portal = this.createPortal(componentOrTemplate, injector);

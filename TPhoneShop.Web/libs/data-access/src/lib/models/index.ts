@@ -5,3 +5,4 @@ export * from './role.model';
 export * from './brand.model';
 export * from './paging.model';
 export * from './file.model';
+export * from './category.model';

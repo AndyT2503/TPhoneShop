@@ -9,6 +9,7 @@ import {
   LucideAward,
   LucideChevronRight,
   LucideDynamicIcon,
+  LucideFolder,
   LucideIconInput,
   LucideShieldCheck,
 } from '@lucide/angular';
@@ -21,6 +22,11 @@ interface MenuItem {
 }
 
 const MENU: MenuItem[] = [
+  {
+    title: 'Danh mục',
+    icon: LucideFolder,
+    link: ADMIN_ROUTES.category,
+  },
   {
     title: 'Phân quyền',
     icon: LucideShieldCheck,

@@ -3,6 +3,11 @@ import { ADMIN_ROUTES } from '@tphone-shop.web/routing-config';
 
 export const adminRoutes: Routes = [
   {
+    path: '',
+    redirectTo: ADMIN_ROUTES.permission,
+    pathMatch: 'full',
+  },
+  {
     path: ADMIN_ROUTES.permission,
     loadComponent: () =>
       import('../permission/permission.component').then(
@@ -20,6 +25,16 @@ export const adminRoutes: Routes = [
       ),
     data: {
       title: 'Nhãn hàng',
+    },
+  },
+  {
+    path: ADMIN_ROUTES.category,
+    loadComponent: () =>
+      import('../category-management/category-management.component').then(
+        (c) => c.CategoryManagementComponent,
+      ),
+    data: {
+      title: 'Danh mục',
     },
   },
 ];

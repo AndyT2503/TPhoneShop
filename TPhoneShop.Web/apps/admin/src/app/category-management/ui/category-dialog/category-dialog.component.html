@@ -1,0 +1,67 @@
+<form class="category-form" (submit)="submit($event)">
+  <label class="field">
+    <span class="field__label">Tên danh mục *</span>
+    <input
+      class="field__control"
+      type="text"
+      placeholder="Ví dụ: Điện thoại"
+      autocomplete="off"
+      [formField]="categoryForm.name"
+    />
+  </label>
+
+  <label class="field">
+    <span class="field__label">Mô tả</span>
+    <textarea
+      class="field__control field__textarea"
+      placeholder="Mô tả ngắn về danh mục"
+      rows="3"
+      [formField]="categoryForm.description"
+    ></textarea>
+  </label>
+
+  <label class="field">
+    <span class="field__label">Danh mục cha</span>
+    <select
+      class="field__control field__select"
+      [formField]="categoryForm.parentId"
+    >
+      <option [value]="undefined">— Không có (danh mục gốc) —</option>
+      @for (cat of categories(); track cat.id) {
+        <option [value]="cat.id">{{ cat.name }}</option>
+      }
+    </select>
+  </label>
+
+  @if (isEdit) {
+    <div class="field field--checkbox">
+      <label class="flex items-center gap-2 cursor-pointer select-none">
+        <input
+          type="checkbox"
+          class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-gray-300"
+          [formField]="categoryForm.isActive"
+        />
+        <span class="text-sm font-semibold text-gray-700">Đang hoạt động</span>
+      </label>
+    </div>
+  }
+
+  <div class="actions">
+    <button
+      class="actions__cancel"
+      type="button"
+      (click)="closeDialog()"
+      [disabled]="isLoading()"
+    >
+      Hủy
+    </button>
+    <button
+      libButton
+      size="md"
+      type="submit"
+      [disabled]="isLoading()"
+    >
+      {{ isLoading() ? 'Đang lưu...' : 'Lưu' }}
+    </button>
+  </div>
+</form>

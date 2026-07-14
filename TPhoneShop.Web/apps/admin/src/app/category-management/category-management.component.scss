@@ -1,0 +1,113 @@
+@reference "tailwindcss";
+
+.category-page {
+  @apply flex flex-col gap-6;
+}
+
+.category-header {
+  @apply flex flex-wrap items-center justify-between gap-4;
+
+  &__left {
+    @apply space-y-1;
+  }
+}
+
+.category-title {
+  @apply text-2xl font-extrabold text-slate-800 tracking-tight;
+}
+
+.category-subtitle {
+  @apply text-sm text-slate-500 font-medium;
+}
+
+.add-btn {
+  @apply flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white border-0 shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer px-4 py-2.5 rounded-xl text-sm font-semibold;
+}
+
+.category-card {
+  @apply bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden;
+}
+
+.table-container {
+  @apply overflow-x-auto;
+}
+
+.category-table {
+  @apply w-full border-collapse text-left text-sm text-slate-600;
+
+  thead {
+    @apply bg-slate-50 border-b border-slate-100;
+
+    th {
+      @apply px-6 py-4 font-bold text-slate-500 uppercase tracking-wider text-xs;
+    }
+  }
+
+  tbody {
+    tr {
+      @apply border-b border-slate-100 hover:bg-slate-50/50 transition-colors duration-150;
+    }
+
+    td {
+      @apply px-6 py-4.5 align-middle;
+    }
+  }
+}
+
+.category-row {
+  &--root {
+    @apply bg-slate-50/20;
+    
+    .category-name {
+      @apply font-bold text-slate-800;
+    }
+  }
+}
+
+.name-cell {
+  @apply flex items-center gap-2 min-w-[280px];
+}
+
+.expand-btn {
+  @apply p-1 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-200/50 transition cursor-pointer shrink-0;
+}
+
+.expand-spacer {
+  @apply w-6 h-6 shrink-0;
+}
+
+.folder-icon {
+  @apply shrink-0;
+}
+
+.category-name {
+  @apply text-slate-700 font-medium truncate max-w-[240px];
+}
+
+.root-badge {
+  @apply select-none px-1.5 py-0.5 rounded-md text-[10px] font-extrabold uppercase bg-indigo-50 text-indigo-600 border border-indigo-100/50 tracking-wider;
+}
+
+.slug-text {
+  @apply font-mono text-xs text-slate-400 select-all;
+}
+
+.product-count {
+  @apply font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-full text-xs;
+}
+
+.actions-cell {
+  @apply flex items-center justify-end gap-2;
+}
+
+.action-btn {
+  @apply p-2 rounded-xl border border-slate-200 text-slate-400 hover:bg-slate-50 transition cursor-pointer;
+
+  &--edit {
+    @apply hover:text-indigo-600 hover:border-indigo-100 hover:bg-indigo-50/30;
+  }
+
+  &--delete {
+    @apply hover:text-rose-600 hover:border-rose-100 hover:bg-rose-50/30;
+  }
+}
