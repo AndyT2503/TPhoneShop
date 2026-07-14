@@ -27,4 +27,14 @@ export const adminRoutes: Routes = [
       title: 'Nhãn hàng',
     },
   },
+  {
+    path: ADMIN_ROUTES.category,
+    loadComponent: () =>
+      import('../category-management/category-management.component').then(
+        (c) => c.CategoryManagementComponent,
+      ),
+    data: {
+      title: 'Danh mục',
+    },
+  },
 ];
