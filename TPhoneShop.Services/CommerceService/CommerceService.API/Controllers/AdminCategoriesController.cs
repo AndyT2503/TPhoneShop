@@ -35,7 +35,7 @@ namespace CommerceService.API.Controllers.Admin
 
             await mediator.Send(command, cancellationToken);
 
-            return NoContent();
+            return Ok();
         }
 
         [HttpDelete("{id:guid}")]
