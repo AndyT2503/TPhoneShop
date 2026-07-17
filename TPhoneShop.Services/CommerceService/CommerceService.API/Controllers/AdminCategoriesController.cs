@@ -1,7 +1,8 @@
 using CommerceService.Application.Catalog.Categories.Commands.CreateCategory;
 using CommerceService.Application.Catalog.Categories.Commands.UpdateCategory;
 using CommerceService.Application.Catalog.Categories.Commands.DeleteCategory;
-using CommerceService.Application.Catalog.Categories.Queries;
+using CommerceService.Application.Catalog.Categories.Commands.Dtos;
+using CommerceService.Application.Catalog.Categories.Queries.GetCategoriesForAdmin;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommerceService.API.Controllers.Admin
@@ -19,31 +20,36 @@ namespace CommerceService.API.Controllers.Admin
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCategories([FromQuery] GetCategoriesQueryCommand query,
+        [Authorize(Permissions.CategoriesRead)]
+        public async Task<IActionResult> GetCategories([FromQuery] GetCategoriesForAdminQuery query,
             CancellationToken cancellationToken)
         {
             var result = await mediator.Send(query, cancellationToken);
             return Ok(result);
         }
 
-        [HttpPut("{id:guid}")]
+        [HttpPut("{id}")]
         [Authorize(Permissions.CategoriesUpdate)]
-        public async Task<IActionResult> UpdateCategory(Guid id,UpdateCategoryCommand command,
+        public async Task<IActionResult> UpdateCategory(Guid id, UpdateCategoryRequest request,
             CancellationToken cancellationToken)
         {
-            command.Id = id;
-
-            await mediator.Send(command, cancellationToken);
+            await mediator.Send(new UpdateCategoryCommand
+            {
+                Id = id,
+                ParentId = request.ParentId,
+                Name = request.Name,
+                Description = request.Description
+            }, cancellationToken);
 
             return NoContent();
         }
 
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("{id}")]
         [Authorize(Permissions.CategoriesDelete)]
         public async Task<IActionResult> DeleteCategory(Guid id, CancellationToken cancellationToken)
         {
             await mediator.Send(new DeleteCategoryCommand(id), cancellationToken);
-            return NoContent();
+            return Ok();
         }
     }
 }

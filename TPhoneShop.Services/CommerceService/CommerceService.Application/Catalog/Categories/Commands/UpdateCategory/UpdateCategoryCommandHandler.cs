@@ -1,4 +1,4 @@
-﻿using BuildingBlocks.Application.Slug;
+using BuildingBlocks.Application.Slug;
 using BuildingBlocks.Application.Exceptions;
 namespace CommerceService.Application.Catalog.Categories.Commands.UpdateCategory
 {
@@ -7,20 +7,24 @@ namespace CommerceService.Application.Catalog.Categories.Commands.UpdateCategory
         public async Task Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
             var category = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
-            if (category == null)
+            if (category is null)
             {
-                throw new NotFoundException("Danh mục không tồn tại");
+                throw new NotFoundException("Danh mục không tồn tại.");
             }
             if (request.ParentId == request.Id)
             {
                 throw new BadRequestException("Danh mục cha không thể chính là danh mục hiện tại.");
             }
-            var slug = slugGenerator.Generate(request.Name);
-            var isSlugExists = await dbContext.Categories
-                .AnyAsync(x => x.Slug == slug && x.Id != request.Id, cancellationToken);
-            if (isSlugExists)
+            if (request.Name != category.Name)
             {
-                throw new BadRequestException("Tên danh mục đã tồn tại (trùng đường dẫn tĩnh/slug).");
+                var slug = slugGenerator.Generate(request.Name);
+                var isSlugExists = await dbContext.Categories
+                    .AnyAsync(x => x.Slug == slug && x.Id != request.Id, cancellationToken);
+                if (isSlugExists)
+                {
+                    throw new BadRequestException("Tên danh mục đã tồn tại (trùng đường dẫn tĩnh/slug).");
+                }
+                category.Slug = slug;
             }
             if (request.ParentId.HasValue)
             {
@@ -33,7 +37,6 @@ namespace CommerceService.Application.Catalog.Categories.Commands.UpdateCategory
             category.ParentId = request.ParentId;
             category.Name = request.Name;
             category.Description = request.Description;
-            category.Slug = slug;
             await dbContext.SaveChangesAsync(cancellationToken);
         }
     }

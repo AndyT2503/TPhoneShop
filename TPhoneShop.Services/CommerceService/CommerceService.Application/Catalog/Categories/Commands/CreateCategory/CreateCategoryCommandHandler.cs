@@ -14,7 +14,6 @@ namespace CommerceService.Application.Catalog.Categories.Commands.CreateCategory
                 Slug = slugGenerator.Generate(request.Name),
                 IsActive = true
             };
-
             dbContext.Categories.Add(category);
             await dbContext.SaveChangesAsync(cancellationToken);
         }
