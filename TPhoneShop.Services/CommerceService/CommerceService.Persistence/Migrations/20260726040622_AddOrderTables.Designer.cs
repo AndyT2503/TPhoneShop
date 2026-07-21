@@ -4,6 +4,7 @@ using System.Text.Json;
 using CommerceService.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CommerceService.Persistence.Migrations
 {
     [DbContext(typeof(CommerceDbContext))]
-    partial class CommerceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260726040622_AddOrderTables")]
+    partial class AddOrderTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -589,8 +592,15 @@ namespace CommerceService.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<long?>("CompareAtPrice")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
@@ -605,6 +615,9 @@ namespace CommerceService.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
+
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uuid");
@@ -1065,51 +1078,6 @@ namespace CommerceService.Persistence.Migrations
                         .WithMany("Variants")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsOne("CommerceService.Domain.ValueObjects.Money", "CompareAtPrice", b1 =>
-                        {
-                            b1.Property<Guid>("ProductVariantId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<long>("Amount")
-                                .HasColumnType("bigint");
-
-                            b1.Property<string>("Currency")
-                                .IsRequired()
-                                .HasColumnType("text");
-
-                            b1.HasKey("ProductVariantId");
-
-                            b1.ToTable("product_variants", "catalogs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ProductVariantId");
-                        });
-
-                    b.OwnsOne("CommerceService.Domain.ValueObjects.Money", "Price", b1 =>
-                        {
-                            b1.Property<Guid>("ProductVariantId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<long>("Amount")
-                                .HasColumnType("bigint");
-
-                            b1.Property<string>("Currency")
-                                .IsRequired()
-                                .HasColumnType("text");
-
-                            b1.HasKey("ProductVariantId");
-
-                            b1.ToTable("product_variants", "catalogs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ProductVariantId");
-                        });
-
-                    b.Navigation("CompareAtPrice");
-
-                    b.Navigation("Price")
                         .IsRequired();
 
                     b.Navigation("Product");

@@ -57,10 +57,17 @@ namespace CommerceService.ReadModel.Catalog.Services.Product
                     Id = v.Id,
                     Name = v.Name,
                     ThumbnailId = v.ThumbnailId,
-                    CompareAtPrice = v.CompareAtPrice,
-                    Price = v.Price,
+                    CompareAtPrice = v.CompareAtPrice != null ? new Money
+                    {
+                        Amount = v.CompareAtPrice.Amount,
+                        Currency = v.CompareAtPrice.Currency
+                    } : null,
+                    Price = new Money
+                    {
+                        Amount = v.Price.Amount,
+                        Currency = v.Price.Currency
+                    },
                     StockQuantity = v.StockQuantity,
-                    Currency = v.Currency
                 }).ToList(),
             };
 

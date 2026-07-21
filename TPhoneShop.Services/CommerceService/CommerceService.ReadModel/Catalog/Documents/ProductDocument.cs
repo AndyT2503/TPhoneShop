@@ -43,9 +43,14 @@
         public Guid Id { get; set; }
         public required string Name { get; set; }
         public Guid ThumbnailId { get; set; }
-        public long Price { get; set; }
-        public long? CompareAtPrice { get; set; }
+        public Money Price { get; set; }
+        public Money? CompareAtPrice { get; set; }
         public int StockQuantity { get; set; }
-        public required string Currency { get; set; }
+    }
+
+    public class Money
+    {
+        public long Amount { get; set; }
+        public string Currency { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace CommerceService.Application.Catalog.Products.Commands.AddProductVariant
+﻿using CommerceService.Domain.ValueObjects;
+
+namespace CommerceService.Application.Catalog.Products.Commands.AddProductVariant
 {
     internal class AddProductVariantCommandHandler(CommerceDbContext dbContext) : IRequestHandler<AddProductVariantCommand>
     {
@@ -37,8 +39,8 @@
                 Name = request.Variant.Name,
                 Sku = request.Variant.Sku,
                 ThumbnailId = request.Variant.ThumbnailId,
-                Price = request.Variant.Price * 100,
-                CompareAtPrice = request.Variant.CompareAtPrice * 100,
+                Price = new Money(request.Variant.Price * 100),
+                CompareAtPrice = request.Variant.CompareAtPrice.HasValue ? new Money(request.Variant.CompareAtPrice.Value * 100) : null,
                 StockQuantity = request.Variant.StockQuantity,
                 IsActive = true,
             };

@@ -1,5 +1,6 @@
 ﻿using BuildingBlocks.Application.Slug;
 using CommerceService.Domain.Events.Product;
+using CommerceService.Domain.ValueObjects;
 using System.Text.Json;
 
 namespace CommerceService.Application.Catalog.Products.Commands.CreateProduct
@@ -100,10 +101,8 @@ namespace CommerceService.Application.Catalog.Products.Commands.CreateProduct
                     Name = variantRequest.Name.Trim(),
                     Sku = variantRequest.Sku.Trim(),
                     ThumbnailId = variantRequest.ThumbnailId,
-                    Price = variantRequest.Price * 100,
-                    CompareAtPrice = variantRequest.CompareAtPrice.HasValue
-                        ? variantRequest.CompareAtPrice.Value * 100
-                        : null,
+                    Price = new Money(variantRequest.Price * 100),
+                    CompareAtPrice = variantRequest.CompareAtPrice.HasValue ? new Money(variantRequest.CompareAtPrice.Value * 100) : null,
                     StockQuantity = variantRequest.StockQuantity,
                     IsActive = true
                 });
