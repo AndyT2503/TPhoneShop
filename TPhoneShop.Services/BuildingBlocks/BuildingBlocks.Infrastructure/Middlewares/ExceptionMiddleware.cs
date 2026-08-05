@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
+using BuildingBlocks.Domain.Exceptions;
 
 namespace BuildingBlocks.Infrastructure.Middlewares
 {
@@ -49,6 +50,9 @@ namespace BuildingBlocks.Infrastructure.Middlewares
             {
                 AppException appEx =>
                     (appEx.Message, (int)appEx.StatusCode),
+                
+                DomainException domainEx =>
+                    (domainEx.Message, StatusCodes.Status400BadRequest),
 
                 FluentValidation.ValidationException valEx =>
                     (valEx.Errors.FirstOrDefault()?.ErrorMessage ?? "Dữ liệu không hợp lệ", 400),

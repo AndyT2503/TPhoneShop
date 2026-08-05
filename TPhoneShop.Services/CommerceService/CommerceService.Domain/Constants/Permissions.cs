@@ -24,5 +24,10 @@
         public const string CategoriesUpdate = "categories.update";
         public const string CategoriesDelete = "categories.delete";
         public const string CategoriesRead = "categories.read";
+
+        public const string CouponsCreate = "coupons.create";
+        public const string CouponsUpdate = "coupons.update";
+        public const string CouponsDelete = "coupons.delete";
+        public const string CouponsRead = "coupons.read";
     }
 }

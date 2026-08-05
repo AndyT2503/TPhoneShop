@@ -2,7 +2,9 @@
 using BuildingBlocks.Domain.Constants;
 using BuildingBlocks.Domain.Events;
 using CommerceService.Domain.Entities;
+using CommerceService.Domain.Events.Coupon;
 using CommerceService.Domain.Events.Product;
+using CommerceService.Domain.Events.Order;
 using CommerceService.Domain.Events.Role;
 using CommerceService.Persistence;
 using MediatR;
@@ -86,6 +88,8 @@ namespace CommerceService.Infrastructure.BackgroundJobs
             {
                 ProductCreatedEvent.EventName => PublishAsync<ProductCreatedEvent>(message, cancellationToken),
                 RolePermissionsUpdatedEvent.EventName => PublishAsync<RolePermissionsUpdatedEvent>(message, cancellationToken),
+                OrderCreatedEvent.EventName => PublishAsync<OrderCreatedEvent>(message, cancellationToken),
+                CouponCreatedEvent.EventName => PublishAsync<CouponCreatedEvent>(message, cancellationToken),
 
                 _ => throw new InvalidOperationException($"Unknown outbox message type '{message.Type}'.")
             };

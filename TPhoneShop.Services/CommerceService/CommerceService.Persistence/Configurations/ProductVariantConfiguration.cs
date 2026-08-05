@@ -22,12 +22,8 @@
             builder.HasIndex(x => x.Sku)
                 .IsUnique();
 
-            builder.Property(x => x.Price)
-                .IsRequired();
-
-            builder.Property(x => x.CompareAtPrice);
-            builder.Property(x => x.Currency)
-                .IsRequired();
+            builder.OwnsOne(x => x.Price);
+            builder.OwnsOne(x => x.CompareAtPrice);
 
             builder.Property(x => x.StockQuantity)
                 .IsRequired();
