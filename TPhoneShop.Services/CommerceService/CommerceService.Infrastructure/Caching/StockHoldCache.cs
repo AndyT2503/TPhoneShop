@@ -10,7 +10,7 @@ namespace CommerceService.Infrastructure.Caching
         private static string ExpiryKey(Guid variantId) => $"stock:hold:expiry:{variantId}";
 
         // KEYS[1] = stock qty key, KEYS[2] = hold hash key, KEYS[3] = expiry sorted set key
-        // ARGV[1] = orderId, ARGV[2] = requestedQty, ARGV[3] = expireAt
+        // ARGV[1] = orderId, ARGV[2] = requestedQty, ARGV[3] = expireAt, ARGV[4] = now (unix timestamp)
         // Returns: 1 = success, -1 = insufficient stock, -2 = stock key not found
         private const string HoldScript = """
             local stockKey = KEYS[1]
@@ -19,6 +19,14 @@ namespace CommerceService.Infrastructure.Caching
             local orderId = ARGV[1]
             local requestedQty = tonumber(ARGV[2])
             local expireAt = tonumber(ARGV[3])
+            local now = tonumber(ARGV[4])
+
+            -- Cleanup expired holds
+            local expired = redis.call("ZRANGEBYSCORE", expiryKey, "-inf", now)
+            for _, oid in ipairs(expired) do
+                redis.call("HDEL", holdKey, oid)
+                redis.call("ZREM", expiryKey, oid)
+            end
 
             local currentStock = redis.call("GET", stockKey)
             if not currentStock then
@@ -69,6 +77,7 @@ namespace CommerceService.Infrastructure.Caching
             }
 
             var expireAt = DateTimeOffset.UtcNow.Add(holdDuration).ToUnixTimeSeconds();
+            var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             var orderIdStr = orderId.ToString();
             var heldVariants = new List<Guid>();
 
@@ -80,7 +89,7 @@ namespace CommerceService.Infrastructure.Caching
                     HoldKey(item.VariantId),
                     ExpiryKey(item.VariantId)
                 };
-                var args = new RedisValue[] { orderIdStr, item.RequestedQuantity, expireAt };
+                var args = new RedisValue[] { orderIdStr, item.RequestedQuantity, expireAt, now };
 
                 try
                 {

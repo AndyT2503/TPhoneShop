@@ -11,7 +11,7 @@ namespace CommerceService.Infrastructure.Caching
 
         // KEYS[1] = coupon:usage:{couponId}, KEYS[2] = coupon:limit:{couponId},
         // KEYS[3] = coupon:hold:{couponId}, KEYS[4] = coupon:hold:expiry:{couponId}
-        // ARGV[1] = orderId, ARGV[2] = expireAt
+        // ARGV[1] = orderId, ARGV[2] = expireAt, ARGV[3] = now
         // Returns: 1 = success, -1 = usage limit exceeded, -2 = keys not found (not cached)
         private const string HoldScript = """
             local usageKey = KEYS[1]
@@ -20,12 +20,20 @@ namespace CommerceService.Infrastructure.Caching
             local expiryKey = KEYS[4]
             local orderId = ARGV[1]
             local expireAt = tonumber(ARGV[2])
+            local now = tonumber(ARGV[3])
 
             local usageLimit = redis.call("GET", limitKey)
             if not usageLimit then
                 return -2
             end
             usageLimit = tonumber(usageLimit)
+
+            -- Cleanup expired holds
+            local expired = redis.call("ZRANGEBYSCORE", expiryKey, "-inf", now)
+            for _, oid in ipairs(expired) do
+                redis.call("HDEL", holdKey, oid)
+                redis.call("ZREM", expiryKey, oid)
+            end
 
             local currentUsage = tonumber(redis.call("GET", usageKey) or "0")
             local totalHolds = redis.call("HLEN", holdKey)
@@ -63,6 +71,7 @@ namespace CommerceService.Infrastructure.Caching
             }
 
             var expireAt = DateTimeOffset.UtcNow.Add(holdDuration).ToUnixTimeSeconds();
+            var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             var orderIdStr = orderId.ToString();
 
             var keys = new RedisKey[]
@@ -73,7 +82,7 @@ namespace CommerceService.Infrastructure.Caching
                 ExpiryKey(couponId)
             };
 
-            var args = new RedisValue[] { orderIdStr, expireAt };
+            var args = new RedisValue[] { orderIdStr, expireAt, now };
 
             try
             {
