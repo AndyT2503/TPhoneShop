@@ -1,3 +1,5 @@
+using BuildingBlocks.Infrastructure.Authentication;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var allowedOrigins =
@@ -16,6 +18,9 @@ builder.Services.AddCors(options =>
             .AllowCredentials();
     });
 });
+
+builder.Services.AddJwtAuthentication(builder.Configuration, builder.Environment);
+builder.Services.AddAuthorization();
 
 builder.Services
     .AddReverseProxy()

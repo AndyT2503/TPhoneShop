@@ -1,5 +1,6 @@
 -- Identity Database
 -- Create default admin user
+-- Default password is 123456
 INSERT INTO public.users
 (
     "Id",
