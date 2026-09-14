@@ -1,6 +1,6 @@
 services:
   minio:
-    image: minio/minio:latest
+    image: quay.io/minio/minio:latest
     container_name: tphoneshop-minio
     restart: unless-stopped
 
@@ -46,7 +46,36 @@ services:
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
 
+  mongodb:
+    image: mongo:8
+    container_name: tphoneshop-mongodb
+    restart: unless-stopped
+
+    ports:
+      - "27017:27017"
+
+    volumes:
+      - mongodb-data:/data/db
+
+  postgres:
+    image: postgres:18
+    container_name: tphoneshop-postgres
+    restart: unless-stopped
+
+    ports:
+      - "5432:5432"
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: tphoneshop
+
+    volumes:
+      - postgres-data:/var/lib/postgresql
+
 volumes:
   minio-data:
   redis-data:
   rabbitmq-data:
+  mongodb-data:
+  postgres-data:
