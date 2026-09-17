@@ -15,6 +15,7 @@ namespace CommerceService.API.Controllers.Admin
             await mediator.Send(command, cancellationToken);
             return Ok();
         }
+
         [HttpGet]
         [Authorize(Permissions.CategoriesRead)]
         public async Task<IActionResult> GetCategories([FromQuery] GetCategoriesForAdminQuery query, CancellationToken cancellationToken)

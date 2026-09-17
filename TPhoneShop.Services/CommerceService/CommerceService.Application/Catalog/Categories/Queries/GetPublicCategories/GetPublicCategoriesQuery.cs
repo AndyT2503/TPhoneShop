@@ -3,7 +3,7 @@ using CommerceService.Application.Catalog.Categories.Queries.Dtos;
 
 namespace CommerceService.Application.Catalog.Categories.Queries.GetPublicCategories
 {
-    public class GetPublicCategoriesQuery : PagingQuery, IRequest<PagingResponse<CategoryDto>>
+    public class GetPublicCategoriesQuery : IRequest<IReadOnlyCollection<CategoryDto>>
     {
     }
 }
